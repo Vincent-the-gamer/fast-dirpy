@@ -31,8 +31,8 @@ importers:
         specifier: ^4.3.1
         version: 4.3.1
       taze:
-        specifier: ^19.0.2
-        version: 19.0.2
+        specifier: ^19.0.3
+        version: 19.0.3
       tsup:
         specifier: ^8.4.0
         version: 8.4.0(jiti@2.4.2)(postcss@8.4.40)(tsx@4.19.3)(typescript@5.8.2)(yaml@2.7.0)
@@ -951,8 +951,8 @@ packages:
     resolution: {integrity: sha512-saLsH7WeYYPiD25LDuLRRY/i+6HaPYr6G1OUlN39otzkSTxKnubR9RTxS3/Kk50s1g2JTgFwWQDQyplC5/SHZg==}
     engines: {node: '>= 6'}
 
-  pnpm-workspace-yaml@0.1.2:
-    resolution: {integrity: sha512-FaSo51Psz+jHV8YtnuIVemTheOIO5EnMtw0HSPTUsASEdOf3ppM5OBxKO5Dpvx4fWKNZF44vEEMFKc5YZG4qjA==}
+  pnpm-workspace-yaml@0.3.1:
+    resolution: {integrity: sha512-3nW5RLmREmZ8Pm8MbPsO2RM+99RRjYd25ynj3NV0cFsN7CcEl4sDFzgoFmSyduFwxFQ2Qbu3y2UdCh6HlyUOeA==}
 
   postcss-load-config@6.0.1:
     resolution: {integrity: sha512-oPtTM4oerL+UXmx+93ytZVN82RrlY/wPUV8IeDxFrzIjXOLF1pN+EmKPLbubvKHT2HC20xXsCAH2Z+CKV6Oz/g==}
@@ -1069,8 +1069,8 @@ packages:
   symbol-tree@3.2.4:
     resolution: {integrity: sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==}
 
-  taze@19.0.2:
-    resolution: {integrity: sha512-SEFTzn2Armn0nsHt4tVoVEOGLb8mxnrYfgOItBfayCbaDHi9DrRkH7UP7wqra3b04kf6dW6KYdroIQCnCAzQOA==}
+  taze@19.0.3:
+    resolution: {integrity: sha512-XYZDCqdiTnuyTKRKjbO6b27jHw9kdW4C28j8DE+nhnnjq0fS0/vcQikivjrMwcAH4vB1v1WkVbYnvjGelDk9yw==}
     hasBin: true
 
   thenify-all@1.6.0:
@@ -1086,8 +1086,8 @@ packages:
   tinyexec@0.3.2:
     resolution: {integrity: sha512-KQQR9yN7R5+OSwaK0XQoj22pwHoTlgYqmUscPYoknOoWCWfj/5/ABTMRi69FrKU5ffPVh5QcFikpWJI/P1ocHA==}
 
-  tinyexec@1.0.0:
-    resolution: {integrity: sha512-djtKaAR3lnRo0uMT/IKYwj3s4E86IE/SdwCE3XXIJcozbDFKsfgAmi8IBIpIDmTd0Y6YKyfqo3vQ33OloPJPaQ==}
+  tinyexec@1.0.1:
+    resolution: {integrity: sha512-5uC6DDlmeqiOwCPmK9jMSdOuZTh8bU39Ys6yidB+UTt5hfZUPGAypSgFRiEp+jbi9qH40BLDvy85jIU88wKSqw==}
 
   tinyglobby@0.2.12:
     resolution: {integrity: sha512-qkf4trmKSIiMTs/E63cxH+ojC2unam7rJ0WrauAzpT3ECNTxGRMlaXxVbfxMUC/w0LaYk6jQ4y/nGR9uBO3tww==}
@@ -1304,7 +1304,7 @@ snapshots:
       ansis: 3.17.0
       fzf: 0.5.2
       package-manager-detector: 1.1.0
-      tinyexec: 1.0.0
+      tinyexec: 1.0.1
 
   '@asamuzakjp/css-color@3.1.1':
     dependencies:
@@ -2030,7 +2030,7 @@ snapshots:
 
   pirates@4.0.6: {}
 
-  pnpm-workspace-yaml@0.1.2:
+  pnpm-workspace-yaml@0.3.1:
     dependencies:
       yaml: 2.7.0
 
@@ -2151,7 +2151,7 @@ snapshots:
 
   symbol-tree@3.2.4: {}
 
-  taze@19.0.2:
+  taze@19.0.3:
     dependencies:
       '@antfu/ni': 24.3.0
       cac: 6.7.14
@@ -2159,9 +2159,9 @@ snapshots:
       ofetch: 1.4.1
       package-manager-detector: 1.1.0
       pathe: 2.0.3
-      pnpm-workspace-yaml: 0.1.2
+      pnpm-workspace-yaml: 0.3.1
       restore-cursor: 5.1.0
-      tinyexec: 0.3.2
+      tinyexec: 1.0.1
       tinyglobby: 0.2.12
       unconfig: 7.3.1
       yaml: 2.7.0
@@ -2178,7 +2178,7 @@ snapshots:
 
   tinyexec@0.3.2: {}
 
-  tinyexec@1.0.0: {}
+  tinyexec@1.0.1: {}
 
   tinyglobby@0.2.12:
     dependencies:
