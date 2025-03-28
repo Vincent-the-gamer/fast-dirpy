@@ -6,7 +6,7 @@
 [![JSDocs][jsdocs-src]][jsdocs-href]
 [![License][license-src]][license-href]
 
-A simple library/CLI to download video using `dirpy.com`
+A simple library/CLI to download youtube(etc.) videos.
 
 ## Installation
 
