@@ -60,7 +60,7 @@ const link = await getDirectLink(
 )
 
 // download video
-downloadVideoFromRawLink({
+await downloadVideoFromRawLink({
     url,
     path: "./download.mp4",
     proxy: {
