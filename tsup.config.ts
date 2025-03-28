@@ -2,7 +2,8 @@ import type { Options } from 'tsup'
 
 export default <Options> {
   entryPoints: [
-    "./src/cli.ts"
+    "./src/cli.ts",
+    "./src/index.ts"
   ],
   clean: true,
   format: ['esm'],

@@ -2,14 +2,13 @@
   "name": "fast-dirpy",
   "version": "0.1.0",
   "type": "module",
-  "description": "A simple CLI to download video using dirpy.com",
+  "description": "A simple library/CLI to download video using dirpy.com",
   "author": "Vincent-the-gamer",
-  "main": "dist/cli.js",
-  "module": "dist/cli.js",
-  "types": "dist/cli.d.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
-    "dist",
-    "*.d.ts"
+    "dist"
   ],
   "bin": {
     "fast-dirpy": "bin/fast-dirpy.js"
@@ -17,6 +16,7 @@
   "typesVersions": {
     "*": {
       ".": [
+        "./dist/index.d.ts",
         "./dist/cli.d.ts"
       ]
     }

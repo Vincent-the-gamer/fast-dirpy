@@ -6,28 +6,68 @@
 [![JSDocs][jsdocs-src]][jsdocs-href]
 [![License][license-src]][license-href]
 
-A simple CLI to download video using `dirpy.com`
-
-> [!NOTE]
-Work in progress.
+A simple library/CLI to download video using `dirpy.com`
 
 ## Installation
 
-> [!CAUTION]
-Not released yet.
+## As a library
+```shell
+npm i fast-dirpy
+```
 
+## As a **command line tool**
 ```shell
 npm i fast-dirpy -g
 ```
 
 
 ## Usage
+
+### Use in command line
+
+#### Get Direct Link
+
 ```shell
 # get video direct link
 # Proxy:
-#   -H, --proxyHost  host
-#   -P, --proxyPort  port
-fast-dirpy get http://xxx/yyy -H 127.0.0.1 -P 7890
+#   -H, --proxyHost: proxy host
+#   -P, --proxyPort: proxy port
+fast-dirpy get https\://www.youtube.com/watch\?v\=SAXpBgkXt60 -H 127.0.0.1 -P 7890
+```
+
+#### Download Video
+```shell
+# get video direct link
+# Path: --path, -P: Downloaded video save path.
+#
+# Proxy:
+#  -H, --proxyHost: proxy host.
+#  -P, --proxyPort: proxy port.
+fast-dirpy download https\://www.youtube.com/watch\?v\=SAXpBgkXt60 -p ./test.mp4  -H 127.0.0.1 -P 7890
+```
+
+### Use as a library
+```ts
+import { getDirectLink, downloadVideoFromRawLink } from "fast-dirpy"
+
+// get direct link
+const link = await getDirectLink(
+    "<url>",
+    {
+        host: "127.0.0.1",
+        port: 7890
+    }
+)
+
+// download video
+downloadVideoFromRawLink({
+    url,
+    path: "./download.mp4",
+    proxy: {
+        host: "127.0.0.1",
+        port: 7890
+    }
+})
 ```
 
 ## License
