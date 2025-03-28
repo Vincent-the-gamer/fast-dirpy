@@ -20,10 +20,16 @@ importers:
       restore-cursor:
         specifier: ^5.1.0
         version: 5.1.0
+      unconfig:
+        specifier: ^7.3.1
+        version: 7.3.1
     devDependencies:
       '@types/node':
         specifier: ^22.13.14
         version: 22.13.14
+      deepmerge:
+        specifier: ^4.3.1
+        version: 4.3.1
       taze:
         specifier: ^19.0.2
         version: 19.0.2
@@ -650,6 +656,10 @@ packages:
   deep-eql@5.0.2:
     resolution: {integrity: sha512-h5k/5U50IJJFpzfL6nO9jaaumfjO/f2NjK/oYB2Djzm4p9L+3T9qWpZqZ2hAbLPuuYq9wrU08WQyBTL5GbPk5Q==}
     engines: {node: '>=6'}
+
+  deepmerge@4.3.1:
+    resolution: {integrity: sha512-3sUqbMEc77XqpdNO7FRyRog+eW3ph+GYCbj+rK+uYyRMuwsVy0rMiVtPn+QJlKFvWP/1PYpapqYn0Me2knFn+A==}
+    engines: {node: '>=0.10.0'}
 
   defu@6.1.4:
     resolution: {integrity: sha512-mEQCMmwJu317oSz8CwdIOdwf3xMif1ttiM8LTufzc3g6kR+9Pe236twL8j3IYT1F7GfRgGcW6MWxzZjLIkuHIg==}
@@ -1701,6 +1711,8 @@ snapshots:
   decimal.js@10.5.0: {}
 
   deep-eql@5.0.2: {}
+
+  deepmerge@4.3.1: {}
 
   defu@6.1.4: {}
 

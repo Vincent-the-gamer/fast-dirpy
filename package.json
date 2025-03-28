@@ -1,6 +1,6 @@
 {
   "name": "fast-dirpy",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "description": "A simple library/CLI to download video using dirpy.com",
   "author": "Vincent-the-gamer",
@@ -44,6 +44,7 @@
   "sideEffects": false,
   "devDependencies": {
     "@types/node": "^22.13.14",
+    "deepmerge": "^4.3.1",
     "taze": "^19.0.2",
     "tsup": "^8.4.0",
     "tsx": "^4.19.3",
@@ -54,6 +55,7 @@
     "axios": "^1.8.4",
     "cac": "^6.7.14",
     "jsdom": "^26.0.0",
-    "restore-cursor": "^5.1.0"
+    "restore-cursor": "^5.1.0",
+    "unconfig": "^7.3.1"
   }
 }

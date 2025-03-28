@@ -2,26 +2,42 @@ import axios from "axios"
 // @ts-expect-error - missing type definitions
 import jsdom from "jsdom"
 import fs from "fs"
-import { useProxyConfig } from "./proxy"
-import { url } from "inspector"
+import { resolveConfig } from "./options"
+import type { DirpyOptions } from "./types"
+import { DEFAULT_DIRPY_OPTIONS } from "./options"
+
+const commonHeaders = {
+    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+}
 
 const { JSDOM } = jsdom
 
-export async function getDirectLink(url: string, proxy?: Record<string, any>): Promise<string> {
-    const proxyConfig = useProxyConfig(proxy || {})
+export async function getDirectLink(url: string, options: Partial<DirpyOptions> = DEFAULT_DIRPY_OPTIONS): Promise<string> {
+    const { proxy, timeout } = await resolveConfig(options)
+
+    let _proxy = proxy?.host !== "" ? proxy : undefined
+
+    const urlEncoded = encodeURIComponent(url)
 
     const { data } = await axios.get("https://dirpy.com/studio", {
         params: {
-            url: encodeURIComponent(url)
+            url: urlEncoded
         },
         headers: {
-            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+            ...commonHeaders,
         },
-        proxy: proxyConfig,
-        timeout: 30000 // 30s
+        proxy: _proxy,
+        timeout
     })
     const { window } = new JSDOM(data)
-    const { src }: { src: string } = window.document.getElementById("media-source")
+    
+    let src = ""
+
+    const mediaSourceDom = window.document.getElementById("media-source")
+
+    if(mediaSourceDom) {
+        src = mediaSourceDom.src
+    }
 
     return src
 }
@@ -30,23 +46,31 @@ export async function getDirectLink(url: string, proxy?: Record<string, any>): P
 // Download
 interface DownloadParams {
     url: string,
-    path: string
-    puppeteer?: boolean
-    proxy?: Record<string, any>
+    path: string,
 }
 
 
-async function downloadVideo(params: DownloadParams): Promise<void> {
-    const { proxy, path, url } = params
+async function downloadVideo(params: DownloadParams, options: Partial<DirpyOptions> = DEFAULT_DIRPY_OPTIONS): Promise<void> {
+    const { path, url } = params
 
-    const proxyConfig = useProxyConfig(proxy || {})
+    const { proxy, timeout } = await resolveConfig(options)
+
+    let _proxy = proxy?.host !== "" ? proxy : undefined
+
+    if(url === "") {
+        return Promise.reject("Extract direct link failed!")
+    }
 
     const writer = fs.createWriteStream(path)
     const response = await axios({
         url,
+        headers: {
+            ...commonHeaders
+        },
         method: 'GET',
         responseType: 'stream',
-        proxy: proxyConfig,
+        proxy: _proxy,
+        timeout,
         onDownloadProgress: (progressEvent) => {
             const { loaded, total, progress } = progressEvent
 
@@ -64,12 +88,14 @@ async function downloadVideo(params: DownloadParams): Promise<void> {
 }
 
 
-export async function downloadVideoFromRawLink(params: DownloadParams): Promise<void> {
-    const { proxy, path, url } = params
-    const directLink = await getDirectLink(url, proxy)
+export async function downloadVideoFromRawLink(params: DownloadParams, options: Partial<DirpyOptions> = DEFAULT_DIRPY_OPTIONS): Promise<void> {
+    const { path, url } = params
+    const directLink = await getDirectLink(url, options)
     await downloadVideo({
         url: directLink,
         path,
-        proxy
-    })
+    }, options)
 }
+
+
+getDirectLink("https://www.xvideos.com/video.hciubkd2832/huge_tits_ebony_fucked_by_gym_coach_during_training")
