@@ -25,7 +25,8 @@
     "tsx": "tsx",
     "build": "tsup",
     "test": "vitest",
-    "dep": "taze major"
+    "dep": "taze major",
+    "login": "pnpm login --registry https://registry.npmjs.com"
   },
   "license": "MIT",
   "homepage": "https://github.com/Vincent-the-gamer/fast-dirpy#readme",
