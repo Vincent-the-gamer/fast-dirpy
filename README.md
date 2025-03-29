@@ -23,6 +23,10 @@ npm i fast-dirpy -g
 ## Usage
 
 ### Config file
+
+> [!IMPORTANT]
+> `fast-dirpy.config` can be `fast-dirpy.config.['ts', 'mts', 'cts', 'js', 'mjs', 'cjs']`
+
 You can create a `fast-dirpy.config.ts` file in your library root or same location in command line.
 
 ```ts
