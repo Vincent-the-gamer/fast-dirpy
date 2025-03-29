@@ -47,25 +47,25 @@ fast-dirpy download https\://www.youtube.com/watch\?v\=SAXpBgkXt60 -p ./test.mp4
 
 ### Use as a library
 ```ts
-import { getDirectLink, downloadVideoFromRawLink } from "fast-dirpy"
+import { downloadVideoFromRawLink, getDirectLink } from 'fast-dirpy'
 
 // get direct link
 const link = await getDirectLink(
-    "<url>",
-    {
-        host: "127.0.0.1",
-        port: 7890
-    }
+  '<url>',
+  {
+    host: '127.0.0.1',
+    port: 7890
+  }
 )
 
 // download video
 await downloadVideoFromRawLink({
-    url,
-    path: "./download.mp4",
-    proxy: {
-        host: "127.0.0.1",
-        port: 7890
-    }
+  url,
+  path: './download.mp4',
+  proxy: {
+    host: '127.0.0.1',
+    port: 7890
+  }
 })
 ```
 
