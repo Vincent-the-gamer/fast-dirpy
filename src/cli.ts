@@ -12,9 +12,9 @@ cli.command('get <url>', 'get video direct link.')
   .action(async (url, options) => {
     const { host, port } = options
 
-    const proxyOptions = {
+    const proxyOptions = host ? {
       proxy: { host, port },
-    }
+    } : undefined
 
     const videoLink = await getDirectLink(url, proxyOptions)
 
@@ -28,9 +28,9 @@ cli.command('download <url>', 'download a video.')
   .action(async (url, options) => {
     const { host, port } = options
 
-    const proxyOptions = {
+    const proxyOptions = host ? {
       proxy: { host, port },
-    }
+    } : undefined
 
     downloadVideoFromRawLink({
       url,

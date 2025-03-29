@@ -22,7 +22,7 @@ export async function getDirectLink(url: string, options: Partial<DirpyOptions> 
     },
     headers: {
       ...dirpyHeaders,
-      'Referer': url
+      'Referer': `https://dirpy.com/studio?url=${url}`
     },
     proxy: _proxy,
     timeout,

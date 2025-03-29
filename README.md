@@ -22,6 +22,22 @@ npm i fast-dirpy -g
 
 ## Usage
 
+### Config file
+You can create a `fast-dirpy.config.ts` file in your library root or same location in command line.
+
+```ts
+import { defineConfig } from 'fast-dirpy'
+
+export default defineConfig({
+  proxy: {
+    protocol: 'http',
+    host: '127.0.0.1',
+    port: 7890,
+  },
+  timeout: 20000, // request timeout: 20s
+})
+```
+
 ### Use in command line
 
 #### Get Direct Link
@@ -31,18 +47,37 @@ npm i fast-dirpy -g
 # Proxy:
 #   -H, --proxyHost: proxy host
 #   -P, --proxyPort: proxy port
+
 fast-dirpy get https\://www.youtube.com/watch\?v\=SAXpBgkXt60 -H 127.0.0.1 -P 7890
+```
+
+if you have set your proxy config in `fast-dirpy.config.ts`, you can omit proxy parameters:
+
+```shell
+fast-dirpy get https\://www.youtube.com/watch\?v\=SAXpBgkXt60
 ```
 
 #### Download Video
 ```shell
 # get video direct link
-# Path: --path, -P: Downloaded video save path.
+# Path: --path, -p: Downloaded video save path.
 #
 # Proxy:
 #  -H, --proxyHost: proxy host.
 #  -P, --proxyPort: proxy port.
 fast-dirpy download https\://www.youtube.com/watch\?v\=SAXpBgkXt60 -p ./test.mp4  -H 127.0.0.1 -P 7890
+```
+
+if you have set your proxy config in `fast-dirpy.config.ts`, you can omit proxy parameters:
+
+```shell
+fast-dirpy download https\://www.youtube.com/watch\?v\=SAXpBgkXt60 -p ./test.mp4
+```
+
+For further CLI help:
+
+```shell
+fast-dirpy --help
 ```
 
 ### Use as a library
