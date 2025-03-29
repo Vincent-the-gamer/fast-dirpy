@@ -10,7 +10,7 @@ cli.command('get <url>', 'get video direct link.')
   .option('--proxyHost, -H <proxyHost>', 'Proxy host.')
   .option('--proxyPort, -P <proxyPort>', 'Proxy port.')
   .action(async (url, options) => {
-    const { host, port } = options
+    const { proxyHost: host, proxyPort: port } = options
 
     const proxyOptions = host ? {
       proxy: { host, port },
@@ -26,7 +26,7 @@ cli.command('download <url>', 'download a video.')
   .option('--proxyHost, -H <proxyHost>', 'Proxy host.')
   .option('--proxyPort, -P <proxyPort>', 'Proxy port.')
   .action(async (url, options) => {
-    const { host, port } = options
+    const { proxyHost: host, proxyPort: port, path } = options
 
     const proxyOptions = host ? {
       proxy: { host, port },
@@ -34,7 +34,7 @@ cli.command('download <url>', 'download a video.')
 
     downloadVideoFromRawLink({
       url,
-      path: options.path || './download.mp4',
+      path: path || './download.mp4',
     }, proxyOptions)
   })
 
