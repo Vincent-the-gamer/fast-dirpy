@@ -5,7 +5,7 @@ import axios from 'axios'
 import jsdom from 'jsdom'
 import { DEFAULT_DIRPY_OPTIONS, resolveConfig } from './options'
 
-const commonHeaders = {
+const dirpyHeaders = {
   'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36',
 }
 
@@ -16,21 +16,21 @@ export async function getDirectLink(url: string, options: Partial<DirpyOptions> 
 
   const _proxy = proxy?.host !== '' ? proxy : undefined
 
-  const urlEncoded = encodeURIComponent(url)
-
   const { data } = await axios.get('https://dirpy.com/studio', {
     params: {
-      url: urlEncoded,
+      url,
     },
     headers: {
-      ...commonHeaders,
+      ...dirpyHeaders,
+      'Referer': url
     },
     proxy: _proxy,
     timeout,
   })
+
   const { window } = new JSDOM(data)
 
-  let src = ''
+  let src = ""
 
   const mediaSourceDom = window.document.getElementById('media-source')
 
@@ -62,7 +62,7 @@ async function downloadVideo(params: DownloadParams, options: Partial<DirpyOptio
   const response = await axios({
     url,
     headers: {
-      ...commonHeaders,
+      'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36',
     },
     method: 'GET',
     responseType: 'stream',

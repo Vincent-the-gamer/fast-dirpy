@@ -1,4 +1,4 @@
-import { expect } from 'vitest'
+import { expect, it } from 'vitest'
 import { getDirectLink } from '../src/core'
 
 it('get Direct Link', async () => {
