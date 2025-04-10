@@ -1,4 +1,7 @@
-# fast-dirpy
+<div align="center">
+  <img src=".github/fast-dirpy.png" style="width: 90px;"/>
+  <h1>fast-dirpy</h1>
+</div>
 
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
