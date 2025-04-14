@@ -129,7 +129,7 @@ await downloadVideoFromRawLink({
 // download bilibili video
 await downloadBilibiliVideo({
   url: '<url>',
-  path: '/path/to/xxx'
+  path: './myvideo.mp4'
 })
 ```
 
