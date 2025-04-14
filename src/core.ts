@@ -1,4 +1,4 @@
-import type { DirpyOptions } from './types'
+import type { DirpyOptions, DownloadParams } from './types'
 import fs from 'node:fs'
 import axios from 'axios'
 // @ts-expect-error - missing type definitions
@@ -41,13 +41,7 @@ export async function getDirectLink(url: string, options: Partial<DirpyOptions> 
   return src
 }
 
-// Download
-interface DownloadParams {
-  url: string
-  path: string
-}
-
-async function downloadVideo(params: DownloadParams, options: Partial<DirpyOptions> = DEFAULT_DIRPY_OPTIONS): Promise<void> {
+export async function downloadVideo(params: DownloadParams, options: Partial<DirpyOptions> = DEFAULT_DIRPY_OPTIONS): Promise<void> {
   const { path, url } = params
 
   const { proxy, timeout } = await resolveConfig(options)

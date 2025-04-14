@@ -6,3 +6,8 @@ export interface DirpyOptions {
   }
   timeout?: number
 }
+
+export interface DownloadParams {
+  url: string
+  path: string
+}

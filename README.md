@@ -11,6 +11,11 @@
 
 A simple library/CLI to download youtube(etc.) videos.
 
+## Supported Websites
+
+- [YouTube](https://www.youtube.com/)
+- [Bilibili](https://www.bilibili.com/)
+
 ## Installation
 
 ### As a library
@@ -56,6 +61,9 @@ export default defineConfig({
 #   -P, --proxyPort: proxy port
 
 fast-dirpy get https\://www.youtube.com/watch\?v\=SAXpBgkXt60 -H 127.0.0.1 -P 7890
+
+# No proxy needed for Bilibili videos
+fast-dirpy get --bilibili https://www.bilibili.com/video/BV1TSPeeGE35
 ```
 
 if you have set your proxy config in `fast-dirpy.config.ts`, you can omit proxy parameters:
@@ -73,6 +81,9 @@ fast-dirpy get https\://www.youtube.com/watch\?v\=SAXpBgkXt60
 #  -H, --proxyHost: proxy host.
 #  -P, --proxyPort: proxy port.
 fast-dirpy download https\://www.youtube.com/watch\?v\=SAXpBgkXt60 -p ./test.mp4  -H 127.0.0.1 -P 7890
+
+# No proxy needed for Bilibili videos
+fast-dirpy download --bilibili https://www.bilibili.com/video/BV1TSPeeGE35 -p ./test.mp4
 ```
 
 if you have set your proxy config in `fast-dirpy.config.ts`, you can omit proxy parameters:
@@ -89,7 +100,7 @@ fast-dirpy --help
 
 ### Use as a library
 ```ts
-import { downloadVideoFromRawLink, getDirectLink } from 'fast-dirpy'
+import { downloadVideoFromRawLink, getDirectLink, getBilibiliLink } from 'fast-dirpy'
 
 // get direct link
 const link = await getDirectLink(
@@ -100,14 +111,25 @@ const link = await getDirectLink(
   }
 )
 
+// get bilibili direct link
+const link = await getBilibiliLink(
+  '<url>',
+)
+
 // download video
 await downloadVideoFromRawLink({
-  url,
+  url: '<url>',
   path: './download.mp4',
   proxy: {
     host: '127.0.0.1',
     port: 7890
   }
+})
+
+// download bilibili video
+await downloadBilibiliVideo({
+  url: '<url>',
+  path: '/path/to/xxx'
 })
 ```
 
