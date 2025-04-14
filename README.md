@@ -63,6 +63,7 @@ export default defineConfig({
 fast-dirpy get https\://www.youtube.com/watch\?v\=SAXpBgkXt60 -H 127.0.0.1 -P 7890
 
 # No proxy needed for Bilibili videos
+# --bilibili: Tell fast-dirpy to get direct link from Bilibili, then bypass proxy.
 fast-dirpy get --bilibili https://www.bilibili.com/video/BV1TSPeeGE35
 ```
 
@@ -83,6 +84,7 @@ fast-dirpy get https\://www.youtube.com/watch\?v\=SAXpBgkXt60
 fast-dirpy download https\://www.youtube.com/watch\?v\=SAXpBgkXt60 -p ./test.mp4  -H 127.0.0.1 -P 7890
 
 # No proxy needed for Bilibili videos
+# --bilibili: Tell fast-dirpy to download from a Bilibili link.
 fast-dirpy download --bilibili https://www.bilibili.com/video/BV1TSPeeGE35 -p ./test.mp4
 ```
 

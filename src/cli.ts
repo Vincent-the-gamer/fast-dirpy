@@ -10,7 +10,7 @@ const cli: CAC = cac('fast-dirpy')
 cli.command('get <url>', 'get video direct link.')
   .option('--proxyHost, -H <proxyHost>', 'Proxy host.')
   .option('--proxyPort, -P <proxyPort>', 'Proxy port.')
-  .option('--bilibili', 'Tell fast-dirpy to fetch a Bilibili link.')
+  .option('--bilibili', 'Tell fast-dirpy to fetch a Bilibili link, then bypass proxy.')
   .action(async (url, options) => {
     const { proxyHost: host, proxyPort: port, bilibili } = options
 
@@ -36,7 +36,7 @@ cli.command('download <url>', 'download a video.')
   .option('--path, -p <path>', 'Download destination path + filename. e.g. /xxx/example.mp4.')
   .option('--proxyHost, -H <proxyHost>', 'Proxy host.')
   .option('--proxyPort, -P <proxyPort>', 'Proxy port.')
-  .option('--bilibili', 'Tell fast-dirpy to download from a Bilibili link, then bypass proxy.')
+  .option('--bilibili', 'Tell fast-dirpy to download from a Bilibili link.')
   .action(async (url, options) => {
     const { proxyHost: host, proxyPort: port, path, bilibili } = options
 
