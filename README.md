@@ -58,7 +58,7 @@ export default defineConfig({
 # Proxy:
 #   -H, --proxyHost: proxy host
 #   -P, --proxyPort: proxy port
-#   -c, --config: Specified external config file. 
+#   -c, --config: Specified external config file.
 #       e.g.: fast-dirpy get https://xxx -c ~/Downloads/fast-dirpy.config.json
 fast-dirpy get https\://www.youtube.com/watch\?v\=SAXpBgkXt60 -H 127.0.0.1 -P 7890
 
@@ -81,7 +81,7 @@ fast-dirpy get https\://www.youtube.com/watch\?v\=SAXpBgkXt60
 # Proxy:
 #  -H, --proxyHost: proxy host.
 #  -P, --proxyPort: proxy port.
-#  -c, --config: Specified external config file. 
+#  -c, --config: Specified external config file.
 #       e.g.: fast-dirpy get https://xxx -c ~/Downloads/fast-dirpy.config.json
 fast-dirpy download https\://www.youtube.com/watch\?v\=SAXpBgkXt60 -p ./test.mp4  -H 127.0.0.1 -P 7890
 
@@ -104,7 +104,7 @@ fast-dirpy --help
 
 ### Use as a library
 ```ts
-import { downloadVideoFromRawLink, getDirectLink, getBilibiliLink } from 'fast-dirpy'
+import { downloadVideoFromRawLink, getBilibiliLink, getDirectLink } from 'fast-dirpy'
 
 // get direct link
 const link = await getDirectLink(

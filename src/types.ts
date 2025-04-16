@@ -8,7 +8,7 @@ export interface DirpyOptions {
 }
 
 export interface DirectLinkParams {
-  url: string,
+  url: string
   cwd?: string
 }
 

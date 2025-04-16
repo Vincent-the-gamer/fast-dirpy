@@ -24,7 +24,7 @@ export async function getDirectLink(params: DirectLinkParams, options: Partial<D
     },
     headers: {
       ...dirpyHeaders,
-      'Referer': `https://dirpy.com/studio?url=${url}`
+      Referer: `https://dirpy.com/studio?url=${url}`,
     },
     proxy: _proxy,
     timeout,
@@ -32,7 +32,7 @@ export async function getDirectLink(params: DirectLinkParams, options: Partial<D
 
   const { window } = new JSDOM(data)
 
-  let src = ""
+  let src = ''
 
   const mediaSourceDom = window.document.getElementById('media-source')
 
@@ -86,6 +86,6 @@ export async function downloadVideoFromRawLink(params: DownloadParams, options: 
   await downloadVideo({
     url: directLink,
     path,
-    cwd
+    cwd,
   }, options)
 }

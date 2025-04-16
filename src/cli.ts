@@ -2,8 +2,8 @@ import type { CAC } from 'cac'
 import { cac } from 'cac'
 import restoreCursor from 'restore-cursor'
 import pkgJson from '../package.json'
+import { downloadBilibiliVideo, getBilibiliDirectLink } from './bilibili'
 import { downloadVideoFromRawLink, getDirectLink } from './core'
-import { getBilibiliDirectLink, downloadBilibiliVideo } from './bilibili'
 
 const cli: CAC = cac('fast-dirpy')
 
@@ -15,25 +15,26 @@ cli.command('get <url>', 'get video direct link.')
   .action(async (url, options) => {
     const { proxyHost: host, proxyPort: port, bilibili, config } = options
 
-    if(bilibili) {
-      if(!url.includes('bilibili.com')) {
+    if (bilibili) {
+      if (!url.includes('bilibili.com')) {
         console.error('Please provide a valid Bilibili URL.')
         return
       }
       const link = await getBilibiliDirectLink(url)
       console.log(link)
-    } else {
-      const proxyOptions = host ? {
-        proxy: { host, port },
-      } : undefined
-
-      console.log(config)
+    }
+    else {
+      const proxyOptions = host
+        ? {
+            proxy: { host, port },
+          }
+        : undefined
 
       const videoLink = await getDirectLink({
         url,
-        cwd: config
+        cwd: config,
       }, proxyOptions)
-  
+
       console.log(videoLink)
     }
   })
@@ -47,24 +48,26 @@ cli.command('download <url>', 'download a video.')
   .action(async (url, options) => {
     const { proxyHost: host, proxyPort: port, path, bilibili, config } = options
 
-    if(bilibili) {
+    if (bilibili) {
       await downloadBilibiliVideo({
         url,
-        path
+        path,
       })
-    } else {
-      const proxyOptions = host ? {
-        proxy: { host, port },
-      } : undefined
-  
+    }
+    else {
+      const proxyOptions = host
+        ? {
+            proxy: { host, port },
+          }
+        : undefined
+
       downloadVideoFromRawLink({
         url,
         path: path || './download.mp4',
-        cwd: config
+        cwd: config,
       }, proxyOptions)
     }
   })
-
 
 cli.help()
 cli.version(pkgJson.version)
