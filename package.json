@@ -1,7 +1,7 @@
 {
   "name": "fast-dirpy",
   "type": "module",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A simple library/CLI to download video using dirpy.com",
   "author": "Vincent-the-gamer",
   "license": "MIT",

@@ -6,7 +6,7 @@ export const DEFAULT_DIRPY_OPTIONS: DirpyOptions = {
   timeout: 20000, // 20s
 }
 
-export async function resolveConfig(options: DirpyOptions): Promise<DirpyOptions> {
+export async function resolveConfig(options: DirpyOptions, cwd?: string): Promise<DirpyOptions> {
   const defaults = DEFAULT_DIRPY_OPTIONS
 
   const loader = createConfigLoader<DirpyOptions>({
@@ -15,10 +15,10 @@ export async function resolveConfig(options: DirpyOptions): Promise<DirpyOptions
         files: [
           'fast-dirpy.config',
         ],
-        extensions: ['ts', 'mts', 'cts', 'js', 'mjs', 'cjs'],
+        extensions: ['ts', 'mts', 'cts', 'js', 'mjs', 'cjs', 'json'],
       },
     ],
-    cwd: process.cwd(),
+    cwd: cwd || process.cwd(),
     merge: false,
   })
 

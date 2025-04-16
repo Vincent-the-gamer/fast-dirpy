@@ -11,8 +11,9 @@ cli.command('get <url>', 'get video direct link.')
   .option('--proxyHost, -H <proxyHost>', 'Proxy host.')
   .option('--proxyPort, -P <proxyPort>', 'Proxy port.')
   .option('--bilibili', 'Tell fast-dirpy to fetch a Bilibili link, then bypass proxy.')
+  .option('--config, -c <path>', 'Give a specific config file.')
   .action(async (url, options) => {
-    const { proxyHost: host, proxyPort: port, bilibili } = options
+    const { proxyHost: host, proxyPort: port, bilibili, config } = options
 
     if(bilibili) {
       if(!url.includes('bilibili.com')) {
@@ -25,8 +26,13 @@ cli.command('get <url>', 'get video direct link.')
       const proxyOptions = host ? {
         proxy: { host, port },
       } : undefined
-  
-      const videoLink = await getDirectLink(url, proxyOptions)
+
+      console.log(config)
+
+      const videoLink = await getDirectLink({
+        url,
+        cwd: config
+      }, proxyOptions)
   
       console.log(videoLink)
     }
@@ -37,8 +43,9 @@ cli.command('download <url>', 'download a video.')
   .option('--proxyHost, -H <proxyHost>', 'Proxy host.')
   .option('--proxyPort, -P <proxyPort>', 'Proxy port.')
   .option('--bilibili', 'Tell fast-dirpy to download from a Bilibili link.')
+  .option('--config, -c <path>', 'Give a specific config file.')
   .action(async (url, options) => {
-    const { proxyHost: host, proxyPort: port, path, bilibili } = options
+    const { proxyHost: host, proxyPort: port, path, bilibili, config } = options
 
     if(bilibili) {
       await downloadBilibiliVideo({
@@ -53,9 +60,11 @@ cli.command('download <url>', 'download a video.')
       downloadVideoFromRawLink({
         url,
         path: path || './download.mp4',
+        cwd: config
       }, proxyOptions)
     }
   })
+
 
 cli.help()
 cli.version(pkgJson.version)

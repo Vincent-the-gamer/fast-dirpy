@@ -32,9 +32,9 @@ npm i fast-dirpy -g
 ### Config file
 
 > [!IMPORTANT]
-> `fast-dirpy.config` can be `fast-dirpy.config.['ts', 'mts', 'cts', 'js', 'mjs', 'cjs']`
+> `fast-dirpy.config` can be `fast-dirpy.config.['ts', 'mts', 'cts', 'js', 'mjs', 'cjs', 'json']`
 
-You can create a `fast-dirpy.config.ts` file in your library root or same location in command line.
+You can create a `fast-dirpy.config` file in your library root or same location in command line.
 
 ```ts
 import { defineConfig } from 'fast-dirpy'
@@ -58,7 +58,8 @@ export default defineConfig({
 # Proxy:
 #   -H, --proxyHost: proxy host
 #   -P, --proxyPort: proxy port
-
+#   -c, --config: Specified external config file. 
+#       e.g.: fast-dirpy get https://xxx -c ~/Downloads/fast-dirpy.config.json
 fast-dirpy get https\://www.youtube.com/watch\?v\=SAXpBgkXt60 -H 127.0.0.1 -P 7890
 
 # No proxy needed for Bilibili videos
@@ -80,6 +81,8 @@ fast-dirpy get https\://www.youtube.com/watch\?v\=SAXpBgkXt60
 # Proxy:
 #  -H, --proxyHost: proxy host.
 #  -P, --proxyPort: proxy port.
+#   -c, --config: Specified external config file. 
+#       e.g.: fast-dirpy get https://xxx -c ~/Downloads/fast-dirpy.config.json
 fast-dirpy download https\://www.youtube.com/watch\?v\=SAXpBgkXt60 -p ./test.mp4  -H 127.0.0.1 -P 7890
 
 # No proxy needed for Bilibili videos
@@ -105,7 +108,10 @@ import { downloadVideoFromRawLink, getDirectLink, getBilibiliLink } from 'fast-d
 
 // get direct link
 const link = await getDirectLink(
-  '<url>',
+  {
+    url: '<url>',
+    cwd: '/path/to/external-config' // Optional: You can specify an external config file.
+  },
   {
     host: '127.0.0.1',
     port: 7890
@@ -121,6 +127,7 @@ const link = await getBilibiliLink(
 await downloadVideoFromRawLink({
   url: '<url>',
   path: './download.mp4',
+  cwd: '/path/to/external-config', // Optional: You can specify an external config file.
   proxy: {
     host: '127.0.0.1',
     port: 7890
