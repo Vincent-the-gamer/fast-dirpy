@@ -4,6 +4,7 @@
 </div>
 
 [![npm version][npm-version-src]][npm-version-href]
+[![JSR][jsr-badge]](https://jsr.io/@vince-g/fast-dirpy)
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
 [![JSDocs][jsdocs-src]][jsdocs-href]
 [![License][license-src]][license-href]
@@ -22,10 +23,7 @@ A simple library/CLI to download youtube(etc.) videos.
 npm i fast-dirpy
 
 # deno
-deno add @vince-g/fast-dirpy
-
-# jsr
-npx jsr add @vince-g/fast-dirpy
+deno add jsr:@vince-g/fast-dirpy
 ```
 
 ### As a **command line tool**
@@ -161,3 +159,4 @@ await downloadBilibiliVideo({
 [license-href]: https://github.com/Vincent-the-gamer/fast-dirpy/blob/main/LICENSE
 [jsdocs-src]: https://img.shields.io/badge/jsdocs-reference-080f12?style=flat&colorA=080f12&colorB=1fa669
 [jsdocs-href]: https://www.jsdocs.io/package/fast-dirpy
+[jsr-badge]: https://jsr.io/badges/@vince-g/fast-dirpy
