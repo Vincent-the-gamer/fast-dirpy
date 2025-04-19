@@ -1,4 +1,4 @@
-import type { Options } from 'tsdown'
+import type { Options } from 'tsup'
 
 export default <Options> {
   entry: [
@@ -7,7 +7,7 @@ export default <Options> {
   clean: true,
   format: ['esm'],
   dts: true,
-  minify: false,
+  minify: true,
   // compatible with __dirname in cjs and import.meta.url in mjs.
   shims: true,
 }

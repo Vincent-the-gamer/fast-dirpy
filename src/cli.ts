@@ -22,7 +22,7 @@ cli.command('get <url>', 'get video direct link.')
 
     setSilent(!!silent)
     logger.info(
-      `fast-dirpy ${dim(`v${version}`)} : you are using ${bold(`direct link getter`)}.`,
+      `fast-dirpy ${dim(`v${version}`)} : ${bold(`Direct Link Getter`)}.`,
     )
 
     if (bilibili) {
@@ -61,7 +61,7 @@ cli.command('download <url>', 'download a video.')
 
     setSilent(!!silent)
     logger.info(
-      `fast-dirpy ${dim(`v${version}`)} : you are using ${bold(`video downloader`)}.`,
+      `fast-dirpy ${dim(`v${version}`)} : ${bold(`Video Downloader`)}.`,
     )
 
     if (bilibili) {

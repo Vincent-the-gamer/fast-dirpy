@@ -28,7 +28,7 @@ export async function resolveConfig(options: DirpyOptions, cwd?: string): Promis
   if (!sources.length)
     return deepmerge(defaults, options)
 
-  logger.info(`You are using config file: ${sources[0]}`)
+  logger.info(`Config file found: ${sources[0]}`)
 
   return deepmerge(deepmerge(defaults, config), options)
 }
