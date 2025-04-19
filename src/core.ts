@@ -4,6 +4,7 @@ import axios from 'axios'
 // @ts-expect-error - missing type definitions
 import jsdom from 'jsdom'
 import { DEFAULT_DIRPY_OPTIONS, resolveConfig } from './options'
+import { logger } from './utils/logger'
 
 const dirpyHeaders = {
   'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36',
@@ -70,7 +71,7 @@ export async function downloadVideo(params: DownloadParams, options: Partial<Dir
       const message = `loaded:${loaded}  `
         + `total: ${total}  `
         + `progress: ${(progress! * 100).toFixed(2)}%\n`
-      console.log(message)
+      logger.info(message)
     },
   })
   response.data.pipe(writer)

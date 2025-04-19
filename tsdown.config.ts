@@ -1,7 +1,7 @@
-import type { Options } from 'tsup'
+import type { Options } from 'tsdown'
 
 export default <Options> {
-  entryPoints: [
+  entry: [
     './src/{index,cli,config}.ts',
   ],
   clean: true,

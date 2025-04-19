@@ -4,20 +4,30 @@ import restoreCursor from 'restore-cursor'
 import pkgJson from '../package.json'
 import { downloadBilibiliVideo, getBilibiliDirectLink } from './bilibili'
 import { downloadVideoFromRawLink, getDirectLink } from './core'
+import { logger, setSilent } from "./utils/logger"
+import { bold, dim } from "ansis"
 
 const cli: CAC = cac('fast-dirpy')
+
+const { version } = pkgJson
 
 cli.command('get <url>', 'get video direct link.')
   .option('--proxyHost, -H <proxyHost>', 'Proxy host.')
   .option('--proxyPort, -P <proxyPort>', 'Proxy port.')
   .option('--bilibili', 'Tell fast-dirpy to fetch a Bilibili link, then bypass proxy.')
   .option('--config, -c <path>', 'Specify an external config file.')
+  .option('--silent', 'Suppress non-error logs')
   .action(async (url, options) => {
-    const { proxyHost: host, proxyPort: port, bilibili, config } = options
+    const { proxyHost: host, proxyPort: port, bilibili, config, silent } = options
+
+    setSilent(!!silent)
+    logger.info(
+      `fast-dirpy ${dim(`v${version}`)} : you are using ${bold(`direct link getter`)}.`,
+    )
 
     if (bilibili) {
       if (!url.includes('bilibili.com')) {
-        console.error('Please provide a valid Bilibili URL.')
+        logger.error('Please provide a valid Bilibili URL.')
         return
       }
       const link = await getBilibiliDirectLink(url)
@@ -45,8 +55,14 @@ cli.command('download <url>', 'download a video.')
   .option('--proxyPort, -P <proxyPort>', 'Proxy port.')
   .option('--bilibili', 'Tell fast-dirpy to download from a Bilibili link.')
   .option('--config, -c <path>', 'Specify an external config file.')
+  .option('--silent', 'Suppress non-error logs')
   .action(async (url, options) => {
-    const { proxyHost: host, proxyPort: port, path, bilibili, config } = options
+    const { proxyHost: host, proxyPort: port, path, bilibili, config, silent } = options
+
+    setSilent(!!silent)
+    logger.info(
+      `fast-dirpy ${dim(`v${version}`)} : you are using ${bold(`video downloader`)}.`,
+    )
 
     if (bilibili) {
       await downloadBilibiliVideo({

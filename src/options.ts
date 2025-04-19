@@ -1,6 +1,7 @@
 import type { DirpyOptions } from './types'
 import deepmerge from 'deepmerge'
 import { createConfigLoader } from 'unconfig'
+import { logger } from './utils/logger'
 
 export const DEFAULT_DIRPY_OPTIONS: DirpyOptions = {
   timeout: 20000, // 20s
@@ -27,7 +28,7 @@ export async function resolveConfig(options: DirpyOptions, cwd?: string): Promis
   if (!sources.length)
     return deepmerge(defaults, options)
 
-  // console.log(`config file found ${sources[0]}`)
+  logger.info(`You are using config file: ${sources[0]}`)
 
   return deepmerge(deepmerge(defaults, config), options)
 }

@@ -60,7 +60,7 @@ export default defineConfig({
 #   -P, --proxyPort: proxy port
 #   -c, --config: Specified external config file.
 #       e.g.: fast-dirpy get https://xxx -c ~/Downloads/fast-dirpy.config.json
-fast-dirpy get https\://www.youtube.com/watch\?v\=SAXpBgkXt60 -H 127.0.0.1 -P 7890
+fast-dirpy get https\://www.youtube.com/watch\?v\=6c28qWDMPBA -H 127.0.0.1 -P 7890
 
 # No proxy needed for Bilibili videos
 # --bilibili: Tell fast-dirpy to get direct link from Bilibili, then bypass proxy.
@@ -70,7 +70,7 @@ fast-dirpy get --bilibili https://www.bilibili.com/video/BV1TSPeeGE35
 if you have set your proxy config in `fast-dirpy.config.ts`, you can omit proxy parameters:
 
 ```shell
-fast-dirpy get https\://www.youtube.com/watch\?v\=SAXpBgkXt60
+fast-dirpy get https\://www.youtube.com/watch\?v\=6c28qWDMPBA
 ```
 
 #### Download Video
@@ -83,7 +83,7 @@ fast-dirpy get https\://www.youtube.com/watch\?v\=SAXpBgkXt60
 #  -P, --proxyPort: proxy port.
 #  -c, --config: Specified external config file.
 #       e.g.: fast-dirpy get https://xxx -c ~/Downloads/fast-dirpy.config.json
-fast-dirpy download https\://www.youtube.com/watch\?v\=SAXpBgkXt60 -p ./test.mp4  -H 127.0.0.1 -P 7890
+fast-dirpy download https\://www.youtube.com/watch\?v\=6c28qWDMPBA -p ./test.mp4  -H 127.0.0.1 -P 7890
 
 # No proxy needed for Bilibili videos
 # --bilibili: Tell fast-dirpy to download from a Bilibili link.
@@ -93,7 +93,7 @@ fast-dirpy download --bilibili https://www.bilibili.com/video/BV1TSPeeGE35 -p ./
 if you have set your proxy config in `fast-dirpy.config.ts`, you can omit proxy parameters:
 
 ```shell
-fast-dirpy download https\://www.youtube.com/watch\?v\=SAXpBgkXt60 -p ./test.mp4
+fast-dirpy download https\://www.youtube.com/watch\?v\=6c28qWDMPBA -p ./test.mp4
 ```
 
 For further CLI help:
