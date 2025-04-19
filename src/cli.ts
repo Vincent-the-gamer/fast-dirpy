@@ -1,11 +1,11 @@
 import type { CAC } from 'cac'
+import { bold, dim } from 'ansis'
 import { cac } from 'cac'
 import restoreCursor from 'restore-cursor'
 import pkgJson from '../package.json'
 import { downloadBilibiliVideo, getBilibiliDirectLink } from './bilibili'
 import { downloadVideoFromRawLink, getDirectLink } from './core'
-import { logger, setSilent } from "./utils/logger"
-import { bold, dim } from "ansis"
+import { logger, setSilent } from './utils/logger'
 
 const cli: CAC = cac('fast-dirpy')
 
