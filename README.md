@@ -23,6 +23,9 @@ npm i fast-dirpy
 
 # deno
 deno add @vince-g/fast-dirpy
+
+# jsr
+npx jsr add @vince-g/fast-dirpy
 ```
 
 ### As a **command line tool**
