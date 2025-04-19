@@ -20,6 +20,9 @@ A simple library/CLI to download youtube(etc.) videos.
 ### As a library
 ```shell
 npm i fast-dirpy
+
+# deno
+deno add @vince-g/fast-dirpy
 ```
 
 ### As a **command line tool**
