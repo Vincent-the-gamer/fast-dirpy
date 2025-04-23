@@ -67,8 +67,7 @@ export default defineConfig({
 
 ### Use in command line
 
-> [!IMPORTANT]
-> Some website listed in [Supported Websites](#supported-websites) requires Google Chrome installed for Puppeteer use. You have to use a config file.
+> Some website listed in [Supported Websites](#supported-websites) requires Google Chrome installed for Puppeteer use. You have to use a config file or give parameter of puppeteer executable path.
 
 #### Get Direct Link
 
@@ -79,7 +78,7 @@ export default defineConfig({
 #   -P, --proxyPort: proxy port
 #   -c, --config: Specified external config file.
 #       e.g.: fast-dirpy get https://xxx -c ~/Downloads/fast-dirpy.config.json
-#  --chromePath: Path to your Google Chrome browser.
+#   --chromePath: Path to your Google Chrome browser.
 fast-dirpy get https\://www.youtube.com/watch\?v\=6c28qWDMPBA -H 127.0.0.1 -P 7890
 
 # Bilibili source doesn't need any proxy, so it's disabled by default.
