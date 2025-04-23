@@ -1,7 +1,7 @@
 import { expect, it } from 'vitest'
 import { getDirpyLink } from '../src/core/dirpy'
 
-it('get Direct Link', async () => {
+it('get Dirpy link', async () => {
   const link = await getDirpyLink({
     url: 'https://www.youtube.com/watch?v=SAXpBgkXt60'
   })

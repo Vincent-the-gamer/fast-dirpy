@@ -6,6 +6,8 @@ export function judgeUrl(url: string): UrlType {
         return UrlType.Bilibili
     } else if(url.includes("dirpy")) {
         return UrlType.Dirpy
+    } else if(url.includes("animeidhentai")) {
+        return UrlType.AnimeIdHentai
     }
     return UrlType.Others
 }

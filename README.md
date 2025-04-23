@@ -57,7 +57,7 @@ export default defineConfig({
   },
   timeout: 20000, // request timeout: 20s
   puppeteer: {
-    // path to chrome, notice that you must give the inner unix executable file path in macOS.
+    // Path to Chrome. Please notice that you must give the inner unix executable file path in macOS.
     // /Applications/Google Chrome.app will not work.
     executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
     headless: false
