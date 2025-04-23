@@ -7,4 +7,8 @@ export default defineConfig({
     port: 7890,
   },
   timeout: 20000, // 20s
+  puppeteer: {
+    executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+    headless: false
+  }
 })

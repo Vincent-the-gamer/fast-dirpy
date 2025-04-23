@@ -1,0 +1,53 @@
+import type { DirectLinkParams, DirpyOptions, DownloadParams } from '../types'
+import axios from 'axios'
+// @ts-expect-error - missing type definitions
+import jsdom from 'jsdom'
+import { resolveConfig } from '../options'
+import { downloadVideo } from '.'
+import { useRandomUserAgent } from '../utils/userAgent'
+import { DEFAULT_DIRPY_OPTIONS } from '../constants'
+
+const { JSDOM } = jsdom
+
+export async function getDirpyLink(params: DirectLinkParams, options: Partial<DirpyOptions> = DEFAULT_DIRPY_OPTIONS): Promise<string> {
+  const { url, cwd } = params
+
+  const { proxy, timeout } = await resolveConfig(options, cwd)
+
+  const _proxy = proxy?.host !== '' ? proxy : undefined
+
+  const { data } = await axios.get('https://dirpy.com/studio', {
+    params: {
+      url,
+    },
+    headers: {
+      "User-Agent": useRandomUserAgent(),
+      "Referer": `https://dirpy.com/studio?url=${url}`,
+    },
+    proxy: _proxy,
+    timeout,
+  })
+
+  const { window } = new JSDOM(data)
+
+  let src = ''
+
+  const mediaSourceDom = window.document.getElementById('media-source')
+
+  if (mediaSourceDom) {
+    src = mediaSourceDom.src
+  }
+
+  return src
+}
+
+
+export async function downloadDirpy(params: DownloadParams, options: Partial<DirpyOptions> = DEFAULT_DIRPY_OPTIONS): Promise<void> {
+  const { path, url, cwd } = params
+  const directLink = await getDirpyLink({ url }, options)
+  await downloadVideo({
+    url: directLink,
+    path,
+    cwd,
+  }, options)
+}

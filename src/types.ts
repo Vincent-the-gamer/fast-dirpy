@@ -5,6 +5,10 @@ export interface DirpyOptions {
     port: number
   }
   timeout?: number
+  puppeteer?: {
+    executablePath: string,
+    headless?: boolean
+  }
 }
 
 export interface DirectLinkParams {
@@ -16,4 +20,11 @@ export interface DownloadParams {
   url: string
   path: string
   cwd?: string
+}
+
+export enum UrlType {
+  Bilibili,
+  Dirpy,
+  AnimeIdHentai,
+  Others
 }

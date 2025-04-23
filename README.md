@@ -16,6 +16,12 @@ A simple library/CLI to download youtube(etc.) videos.
 - [YouTube](https://www.youtube.com/)
 - [Bilibili](https://www.bilibili.com/)
 
+<details>
+  <summary>「Mystic」Websites</summary>
+
+  - Animeidhentai (Google Chrome required)
+</details>
+
 ## Installation
 
 ### As a library
@@ -50,10 +56,18 @@ export default defineConfig({
     port: 7890,
   },
   timeout: 20000, // request timeout: 20s
-})
+  puppeteer: {
+    // path to chrome, notice that you must give the inner unix executable file path in macOS.
+    // /Applications/Google Chrome.app will not work.
+    executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+    headless: false
+  }
 ```
 
 ### Use in command line
+
+> [!IMPORTANT]
+> Some website listed in [Supported Websites](#supported-websites) requires Google Chrome installed for Puppeteer use. You have to use a config file.
 
 #### Get Direct Link
 
@@ -64,11 +78,11 @@ export default defineConfig({
 #   -P, --proxyPort: proxy port
 #   -c, --config: Specified external config file.
 #       e.g.: fast-dirpy get https://xxx -c ~/Downloads/fast-dirpy.config.json
+#  --chromePath: Path to your Google Chrome browser.
 fast-dirpy get https\://www.youtube.com/watch\?v\=6c28qWDMPBA -H 127.0.0.1 -P 7890
 
-# No proxy needed for Bilibili videos
-# --bilibili: Tell fast-dirpy to get direct link from Bilibili, then bypass proxy.
-fast-dirpy get --bilibili https://www.bilibili.com/video/BV1TSPeeGE35
+# Bilibili source doesn't need any proxy, so it's disabled by default.
+fast-dirpy get https://www.bilibili.com/video/BV1TSPeeGE35
 ```
 
 if you have set your proxy config in `fast-dirpy.config.ts`, you can omit proxy parameters:
@@ -78,6 +92,10 @@ fast-dirpy get https\://www.youtube.com/watch\?v\=6c28qWDMPBA
 ```
 
 #### Download Video
+
+> [!IMPORTANT]
+> Some website listed in [Supported Websites](#supported-websites) requires Google Chrome installed for Puppeteer use. You have to use a config file or give parameter of puppeteer executable path.
+
 ```shell
 # get video direct link
 # Path: --path, -p: Downloaded video save path.
@@ -87,11 +105,11 @@ fast-dirpy get https\://www.youtube.com/watch\?v\=6c28qWDMPBA
 #  -P, --proxyPort: proxy port.
 #  -c, --config: Specified external config file.
 #       e.g.: fast-dirpy get https://xxx -c ~/Downloads/fast-dirpy.config.json
+#  --chromePath: Path to your Google Chrome browser.
 fast-dirpy download https\://www.youtube.com/watch\?v\=6c28qWDMPBA -p ./test.mp4  -H 127.0.0.1 -P 7890
 
-# No proxy needed for Bilibili videos
-# --bilibili: Tell fast-dirpy to download from a Bilibili link.
-fast-dirpy download --bilibili https://www.bilibili.com/video/BV1TSPeeGE35 -p ./test.mp4
+# Bilibili source doesn't need any proxy, so it's disabled by default.
+fast-dirpy download https://www.bilibili.com/video/BV1TSPeeGE35 -p ./test.mp4
 ```
 
 if you have set your proxy config in `fast-dirpy.config.ts`, you can omit proxy parameters:
@@ -107,11 +125,15 @@ fast-dirpy --help
 ```
 
 ### Use as a library
+
+> [!IMPORTANT]
+> If a website is listed in [Supported Websites](#supported-websites), then `getXXXLink` is to get direct link and `downloadXXX` is to download video. 
+
 ```ts
-import { downloadVideoFromRawLink, getBilibiliLink, getDirectLink } from 'fast-dirpy'
+import { downloadDirpy, getBilibiliLink, getDirpyLink } from 'fast-dirpy'
 
 // get direct link
-const link = await getDirectLink(
+const link = await getDirpyLink(
   {
     url: '<url>',
     cwd: '/path/to/external-config' // Optional: You can specify an external config file.
@@ -128,7 +150,7 @@ const link = await getBilibiliLink(
 )
 
 // download video
-await downloadVideoFromRawLink({
+await downloadDirpy({
   url: '<url>',
   path: './download.mp4',
   cwd: '/path/to/external-config', // Optional: You can specify an external config file.
@@ -139,7 +161,7 @@ await downloadVideoFromRawLink({
 })
 
 // download bilibili video
-await downloadBilibiliVideo({
+await downloadBilibili({
   url: '<url>',
   path: './myvideo.mp4'
 })

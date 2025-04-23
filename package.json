@@ -1,7 +1,7 @@
 {
   "name": "fast-dirpy",
   "type": "module",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "A simple library/CLI to download video using dirpy.com",
   "author": "Vincent-the-gamer",
   "license": "MIT",
@@ -49,18 +49,19 @@
     "cac": "^6.7.14",
     "consola": "^3.4.2",
     "jsdom": "^26.1.0",
+    "puppeteer-core": "^24.7.1",
     "restore-cursor": "^5.1.0",
-    "unconfig": "^7.3.1"
+    "unconfig": "^7.3.2"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^4.12.0",
     "@types/node": "^22.14.1",
     "deepmerge": "^4.3.1",
-    "eslint": "^9.25.0",
+    "eslint": "^9.25.1",
     "taze": "^19.0.4",
     "tsup": "^8.4.0",
     "tsx": "^4.19.3",
     "typescript": "^5.8.3",
-    "vitest": "^3.1.1"
+    "vitest": "^3.1.2"
   }
 }
