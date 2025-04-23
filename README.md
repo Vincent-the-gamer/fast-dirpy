@@ -67,6 +67,7 @@ export default defineConfig({
 
 ### Use in command line
 
+> [!IMPORTANT]
 > Some website listed in [Supported Websites](#supported-websites) requires Google Chrome installed for Puppeteer use. You have to use a config file or give parameter of puppeteer executable path.
 
 #### Get Direct Link
