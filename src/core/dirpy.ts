@@ -2,10 +2,10 @@ import type { DirectLinkParams, DirpyOptions, DownloadParams } from '../types'
 import axios from 'axios'
 // @ts-expect-error - missing type definitions
 import jsdom from 'jsdom'
-import { downloadVideo } from './index'
 import { DEFAULT_DIRPY_OPTIONS } from '../constants'
 import { resolveConfig } from '../options'
 import { useRandomUserAgent } from '../utils/userAgent'
+import { downloadVideo } from './index'
 
 const { JSDOM } = jsdom
 

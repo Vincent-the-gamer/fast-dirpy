@@ -140,6 +140,9 @@ cli.command('download <url>', 'download a video.')
         ...puppeteerOptions,
       })
     }
+    else {
+      logger.error('Your link is not supported!')
+    }
   })
 
 cli.help()
