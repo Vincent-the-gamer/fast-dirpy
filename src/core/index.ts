@@ -1,48 +1,48 @@
 import type { DirpyOptions, DownloadParams } from '../types'
 import fs from 'node:fs'
 import axios from 'axios'
+import { DEFAULT_DIRPY_OPTIONS } from '../constants'
 import { resolveConfig } from '../options'
 import { logger } from '../utils/logger'
 import { useRandomUserAgent } from '../utils/userAgent'
-import { DEFAULT_DIRPY_OPTIONS } from '../constants'
 
 export async function downloadVideo(params: DownloadParams, options: Partial<DirpyOptions> = DEFAULT_DIRPY_OPTIONS): Promise<void> {
-    const { path, url } = params
+  const { path, url } = params
 
-    const { proxy, timeout } = await resolveConfig(options)
+  const { proxy, timeout } = await resolveConfig(options)
 
-    const _proxy = proxy?.host !== '' ? proxy : undefined
+  const _proxy = proxy?.host !== '' ? proxy : undefined
 
-    if (url === '') {
-        return Promise.reject('Extract direct link failed!')
-    }
+  if (url === '') {
+    return Promise.reject('Extract direct link failed!')
+  }
 
-    const writer = fs.createWriteStream(path)
-    const response = await axios({
-        url,
-        headers: {
-            'User-Agent': useRandomUserAgent(),
-        },
-        method: 'GET',
-        responseType: 'stream',
-        proxy: _proxy,
-        timeout,
-        onDownloadProgress: (progressEvent) => {
-            const { loaded, total, progress } = progressEvent
+  const writer = fs.createWriteStream(path)
+  const response = await axios({
+    url,
+    headers: {
+      'User-Agent': useRandomUserAgent(),
+    },
+    method: 'GET',
+    responseType: 'stream',
+    proxy: _proxy,
+    timeout,
+    onDownloadProgress: (progressEvent) => {
+      const { loaded, total, progress } = progressEvent
 
-            const message = `loaded:${loaded}  `
-                + `total: ${total}  `
-                + `progress: ${(progress! * 100).toFixed(2)}%`
-            logger.info(message)
-        },
-    })
-    response.data.pipe(writer)
-    return new Promise((resolve, reject) => {
-        writer.on('finish', resolve)
-        writer.on('error', reject)
-    })
+      const message = `loaded:${loaded}  `
+        + `total: ${total}  `
+        + `progress: ${(progress! * 100).toFixed(2)}%`
+      logger.info(message)
+    },
+  })
+  response.data.pipe(writer)
+  return new Promise((resolve, reject) => {
+    writer.on('finish', resolve)
+    writer.on('error', reject)
+  })
 }
 
-export * from "./dirpy"
-export * from "./bilibili"
-export * from "./animeidhentai"
+export * from './animeidhentai'
+export * from './bilibili'
+export * from './dirpy'

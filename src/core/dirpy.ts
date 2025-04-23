@@ -2,10 +2,10 @@ import type { DirectLinkParams, DirpyOptions, DownloadParams } from '../types'
 import axios from 'axios'
 // @ts-expect-error - missing type definitions
 import jsdom from 'jsdom'
-import { resolveConfig } from '../options'
 import { downloadVideo } from '.'
-import { useRandomUserAgent } from '../utils/userAgent'
 import { DEFAULT_DIRPY_OPTIONS } from '../constants'
+import { resolveConfig } from '../options'
+import { useRandomUserAgent } from '../utils/userAgent'
 
 const { JSDOM } = jsdom
 
@@ -21,8 +21,8 @@ export async function getDirpyLink(params: DirectLinkParams, options: Partial<Di
       url,
     },
     headers: {
-      "User-Agent": useRandomUserAgent(),
-      "Referer": `https://dirpy.com/studio?url=${url}`,
+      'User-Agent': useRandomUserAgent(),
+      'Referer': `https://dirpy.com/studio?url=${url}`,
     },
     proxy: _proxy,
     timeout,
@@ -40,7 +40,6 @@ export async function getDirpyLink(params: DirectLinkParams, options: Partial<Di
 
   return src
 }
-
 
 export async function downloadDirpy(params: DownloadParams, options: Partial<DirpyOptions> = DEFAULT_DIRPY_OPTIONS): Promise<void> {
   const { path, url, cwd } = params

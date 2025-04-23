@@ -3,7 +3,7 @@ import { getDirpyLink } from '../src/core/dirpy'
 
 it('get Dirpy link', async () => {
   const link = await getDirpyLink({
-    url: 'https://www.youtube.com/watch?v=SAXpBgkXt60'
+    url: 'https://www.youtube.com/watch?v=SAXpBgkXt60',
   })
 
   expect(link).toBe(

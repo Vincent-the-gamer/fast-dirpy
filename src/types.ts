@@ -6,7 +6,7 @@ export interface DirpyOptions {
   }
   timeout?: number
   puppeteer?: {
-    executablePath: string,
+    executablePath: string
     headless?: boolean
   }
 }
@@ -26,5 +26,5 @@ export enum UrlType {
   Bilibili,
   Dirpy,
   AnimeIdHentai,
-  Others
+  Others,
 }

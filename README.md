@@ -62,6 +62,7 @@ export default defineConfig({
     executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
     headless: false
   }
+}
 ```
 
 ### Use in command line
@@ -127,7 +128,7 @@ fast-dirpy --help
 ### Use as a library
 
 > [!IMPORTANT]
-> If a website is listed in [Supported Websites](#supported-websites), then `getXXXLink` is to get direct link and `downloadXXX` is to download video. 
+> If a website is listed in [Supported Websites](#supported-websites), then `getXXXLink` is to get direct link and `downloadXXX` is to download video.
 
 ```ts
 import { downloadDirpy, getBilibiliLink, getDirpyLink } from 'fast-dirpy'

@@ -3,12 +3,12 @@ import { bold, dim } from 'ansis'
 import { cac } from 'cac'
 import restoreCursor from 'restore-cursor'
 import pkgJson from '../package.json'
+import { downloadAnimeIdHentai, getAnimeIdHentaiLink } from './core'
 import { downloadBilibili, getBilibiliLink } from './core/bilibili'
 import { downloadDirpy, getDirpyLink } from './core/dirpy'
-import { logger, setSilent } from './utils/logger'
 import { UrlType } from './types'
 import { judgeUrl } from './utils/judgeUrl'
-import { downloadAnimeIdHentai, getAnimeIdHentaiLink } from './core'
+import { logger, setSilent } from './utils/logger'
 
 const cli: CAC = cac('fast-dirpy')
 
@@ -27,15 +27,17 @@ cli.command('get <url>', 'get video direct link.')
 
     const proxyOptions = host
       ? {
-        proxy: { host, port },
-      }
+          proxy: { host, port },
+        }
       : undefined
 
-    const puppeteerOptions = chromePath ? {
-      puppeteer: {
-        executablePath: chromePath
-      }
-    } : undefined
+    const puppeteerOptions = chromePath
+      ? {
+          puppeteer: {
+            executablePath: chromePath,
+          },
+        }
+      : undefined
 
     setSilent(!!silent)
 
@@ -44,7 +46,7 @@ cli.command('get <url>', 'get video direct link.')
     )
 
     if (urlType === UrlType.Bilibili) {
-      logger.info("Matched link source: Bilibili.")
+      logger.info('Matched link source: Bilibili.')
       if (!url.includes('bilibili.com')) {
         logger.error('Please provide a valid Bilibili URL.')
         return
@@ -53,7 +55,7 @@ cli.command('get <url>', 'get video direct link.')
       console.log(link)
     }
     else if (urlType === UrlType.Dirpy) {
-      logger.info("Matched link source: Dirpy.")
+      logger.info('Matched link source: Dirpy.')
 
       const videoLink = await getDirpyLink({
         url,
@@ -61,19 +63,21 @@ cli.command('get <url>', 'get video direct link.')
       }, proxyOptions)
 
       console.log(videoLink)
-    } else if (urlType === UrlType.AnimeIdHentai) {
-      logger.info("Matched link source: Animeidhentai.")
+    }
+    else if (urlType === UrlType.AnimeIdHentai) {
+      logger.info('Matched link source: Animeidhentai.')
       const videoLink = await getAnimeIdHentaiLink({
         url,
-        cwd: config
+        cwd: config,
       }, {
         ...proxyOptions,
-        ...puppeteerOptions
+        ...puppeteerOptions,
       })
 
       console.log(videoLink)
-    } else {
-      logger.error("Your link is not supported!")
+    }
+    else {
+      logger.error('Your link is not supported!')
     }
   })
 
@@ -85,22 +89,23 @@ cli.command('download <url>', 'download a video.')
   .option('--silent', 'Suppress non-error logs')
   .option('--chromePath', 'Path to your Google Chrome browser')
   .action(async (url, options) => {
-
     const urlType = judgeUrl(url)
 
     const { proxyHost: host, proxyPort: port, path, config, silent, chromePath } = options
 
     const proxyOptions = host
       ? {
-        proxy: { host, port },
-      }
+          proxy: { host, port },
+        }
       : undefined
 
-    const puppeteerOptions = chromePath ? {
-      puppeteer: {
-        executablePath: chromePath
-      }
-    } : undefined
+    const puppeteerOptions = chromePath
+      ? {
+          puppeteer: {
+            executablePath: chromePath,
+          },
+        }
+      : undefined
 
     setSilent(!!silent)
     logger.info(
@@ -108,30 +113,31 @@ cli.command('download <url>', 'download a video.')
     )
 
     if (urlType === UrlType.Bilibili) {
-      logger.info("Matched link source: Bilibili.")
+      logger.info('Matched link source: Bilibili.')
       await downloadBilibili({
         url,
         path,
       })
     }
     else if (urlType === UrlType.Dirpy) {
-      logger.info("Matched link source: Dirpy.")
+      logger.info('Matched link source: Dirpy.')
 
       downloadDirpy({
         url,
         path: path || './dirpy.mp4',
         cwd: config,
       }, proxyOptions)
-    } else if (urlType === UrlType.AnimeIdHentai) {
-      logger.info("Matched link source: AnimeIdHentai.")
+    }
+    else if (urlType === UrlType.AnimeIdHentai) {
+      logger.info('Matched link source: AnimeIdHentai.')
 
       await downloadAnimeIdHentai({
         url,
-        path: path || "./animeidhentai.mp4",
-        cwd: config
+        path: path || './animeidhentai.mp4',
+        cwd: config,
       }, {
         ...proxyOptions,
-        ...puppeteerOptions
+        ...puppeteerOptions,
       })
     }
   })
