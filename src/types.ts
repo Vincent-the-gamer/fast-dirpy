@@ -24,7 +24,6 @@ export interface DownloadParams {
 
 export enum UrlType {
   Bilibili,
-  Dirpy,
   AnimeIdHentai,
-  Others,
+  Dirpy,
 }

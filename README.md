@@ -16,12 +16,6 @@ A simple library/CLI to download youtube(etc.) videos.
 - [YouTube](https://www.youtube.com/)
 - [Bilibili](https://www.bilibili.com/)
 
-<details>
-  <summary>「Mystic」Websites</summary>
-
-  - Animeidhentai (Google Chrome required)
-</details>
-
 ## Installation
 
 ### As a library
