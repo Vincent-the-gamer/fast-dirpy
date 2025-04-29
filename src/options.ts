@@ -1,13 +1,13 @@
-import type { DirpyOptions } from './types'
+import type { Options } from './types'
 import deepmerge from 'deepmerge'
 import { createConfigLoader } from 'unconfig'
 import { DEFAULT_DIRPY_OPTIONS } from './constants'
 import { logger } from './utils/logger'
 
-export async function resolveConfig(options: DirpyOptions, cwd?: string): Promise<DirpyOptions> {
+export async function resolveConfig(options: Options, cwd?: string): Promise<Options> {
   const defaults = DEFAULT_DIRPY_OPTIONS
 
-  const loader = createConfigLoader<DirpyOptions>({
+  const loader = createConfigLoader<Options>({
     sources: [
       {
         files: [

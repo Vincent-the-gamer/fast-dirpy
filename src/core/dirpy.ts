@@ -1,4 +1,4 @@
-import type { DirectLinkParams, DirpyOptions, DownloadParams } from '../types'
+import type { DirectLinkParams, DownloadParams, Options } from '../types'
 import axios from 'axios'
 // @ts-expect-error - missing type definitions
 import jsdom from 'jsdom'
@@ -9,7 +9,7 @@ import { downloadVideo } from './index'
 
 const { JSDOM } = jsdom
 
-export async function getDirpyLink(params: DirectLinkParams, options: Partial<DirpyOptions> = DEFAULT_DIRPY_OPTIONS): Promise<string> {
+export async function getDirpyLink(params: DirectLinkParams, options: Partial<Options> = DEFAULT_DIRPY_OPTIONS): Promise<string> {
   const { url, cwd } = params
 
   const { proxy, timeout } = await resolveConfig(options, cwd)
@@ -41,7 +41,7 @@ export async function getDirpyLink(params: DirectLinkParams, options: Partial<Di
   return src
 }
 
-export async function downloadDirpy(params: DownloadParams, options: Partial<DirpyOptions> = DEFAULT_DIRPY_OPTIONS): Promise<void> {
+export async function downloadDirpy(params: DownloadParams, options: Partial<Options> = DEFAULT_DIRPY_OPTIONS): Promise<void> {
   const { path, url, cwd } = params
   const directLink = await getDirpyLink({ url }, options)
   await downloadVideo({

@@ -1,4 +1,4 @@
-import type { DirpyOptions, DownloadParams } from '../types'
+import type { DownloadParams, Options } from '../types'
 import fs from 'node:fs'
 import axios from 'axios'
 import { DEFAULT_DIRPY_OPTIONS } from '../constants'
@@ -6,7 +6,7 @@ import { resolveConfig } from '../options'
 import { logger } from '../utils/logger'
 import { useRandomUserAgent } from '../utils/userAgent'
 
-export async function downloadVideo(params: DownloadParams, options: Partial<DirpyOptions> = DEFAULT_DIRPY_OPTIONS): Promise<void> {
+export async function downloadVideo(params: DownloadParams, options: Partial<Options> = DEFAULT_DIRPY_OPTIONS): Promise<void> {
   const { path, url } = params
 
   const { proxy, timeout } = await resolveConfig(options)

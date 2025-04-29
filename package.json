@@ -45,17 +45,17 @@
   },
   "dependencies": {
     "ansis": "^3.17.0",
-    "axios": "^1.8.4",
+    "axios": "^1.9.0",
     "cac": "^6.7.14",
     "consola": "^3.4.2",
     "jsdom": "^26.1.0",
-    "puppeteer-core": "^24.7.1",
+    "puppeteer-core": "^24.7.2",
     "restore-cursor": "^5.1.0",
     "unconfig": "^7.3.2"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^4.12.0",
-    "@types/node": "^22.14.1",
+    "@types/node": "^22.15.3",
     "deepmerge": "^4.3.1",
     "eslint": "^9.25.1",
     "taze": "^19.0.4",

@@ -1,4 +1,4 @@
-export interface DirpyOptions {
+export interface Options {
   proxy?: {
     protocol?: string
     host: string

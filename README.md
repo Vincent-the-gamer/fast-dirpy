@@ -54,7 +54,7 @@ export default defineConfig({
     // Path to Chrome. Please notice that you must give the inner unix executable file path in macOS.
     // /Applications/Google Chrome.app will not work.
     executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-    headless: false
+    headless: true
   }
 }
 ```
@@ -160,6 +160,14 @@ await downloadBilibili({
   url: '<url>',
   path: './myvideo.mp4'
 })
+```
+
+## Test
+
+To run single test case in Vitest, using:
+
+```shell
+pnpm run test src/test/xxx.test.ts:<line_number>
 ```
 
 ## License
