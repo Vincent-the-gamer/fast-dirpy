@@ -2,7 +2,7 @@ import type { DirectLinkParams, DownloadParams, Options } from '../types'
 import axios from 'axios'
 // @ts-expect-error - missing type definitions
 import jsdom from 'jsdom'
-import { DEFAULT_DIRPY_OPTIONS } from '../constants'
+import { DEFAULT_OPTIONS } from '../constants'
 import { resolveConfig } from '../options'
 import { usePuppeteer } from '../utils/puppeteer'
 import { useRandomUserAgent } from '../utils/userAgent'
@@ -13,7 +13,7 @@ const { JSDOM } = jsdom
 /**
  * Requires puppeteer
  */
-async function getPlayerPage(params: DirectLinkParams, options: Partial<Options> = DEFAULT_DIRPY_OPTIONS) {
+async function getPlayerPage(params: DirectLinkParams, options: Partial<Options> = DEFAULT_OPTIONS) {
   const { url, cwd } = params
 
   const { proxy, timeout } = await resolveConfig(options, cwd)
@@ -41,7 +41,7 @@ async function getPlayerPage(params: DirectLinkParams, options: Partial<Options>
   return src
 }
 
-export async function getAnimeIdHentaiLink(params: DirectLinkParams, options: Partial<Options> = DEFAULT_DIRPY_OPTIONS): Promise<string> {
+export async function getAnimeIdHentaiLink(params: DirectLinkParams, options: Partial<Options> = DEFAULT_OPTIONS): Promise<string> {
   const { url, cwd } = params
   const { proxy, puppeteer }: any = await resolveConfig(options, cwd)
 
@@ -83,7 +83,7 @@ export async function getAnimeIdHentaiLink(params: DirectLinkParams, options: Pa
   return link
 }
 
-export async function downloadAnimeIdHentai(params: DownloadParams, options: Partial<Options> = DEFAULT_DIRPY_OPTIONS): Promise<void> {
+export async function downloadAnimeIdHentai(params: DownloadParams, options: Partial<Options> = DEFAULT_OPTIONS): Promise<void> {
   const { path, url, cwd } = params
   const directLink = await getAnimeIdHentaiLink({ url }, options)
   await downloadVideo({
