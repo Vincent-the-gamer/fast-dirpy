@@ -55,7 +55,10 @@ export default defineConfig({
     // /Applications/Google Chrome.app will not work.
     executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
     headless: true
-  }
+  },
+  // binary file path of ffmpeg 
+  // in Windows, use: "xx/ffmpeg.exe"
+  ffmpeg: "./ffmpeg"
 }
 ```
 
@@ -119,13 +122,16 @@ For further CLI help:
 fast-dirpy --help
 ```
 
+### Download and parse `.m3u8` files
+
+
 ### Use as a library
 
 > [!IMPORTANT]
 > If a website is listed in [Supported Websites](#supported-websites), then `getXXXLink` is to get direct link and `downloadXXX` is to download video.
 
 ```ts
-import { downloadDirpy, getBilibiliLink, getDirpyLink } from 'fast-dirpy'
+import { downloadDirpy, getBilibiliLink, getDirpyLink, downloadM3U8 } from 'fast-dirpy'
 
 // get direct link
 const link = await getDirpyLink(
@@ -160,6 +166,11 @@ await downloadBilibili({
   url: '<url>',
   path: './myvideo.mp4'
 })
+
+// download `.m3u8` files
+
+
+
 ```
 
 ## Test

@@ -9,4 +9,6 @@ lib-cov
 logs
 node_modules
 temp
-*.mp4
+**/*.mp4
+**/*.m3u8
+**/ffmpeg

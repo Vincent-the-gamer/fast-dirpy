@@ -1,13 +1,10 @@
 import type { DirectLinkParams, DownloadParams, Options } from '../types'
 import axios from 'axios'
-// @ts-expect-error - missing type definitions
-import jsdom from 'jsdom'
+import { load } from 'cheerio'
 import { DEFAULT_OPTIONS } from '../constants'
 import { resolveConfig } from '../options'
 import { useRandomUserAgent } from '../utils/userAgent'
 import { downloadVideo } from './index'
-
-const { JSDOM } = jsdom
 
 export async function getDirpyLink(params: DirectLinkParams, options: Partial<Options> = DEFAULT_OPTIONS): Promise<string> {
   const { url, cwd } = params
@@ -28,11 +25,11 @@ export async function getDirpyLink(params: DirectLinkParams, options: Partial<Op
     timeout,
   })
 
-  const { window } = new JSDOM(data)
+  const $ = load(data)
 
   let src = ''
 
-  const mediaSourceDom = window.document.getElementById('media-source')
+  const mediaSourceDom = $('#media-source').attr()
 
   if (mediaSourceDom) {
     src = mediaSourceDom.src

@@ -8,7 +8,8 @@ export interface Options {
   puppeteer?: {
     executablePath: string
     headless?: boolean
-  }
+  },
+  ffmpeg?: string
 }
 
 export interface DirectLinkParams {
@@ -26,4 +27,5 @@ export enum UrlType {
   Bilibili,
   AnimeIdHentai,
   Dirpy,
+  M3U8,
 }

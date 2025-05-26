@@ -1,7 +1,7 @@
 {
   "name": "fast-dirpy",
   "type": "module",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "A simple library/CLI to download video using dirpy.com",
   "author": "Vincent-the-gamer",
   "license": "MIT",
@@ -47,8 +47,8 @@
     "ansis": "^4.0.0",
     "axios": "^1.9.0",
     "cac": "^6.7.14",
+    "cheerio": "^1.0.0",
     "consola": "^3.4.2",
-    "jsdom": "^26.1.0",
     "puppeteer-core": "^24.9.0",
     "restore-cursor": "^5.1.0",
     "unconfig": "^7.3.2"

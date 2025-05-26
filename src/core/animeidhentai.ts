@@ -1,14 +1,11 @@
 import type { DirectLinkParams, DownloadParams, Options } from '../types'
 import axios from 'axios'
-// @ts-expect-error - missing type definitions
-import jsdom from 'jsdom'
+import { load } from 'cheerio'
 import { DEFAULT_OPTIONS } from '../constants'
 import { resolveConfig } from '../options'
 import { usePuppeteer } from '../utils/puppeteer'
 import { useRandomUserAgent } from '../utils/userAgent'
 import { downloadVideo } from './index'
-
-const { JSDOM } = jsdom
 
 /**
  * Requires puppeteer
@@ -28,11 +25,11 @@ async function getPlayerPage(params: DirectLinkParams, options: Partial<Options>
     timeout,
   })
 
-  const { window } = new JSDOM(data)
-
+  const $ = load(data)
+  
   let src = ''
 
-  const iframe = window.document.querySelector('div.embed.rad2 > iframe')
+  const iframe = $('div.embed.rad2 > iframe').attr()
 
   if (iframe) {
     src = iframe.src
