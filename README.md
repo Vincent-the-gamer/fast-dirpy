@@ -16,6 +16,8 @@ A simple library/CLI to download youtube(etc.) videos.
 - [YouTube](https://www.youtube.com/)
 - [Bilibili](https://www.bilibili.com/)
 
+And `.m3u8` videos(using `ffmpeg`).
+
 ## Installation
 
 ### As a library
@@ -58,6 +60,7 @@ export default defineConfig({
   },
   // binary file path of ffmpeg
   // in Windows, use: "xx/ffmpeg.exe"
+  // if no ffmpeg path given, it will rely on your env variable.
   ffmpeg: "./ffmpeg"
 }
 ```
@@ -65,7 +68,8 @@ export default defineConfig({
 ### Use in command line
 
 > [!IMPORTANT]
-> Some website listed in [Supported Websites](#supported-websites) requires Google Chrome installed for Puppeteer use. You have to use a config file or give parameter of puppeteer executable path.
+> 1. Some website listed in [Supported Websites](#supported-websites) requires Google Chrome installed for Puppeteer use. You have to use a config file or give parameter of puppeteer executable path.
+> 2. `.m3u8` source is handled by `ffmpeg`, please download it if you want to download `.m3u8` videos.
 
 #### Get Direct Link
 
@@ -92,7 +96,8 @@ fast-dirpy get https\://www.youtube.com/watch\?v\=6c28qWDMPBA
 #### Download Video
 
 > [!IMPORTANT]
-> Some website listed in [Supported Websites](#supported-websites) requires Google Chrome installed for Puppeteer use. You have to use a config file or give parameter of puppeteer executable path.
+> 1. Some website listed in [Supported Websites](#supported-websites) requires Google Chrome installed for Puppeteer use. You have to use a config file or give parameter of puppeteer executable path.
+> 2. `.m3u8` source is handled by `ffmpeg`, please download it if you want to download `.m3u8` videos.
 
 ```shell
 # get video direct link
@@ -108,6 +113,11 @@ fast-dirpy download https\://www.youtube.com/watch\?v\=6c28qWDMPBA -p ./test.mp4
 
 # Bilibili source doesn't need any proxy, so it's disabled by default.
 fast-dirpy download https://www.bilibili.com/video/BV1TSPeeGE35 -p ./test.mp4
+```
+
+# m3u8 sources
+```
+fast-dirpy download https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8 -p ./test.mp4
 ```
 
 if you have set your proxy config in `fast-dirpy.config.ts`, you can omit proxy parameters:
@@ -130,7 +140,7 @@ fast-dirpy --help
 > If a website is listed in [Supported Websites](#supported-websites), then `getXXXLink` is to get direct link and `downloadXXX` is to download video.
 
 ```ts
-import { downloadDirpy, downloadM3U8, getBilibiliLink, getDirpyLink } from 'fast-dirpy'
+import { downloadDirpy, remoteM3U8ToMP4, getBilibiliLink, getDirpyLink } from 'fast-dirpy'
 
 // get direct link
 const link = await getDirpyLink(
@@ -166,7 +176,12 @@ await downloadBilibili({
   path: './myvideo.mp4'
 })
 
-// download `.m3u8` files
+// download `.m3u8` video
+await remoteM3U8ToMP4({
+  input: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8',
+  output: './test.mp4',
+})
+
 ```
 
 ## Test
