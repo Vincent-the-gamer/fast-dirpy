@@ -112,12 +112,10 @@ fast-dirpy get https\://www.youtube.com/watch\?v\=6c28qWDMPBA
 fast-dirpy download https\://www.youtube.com/watch\?v\=6c28qWDMPBA -p ./test.mp4  -H 127.0.0.1 -P 7890
 
 # Bilibili source doesn't need any proxy, so it's disabled by default.
-fast-dirpy download https://www.bilibili.com/video/BV1TSPeeGE35 -p ./test.mp4
-```
+fast-dirpy download https\://www.bilibili.com/video/BV1TSPeeGE35 -p ./test.mp4
 
 # m3u8 sources
-```
-fast-dirpy download https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8 -p ./test.mp4
+fast-dirpy download https\://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8 -p ./test.mp4
 ```
 
 if you have set your proxy config in `fast-dirpy.config.ts`, you can omit proxy parameters:
