@@ -3,7 +3,7 @@ import { bold, dim } from 'ansis'
 import { cac } from 'cac'
 import restoreCursor from 'restore-cursor'
 import pkgJson from '../package.json'
-import { downloadAnimeIdHentai, getAnimeIdHentaiLink } from './core'
+import { downloadAnimeIdHentai, getAnimeIdHentaiLink, remoteM3U8ToMP4 } from './core'
 import { downloadBilibili, getBilibiliLink } from './core/bilibili'
 import { downloadDirpy, getDirpyLink } from './core/dirpy'
 import { UrlType } from './types'
@@ -138,6 +138,15 @@ cli.command('download <url>', 'download a video.')
       }, {
         ...proxyOptions,
         ...puppeteerOptions,
+      })
+    }
+    else if (urlType === UrlType.M3U8) {
+      logger.info('Matched link source: m3u8.')
+
+      await remoteM3U8ToMP4({
+        input: url,
+        output: path || './m3u8-download.mp4',
+        cwd: config,
       })
     }
     else {

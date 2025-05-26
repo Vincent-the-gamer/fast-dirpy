@@ -8,7 +8,7 @@ export interface Options {
   puppeteer?: {
     executablePath: string
     headless?: boolean
-  },
+  }
   ffmpeg?: string
 }
 

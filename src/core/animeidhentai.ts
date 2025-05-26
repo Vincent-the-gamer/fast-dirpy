@@ -26,7 +26,7 @@ async function getPlayerPage(params: DirectLinkParams, options: Partial<Options>
   })
 
   const $ = load(data)
-  
+
   let src = ''
 
   const iframe = $('div.embed.rad2 > iframe').attr()

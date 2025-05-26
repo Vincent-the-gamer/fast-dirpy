@@ -8,5 +8,8 @@ export function judgeUrl(url: string): UrlType {
   else if (url.includes('animeidhentai')) {
     return UrlType.AnimeIdHentai
   }
+  else if (url.endsWith('.m3u8')) {
+    return UrlType.M3U8
+  }
   return UrlType.Dirpy
 }
