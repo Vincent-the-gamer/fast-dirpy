@@ -130,8 +130,6 @@ For further CLI help:
 fast-dirpy --help
 ```
 
-### Download and parse `.m3u8` files
-
 ### Use as a library
 
 > [!IMPORTANT]
