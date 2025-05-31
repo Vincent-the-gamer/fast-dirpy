@@ -20,7 +20,7 @@ export async function remoteM3U8ToMP4(params: M3U8ParserParams, options: Partial
 
   const _proxy = proxy?.host !== '' ? proxy : undefined
 
-  const ffmpegShell = spawn(ffmpeg as string || "ffmpeg", [
+  const ffmpegShell = spawn(ffmpeg as string || 'ffmpeg', [
     '-http_proxy',
     `${_proxy?.protocol}://${_proxy?.host}:${_proxy?.port}`,
     '-i',

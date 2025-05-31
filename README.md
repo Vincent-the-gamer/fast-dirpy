@@ -136,7 +136,7 @@ fast-dirpy --help
 > If a website is listed in [Supported Websites](#supported-websites), then `getXXXLink` is to get direct link and `downloadXXX` is to download video.
 
 ```ts
-import { downloadDirpy, remoteM3U8ToMP4, getBilibiliLink, getDirpyLink } from 'fast-dirpy'
+import { downloadDirpy, getBilibiliLink, getDirpyLink, remoteM3U8ToMP4 } from 'fast-dirpy'
 
 // get direct link
 const link = await getDirpyLink(
@@ -177,7 +177,6 @@ await remoteM3U8ToMP4({
   input: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8',
   output: './test.mp4',
 })
-
 ```
 
 ## Test
