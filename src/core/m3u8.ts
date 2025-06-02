@@ -53,5 +53,7 @@ export async function remoteM3U8ToMP4(params: M3U8ParserParams, options: Partial
     process.exit(1)
   })
 
-  process.exit(0)
+  ffmpegShell.on('close', () => {
+    process.exit(0)
+  })
 }

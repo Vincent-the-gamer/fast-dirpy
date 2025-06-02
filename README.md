@@ -18,6 +18,8 @@ A simple library/CLI to download youtube(etc.) videos.
 
 And `.m3u8` videos(using `ffmpeg`).
 
+You can use this [userscript](https://greasyfork.org/zh-CN/scripts/449581-m3u8%E8%A7%86%E9%A2%91%E4%BE%A6%E6%B5%8B%E4%B8%8B%E8%BD%BD%E5%99%A8-%E8%87%AA%E5%8A%A8%E5%97%85%E6%8E%A2) to extract `.m3u8` sources from websites.
+
 ## Installation
 
 ### As a library
@@ -32,6 +34,10 @@ deno add jsr:@vince-g/fast-dirpy
 ```shell
 npm i fast-dirpy -g
 ```
+
+### Additional: download `ffmpeg`
+
+https://www.ffmpeg.org/download.html
 
 ## Usage
 
@@ -68,8 +74,7 @@ export default defineConfig({
 ### Use in command line
 
 > [!IMPORTANT]
-> 1. Some website listed in [Supported Websites](#supported-websites) requires Google Chrome installed for Puppeteer use. You have to use a config file or give parameter of puppeteer executable path.
-> 2. `.m3u8` source is handled by `ffmpeg`, please download it if you want to download `.m3u8` videos.
+> Some website listed in [Supported Websites](#supported-websites) requires Google Chrome installed for Puppeteer use. You have to use a config file or give parameter of puppeteer executable path.
 
 #### Get Direct Link
 
@@ -97,7 +102,7 @@ fast-dirpy get https\://www.youtube.com/watch\?v\=6c28qWDMPBA
 
 > [!IMPORTANT]
 > 1. Some website listed in [Supported Websites](#supported-websites) requires Google Chrome installed for Puppeteer use. You have to use a config file or give parameter of puppeteer executable path.
-> 2. `.m3u8` source is handled by `ffmpeg`, please download it if you want to download `.m3u8` videos.
+> 2. `.m3u8` source is handled by `ffmpeg`.
 
 ```shell
 # get video direct link
