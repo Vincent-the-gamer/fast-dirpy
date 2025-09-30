@@ -1,7 +1,7 @@
 {
   "name": "fast-dirpy",
   "type": "module",
-  "version": "0.1.9",
+  "version": "0.2.0",
   "description": "A simple library/CLI to download video using dirpy.com",
   "author": "Vincent-the-gamer",
   "license": "MIT",
@@ -44,24 +44,24 @@
     "access": "public"
   },
   "dependencies": {
-    "ansis": "^4.1.0",
-    "axios": "^1.9.0",
+    "ansis": "^4.2.0",
+    "axios": "^1.12.2",
     "cac": "^6.7.14",
-    "cheerio": "^1.0.0",
+    "cheerio": "^1.1.2",
     "consola": "^3.4.2",
-    "puppeteer-core": "^24.9.0",
+    "puppeteer-core": "^24.22.3",
     "restore-cursor": "^5.1.0",
-    "unconfig": "^7.3.2"
+    "unconfig": "^7.3.3"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^4.13.2",
-    "@types/node": "^22.15.29",
+    "@antfu/eslint-config": "^5.4.1",
+    "@types/node": "^22.18.7",
     "deepmerge": "^4.3.1",
-    "eslint": "^9.28.0",
-    "taze": "^19.1.0",
-    "tsdown": "^0.12.5",
-    "tsx": "^4.19.4",
-    "typescript": "^5.8.3",
-    "vitest": "^3.1.4"
+    "eslint": "^9.36.0",
+    "taze": "^19.7.0",
+    "tsdown": "^0.15.5",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
   }
 }

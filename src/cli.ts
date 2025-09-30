@@ -9,6 +9,7 @@ import { downloadDirpy, getDirpyLink } from './core/dirpy'
 import { UrlType } from './types'
 import { judgeUrl } from './utils/judgeUrl'
 import { logger, setSilent } from './utils/logger'
+import { downloadKoreanPm, getKoreanPmLink } from './core/koreanpm'
 
 const cli: CAC = cac('fast-dirpy')
 
@@ -76,6 +77,15 @@ cli.command('get <url>', 'get video direct link.')
 
       console.log(videoLink)
     }
+    else if (urlType === UrlType.KoreanPM) {
+      logger.info('Matched link source: KoreanPM.')
+      const videoLink = await getKoreanPmLink({
+        url,
+        cwd: config
+      }, proxyOptions)
+
+      console.log(videoLink)
+    }
     else {
       logger.error('Your link is not supported!')
     }
@@ -139,6 +149,15 @@ cli.command('download <url>', 'download a video.')
         ...proxyOptions,
         ...puppeteerOptions,
       })
+    }
+
+    else if (urlType === UrlType.KoreanPM) {
+      logger.info('Matched link source: KoreanPM.')
+      await downloadKoreanPm({
+        url,
+        path: path || './korean-pm.mp4',
+        cwd: config
+      }, proxyOptions)
     }
     else if (urlType === UrlType.M3U8) {
       logger.info('Matched link source: m3u8.')

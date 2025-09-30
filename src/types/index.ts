@@ -28,4 +28,5 @@ export enum UrlType {
   AnimeIdHentai,
   Dirpy,
   M3U8,
+  KoreanPM,
 }
