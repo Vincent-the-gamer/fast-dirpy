@@ -1,6 +1,6 @@
-import type { Options } from 'tsdown'
+import { defineConfig } from 'tsdown'
 
-export default <Options> {
+export default defineConfig({
   entry: [
     './src/{index,cli,config}.ts',
   ],
@@ -10,4 +10,4 @@ export default <Options> {
   minify: true,
   // compatible with __dirname in cjs and import.meta.url in mjs.
   shims: true,
-}
+})
