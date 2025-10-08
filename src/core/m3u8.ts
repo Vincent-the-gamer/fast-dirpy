@@ -1,39 +1,29 @@
-import type { DownloadParams, Options } from '../types'
-
-import { DEFAULT_OPTIONS } from '../constants'
-import { resolveConfig } from '../options'
+import type { M3U8Params } from '../types'
 import { logger } from '../utils/logger'
-import M3U8Downloader from '@renmu/m3u8-downloader'
-
+import path from 'node:path'
+import { __dirname } from '../constants'
+import m3u8stream from 'm3u8stream'
+import { createWriteStream } from 'node:fs'
 
 /**
- * Get remote m3u8 stream, then use ffmpeg to parse it to mp4.
+ * Get remote m3u8 stream, parse it to mp4.
  */
-export async function remoteM3U8ToMP4(params: DownloadParams, options: Partial<Options> = DEFAULT_OPTIONS) {
-  const { cwd, url, path } = params
+export function remoteM3U8ToMP4(params: Partial<M3U8Params>) {
+  const { url, path: _path } = params
 
-  const { ffmpeg } = await resolveConfig(options, cwd)
+  const filePath = _path ?? path.resolve(__dirname, "../m3u8-download.mp4")
 
-  const downloader = new M3U8Downloader(
-    url,
-    path || `./m3u8-downloader.mp4`,
-    {
-      convert2Mp4: true,
-      ffmpegPath: ffmpeg,
+  const stream = m3u8stream(url!)
+
+  stream.pipe(createWriteStream(filePath))
+
+  stream.on("progress", (segment, totalSegments, downloaded) => {
+    logger.info(`Segment: ${JSON.stringify(segment)},
+  Total Segments: ${totalSegments},
+  downloaded: ${(downloaded / 1024 / 1024).toFixed(2)}MB Downloaded`)
+
+    if(segment.num >= totalSegments) {
+      stream.end()
     }
-  )
-
-  downloader.download()
-
-  downloader.on("progress", progress => {
-    logger.info(`Download progress: ${progress.downloaded}/${progress.total}`);
-  });
-
-  downloader.on("completed", () => {
-    logger.info("Download completed");
-  });
-
-  downloader.on("error", error => {
-    logger.error("Error occurred:", error);
-  });
+  })
 }

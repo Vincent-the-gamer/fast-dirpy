@@ -164,7 +164,3 @@ export async function downloadMissav(params: Partial<DownloadParams>) {
         path: path || `${ movieId }.mp4`
     })
 }
-
-await downloadMissav({
-    url: "https://missav.ws/dm2/cn/meyd-631-uncensored-leak",
-})

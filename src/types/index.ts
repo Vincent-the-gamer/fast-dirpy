@@ -9,7 +9,6 @@ export interface Options {
     executablePath: string
     headless?: boolean
   }
-  ffmpeg?: string
 }
 
 export interface DirectLinkParams {
@@ -21,6 +20,10 @@ export interface DownloadParams {
   url: string
   path: string
   cwd?: string
+}
+
+export type M3U8Params = DownloadParams & {
+  ffmpegPath: string
 }
 
 export enum UrlType {

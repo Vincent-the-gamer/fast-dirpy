@@ -10,6 +10,5 @@ export default defineConfig({
   puppeteer: {
     executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
     headless: true,
-  },
-  // Use ffmpeg in system env variable by leaving its option empty.
+  }
 })
