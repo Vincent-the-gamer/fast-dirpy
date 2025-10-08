@@ -46,4 +46,6 @@ export async function downloadVideo(params: DownloadParams, options: Partial<Opt
 export * from './animeidhentai'
 export * from './bilibili'
 export * from './dirpy'
+export * from './missav'
+export * from './koreanpm'
 export * from './m3u8'
