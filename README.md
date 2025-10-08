@@ -21,6 +21,7 @@ A simple library/CLI to download youtube(etc.) videos.
   
   * [Animehentai](https://animeidhentai.com/)
   * [Koreanpornmovies](https://koreanpornmovie.com/)
+  * [XVideos](https://www.xvideos.com/)
 </details>
 
 

@@ -11,5 +11,5 @@ export default defineConfig({
     executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
     headless: true,
   },
-  ffmpeg: './ffmpeg',
+  // Use ffmpeg in system env variable by leaving its option empty.
 })

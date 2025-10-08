@@ -10,6 +10,7 @@ import { UrlType } from './types'
 import { judgeUrl } from './utils/judgeUrl'
 import { logger, setSilent } from './utils/logger'
 import { downloadKoreanPm, getKoreanPmLink } from './core/koreanpm'
+import { downloadMissav } from './core/missav'
 
 const cli: CAC = cac('fast-dirpy')
 
@@ -159,12 +160,20 @@ cli.command('download <url>', 'download a video.')
         cwd: config
       }, proxyOptions)
     }
+    else if( urlType === UrlType.MissAV ) {
+      logger.info('Matched link source: MissAV.')
+      await downloadMissav({
+        url,
+        path,
+        cwd: config
+      })
+    }
     else if (urlType === UrlType.M3U8) {
       logger.info('Matched link source: m3u8.')
 
       await remoteM3U8ToMP4({
-        input: url,
-        output: path || './m3u8-download.mp4',
+        url,
+        path: path || './m3u8-download.mp4',
         cwd: config,
       })
     }

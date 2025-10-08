@@ -11,6 +11,9 @@ export function judgeUrl(url: string): UrlType {
   else if (url.includes("koreanpornmovie")) {
     return UrlType.KoreanPM
   }
+  else if (url.includes("missav")) {
+    return UrlType.MissAV
+  }
   else if (url.endsWith('.m3u8')) {
     return UrlType.M3U8
   }
