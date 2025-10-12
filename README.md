@@ -26,7 +26,7 @@ A simple library/CLI to download youtube(etc.) videos.
 </details>
 
 
-And `.m3u8` videos(using `ffmpeg`).
+And `.m3u8` videos.
 
 > [!IMPORTANT]
 > From v0.2.1, .m3u8 downloader is no longer using ffmpeg.
@@ -77,11 +77,7 @@ export default defineConfig({
     // /Applications/Google Chrome.app will not work.
     executablePath: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
     headless: true
-  },
-  // binary file path of ffmpeg
-  // in Windows, use: "xx/ffmpeg.exe"
-  // if no ffmpeg path given, it will rely on your env variable.
-  ffmpeg: "./ffmpeg"
+  }
 }
 ```
 
