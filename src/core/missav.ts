@@ -6,6 +6,7 @@ import { DEFAULT_OPTIONS } from "../constants"
 import { logger } from "../utils/logger"
 import { sleep } from "../utils/sleep"
 import { remoteM3U8ToMP4 } from "./m3u8"
+import axios from "axios"
 
 async function fetchHtml(params: DirectLinkParams, options: Partial<Options> = DEFAULT_OPTIONS) {
     const { url, cwd } = params
@@ -145,9 +146,15 @@ export async function getMissavLink(params: DirectLinkParams) {
         cwd
     })
     let uuid = await getUuid(pageHtml)
-    const m3u8Url = `https://surrit.com/${uuid}/1080p/video.m3u8`
+    const playlist = `https://surrit.com/${uuid}/playlist.m3u8`
+    const { data: list } = await axios.get(playlist)
+    const regex = /(?:\d+p|\d+x\d+)\/video\.m3u8/g
+    const matches = list.match(regex)
+
+    const m3u8Url = `https://surrit.com/${uuid}/${ matches[matches.length - 1] }`
     return m3u8Url
 }
+
 
 export async function downloadMissav(params: Partial<DownloadParams>) {
     const { url, cwd, path }: any = params
@@ -164,3 +171,4 @@ export async function downloadMissav(params: Partial<DownloadParams>) {
         path: path || `${ movieId }.mp4`
     })
 }
+
