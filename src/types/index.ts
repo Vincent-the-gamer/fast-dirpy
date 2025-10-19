@@ -32,5 +32,5 @@ export enum UrlType {
   Dirpy,
   M3U8,
   KoreanPM,
-  MissAV
+  MissAV,
 }

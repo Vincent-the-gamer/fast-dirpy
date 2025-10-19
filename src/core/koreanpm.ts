@@ -34,7 +34,6 @@ export async function getKoreanPmLink(params: DirectLinkParams, options: Partial
   return link
 }
 
-
 export async function downloadKoreanPm(params: DownloadParams, options: Partial<Options> = DEFAULT_OPTIONS): Promise<void> {
   const { path, url, cwd } = params
   const directLink = await getKoreanPmLink({ url }, options)

@@ -18,13 +18,12 @@ A simple library/CLI to download youtube(etc.) videos.
 
 <details>
   <summary>NSFW</summary>
-  
+
   * [Animehentai](https://animeidhentai.com/)
   * [Koreanpornmovies](https://koreanpornmovie.com/)
   * [XVideos](https://www.xvideos.com/)
   * [Missav](https://missav.ws/) (m3u8)
 </details>
-
 
 And `.m3u8` videos.
 
@@ -189,8 +188,8 @@ await downloadBilibili({
 
 // download `.m3u8` video
 await remoteM3U8ToMP4({
-  input: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8',
-  output: './test.mp4',
+  url: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8',
+  path: './test.mp4',
 })
 ```
 

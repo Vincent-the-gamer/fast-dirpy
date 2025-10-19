@@ -8,10 +8,10 @@ export function judgeUrl(url: string): UrlType {
   else if (url.includes('animeidhentai')) {
     return UrlType.AnimeIdHentai
   }
-  else if (url.includes("koreanpornmovie")) {
+  else if (url.includes('koreanpornmovie')) {
     return UrlType.KoreanPM
   }
-  else if (url.includes("missav")) {
+  else if (url.includes('missav')) {
     return UrlType.MissAV
   }
   else if (url.endsWith('.m3u8')) {

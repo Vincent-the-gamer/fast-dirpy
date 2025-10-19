@@ -6,11 +6,11 @@ import pkgJson from '../package.json'
 import { downloadAnimeIdHentai, getAnimeIdHentaiLink, remoteM3U8ToMP4 } from './core'
 import { downloadBilibili, getBilibiliLink } from './core/bilibili'
 import { downloadDirpy, getDirpyLink } from './core/dirpy'
+import { downloadKoreanPm, getKoreanPmLink } from './core/koreanpm'
+import { downloadMissav } from './core/missav'
 import { UrlType } from './types'
 import { judgeUrl } from './utils/judgeUrl'
 import { logger, setSilent } from './utils/logger'
-import { downloadKoreanPm, getKoreanPmLink } from './core/koreanpm'
-import { downloadMissav } from './core/missav'
 
 const cli: CAC = cac('fast-dirpy')
 
@@ -82,7 +82,7 @@ cli.command('get <url>', 'get video direct link.')
       logger.info('Matched link source: KoreanPM.')
       const videoLink = await getKoreanPmLink({
         url,
-        cwd: config
+        cwd: config,
       }, proxyOptions)
 
       console.log(videoLink)
@@ -157,15 +157,15 @@ cli.command('download <url>', 'download a video.')
       await downloadKoreanPm({
         url,
         path: path || './korean-pm.mp4',
-        cwd: config
+        cwd: config,
       }, proxyOptions)
     }
-    else if( urlType === UrlType.MissAV ) {
+    else if (urlType === UrlType.MissAV) {
       logger.info('Matched link source: MissAV.')
       await downloadMissav({
         url,
         path,
-        cwd: config
+        cwd: config,
       })
     }
     else if (urlType === UrlType.M3U8) {
