@@ -3,7 +3,7 @@ import { DEFAULT_OPTIONS } from './constants'
 import { logger } from './utils/logger'
 import { judgeUrl } from './utils/judgeUrl'
 import { bold, dim } from 'ansis'
-import pkgJson from "../package.json"
+import pkgJson from "../package.json" assert { type: "json" }
 import { 
     downloadBilibili, 
     getBilibiliLink,
