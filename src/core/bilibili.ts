@@ -1,5 +1,5 @@
 import type { DownloadParams } from '../types'
-import { downloadVideo } from './index'
+import { downloadVideo } from '../utils/downloader'
 
 export function getBilibiliLink(link: string): string {
   const BV = link.match(/BV[a-zA-Z0-9]+/)

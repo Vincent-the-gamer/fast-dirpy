@@ -28,7 +28,7 @@ A simple library/CLI to download youtube(etc.) videos.
 And `.m3u8` videos.
 
 > [!IMPORTANT]
-> From v0.2.1, .m3u8 downloader is no longer using ffmpeg.
+> From v0.3.0, .m3u8 downloader is no longer using ffmpeg.
 > And it doesn't provide proxy settings, so, you need to use `export https_proxy=http://ip:port` to set proxy manually in terminal.
 
 You can use this [userscript](https://greasyfork.org/zh-CN/scripts/449581-m3u8%E8%A7%86%E9%A2%91%E4%BE%A6%E6%B5%8B%E4%B8%8B%E8%BD%BD%E5%99%A8-%E8%87%AA%E5%8A%A8%E5%97%85%E6%8E%A2) to extract `.m3u8` sources from websites.
@@ -150,40 +150,29 @@ fast-dirpy --help
 > If a website is listed in [Supported Websites](#supported-websites), then `getXXXLink` is to get direct link and `downloadXXX` is to download video.
 
 ```ts
-import { downloadDirpy, getBilibiliLink, getDirpyLink, remoteM3U8ToMP4 } from 'fast-dirpy'
+import { fastLink, fastDownload } from 'fast-dirpy'
 
 // get direct link
-const link = await getDirpyLink(
+const link = await fastLink(
   {
     url: '<url>',
     cwd: '/path/to/external-config' // Optional: You can specify an external config file.
   },
+  // options (Optional, can be omitted if you have a config file, this can overwrite your config file options.)
   {
-    host: '127.0.0.1',
-    port: 7890
+    proxy: { ... }
   }
-)
-
-// get bilibili direct link
-const link = await getBilibiliLink(
-  '<url>',
 )
 
 // download video
-await downloadDirpy({
+await fastDownload({
   url: '<url>',
   path: './download.mp4',
   cwd: '/path/to/external-config', // Optional: You can specify an external config file.
-  proxy: {
-    host: '127.0.0.1',
-    port: 7890
-  }
-})
-
-// download bilibili video
-await downloadBilibili({
-  url: '<url>',
-  path: './myvideo.mp4'
+}, 
+// options (Optional, can be omitted if you have a config file, this can overwrite your config file options.)
+{
+  proxy: { ... }
 })
 
 // download `.m3u8` video

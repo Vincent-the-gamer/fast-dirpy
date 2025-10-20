@@ -4,7 +4,7 @@ import { load } from 'cheerio'
 import { DEFAULT_OPTIONS } from '../constants'
 import { resolveConfig } from '../options'
 import { useRandomUserAgent } from '../utils/userAgent'
-import { downloadVideo } from './index'
+import { downloadVideo } from '../utils/downloader'
 
 export async function getKoreanPmLink(params: DirectLinkParams, options: Partial<Options> = DEFAULT_OPTIONS): Promise<string> {
   const { url, cwd } = params
