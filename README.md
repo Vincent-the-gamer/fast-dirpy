@@ -145,10 +145,6 @@ fast-dirpy --help
 ```
 
 ### Use as a library
-
-> [!IMPORTANT]
-> If a website is listed in [Supported Websites](#supported-websites), then `getXXXLink` is to get direct link and `downloadXXX` is to download video.
-
 ```ts
 import { fastLink, fastDownload } from 'fast-dirpy'
 
@@ -158,7 +154,7 @@ const link = await fastLink(
     url: '<url>',
     cwd: '/path/to/external-config' // Optional: You can specify an external config file.
   },
-  // options (Optional, can be omitted if you have a config file, this can overwrite your config file options.)
+  // options (Optional, can be omitted if you have a config file, this will overwrites your config file options.)
   {
     proxy: { ... }
   }
@@ -170,7 +166,7 @@ await fastDownload({
   path: './download.mp4',
   cwd: '/path/to/external-config', // Optional: You can specify an external config file.
 }, 
-// options (Optional, can be omitted if you have a config file, this can overwrite your config file options.)
+// options (Optional, can be omitted if you have a config file, this will overwrites your config file options.)
 {
   proxy: { ... }
 })
