@@ -11,6 +11,7 @@ import { downloadMissav } from './core/missav'
 import { UrlType } from './types'
 import { judgeUrl } from './utils/judgeUrl'
 import { logger, setSilent } from './utils/logger'
+import { downloadVideo } from './utils/downloader'
 
 const cli: CAC = cac('fast-dirpy')
 
@@ -175,6 +176,14 @@ cli.command('download <url>', 'download a video.')
         url,
         path: path || './m3u8-download.mp4',
         cwd: config,
+      })
+    } else if(urlType === UrlType.MP4) {
+      logger.info('Matched link source: mp4.')
+
+      await downloadVideo({
+        url,
+        path,
+        cwd: config
       })
     }
     else {

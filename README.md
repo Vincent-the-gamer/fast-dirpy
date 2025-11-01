@@ -130,6 +130,9 @@ fast-dirpy download https\://www.bilibili.com/video/BV1TSPeeGE35 -p ./test.mp4
 
 # m3u8 sources
 fast-dirpy download https\://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8 -p ./test.mp4
+
+# mp4 sources
+fast-dirpy download http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4 -p ./big_buck_bunny.mp4
 ```
 
 if you have set your proxy config in `fast-dirpy.config.ts`, you can omit proxy parameters:
@@ -171,10 +174,16 @@ await fastDownload({
   proxy: { ... }
 })
 
-// download `.m3u8` video
+// Download `.m3u8` video
 await remoteM3U8ToMP4({
   url: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8',
   path: './test.mp4',
+})
+
+// Download `.mp4` video
+await downloadVideo({
+    url: 'http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4',
+    path: "./big_buck_bunny.mp4"
 })
 ```
 

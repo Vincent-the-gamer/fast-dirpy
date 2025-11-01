@@ -33,4 +33,5 @@ export enum UrlType {
   M3U8,
   KoreanPM,
   MissAV,
+  MP4
 }
