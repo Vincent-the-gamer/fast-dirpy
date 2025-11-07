@@ -14,10 +14,16 @@ export function judgeUrl(url: string): UrlType {
   else if (url.includes('missav')) {
     return UrlType.MissAV
   }
-  else if (url.includes('.m3u8')) {
+  else if ( 
+    url.endsWith('.m3u8') ||
+    url.includes('.m3u8') && !url.endsWith('.mp4')
+  ) {
     return UrlType.M3U8
   }
-  else if (url.endsWith('.mp4')) {
+  else if (
+    url.endsWith('.mp4') ||
+    url.includes('.mp4') && !url.endsWith('.m3u8')
+  ) {
     return UrlType.MP4
   }
   return UrlType.Dirpy
