@@ -17,15 +17,15 @@ export function judgeUrl(url: string): UrlType {
   else if (url.includes('hanime1.me')) {
     return UrlType.Hanime
   }
-  else if ( 
-    url.endsWith('.m3u8') ||
-    url.includes('.m3u8') && !url.endsWith('.mp4')
+  else if (
+    url.endsWith('.m3u8')
+    || url.includes('.m3u8') && !url.endsWith('.mp4')
   ) {
     return UrlType.M3U8
   }
   else if (
-    url.endsWith('.mp4') ||
-    url.includes('.mp4') && !url.endsWith('.m3u8')
+    url.endsWith('.mp4')
+    || url.includes('.mp4') && !url.endsWith('.m3u8')
   ) {
     return UrlType.MP4
   }

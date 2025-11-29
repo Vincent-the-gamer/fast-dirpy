@@ -9,9 +9,9 @@ import { downloadDirpy, getDirpyLink } from './core/dirpy'
 import { downloadKoreanPm, getKoreanPmLink } from './core/koreanpm'
 import { downloadMissav } from './core/missav'
 import { UrlType } from './types'
+import { downloadVideo } from './utils/downloader'
 import { judgeUrl } from './utils/judgeUrl'
 import { logger, setSilent } from './utils/logger'
-import { downloadVideo } from './utils/downloader'
 
 const cli: CAC = cac('fast-dirpy')
 
@@ -177,13 +177,14 @@ cli.command('download <url>', 'download a video.')
         path: path || './m3u8-download.mp4',
         cwd: config,
       })
-    } else if(urlType === UrlType.MP4) {
+    }
+    else if (urlType === UrlType.MP4) {
       logger.info('Matched link source: mp4.')
 
       await downloadVideo({
         url,
         path,
-        cwd: config
+        cwd: config,
       })
     }
     else {

@@ -34,5 +34,5 @@ export enum UrlType {
   KoreanPM,
   MissAV,
   Hanime,
-  MP4
+  MP4,
 }

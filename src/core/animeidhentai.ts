@@ -3,9 +3,9 @@ import axios from 'axios'
 import { load } from 'cheerio'
 import { DEFAULT_OPTIONS } from '../constants'
 import { resolveConfig } from '../options'
+import { downloadVideo } from '../utils/downloader'
 import { usePuppeteer } from '../utils/puppeteer'
 import { useRandomUserAgent } from '../utils/userAgent'
-import { downloadVideo } from '../utils/downloader'
 
 /**
  * Requires puppeteer

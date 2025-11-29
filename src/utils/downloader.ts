@@ -1,11 +1,10 @@
-import { Options } from "../types"
-import { DownloadParams } from "../types"
-import { DEFAULT_OPTIONS } from "../constants"
-import { resolveConfig } from "../options"
-import fs from "node:fs"
-import axios from "axios"
-import { useRandomUserAgent } from "./userAgent"
-import { logger } from "./logger"
+import type { DownloadParams, Options } from '../types'
+import fs from 'node:fs'
+import axios from 'axios'
+import { DEFAULT_OPTIONS } from '../constants'
+import { resolveConfig } from '../options'
+import { logger } from './logger'
+import { useRandomUserAgent } from './userAgent'
 
 export async function downloadVideo(params: DownloadParams, options: Partial<Options> = DEFAULT_OPTIONS): Promise<void> {
   const { path, url } = params
@@ -18,7 +17,7 @@ export async function downloadVideo(params: DownloadParams, options: Partial<Opt
     return Promise.reject('Extract direct link failed!')
   }
 
-  const writer = fs.createWriteStream(path || "./download.mp4")
+  const writer = fs.createWriteStream(path || './download.mp4')
   const response = await axios({
     url,
     headers: {

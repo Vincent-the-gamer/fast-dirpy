@@ -1,25 +1,26 @@
-import { UrlType, type DirectLinkParams, type DownloadParams, type Options } from './types'
-import { DEFAULT_OPTIONS } from './constants'
-import { logger } from './utils/logger'
-import { judgeUrl } from './utils/judgeUrl'
+import type { DirectLinkParams, DownloadParams, Options } from './types'
 import { bold, dim } from 'ansis'
-import pkgJson from "../package.json" with { type: "json" }
+import pkgJson from '../package.json' with { type: 'json' }
+import { DEFAULT_OPTIONS } from './constants'
 import {
-  downloadBilibili,
-  getBilibiliLink,
-  downloadDirpy,
-  getDirpyLink,
   downloadAnimeIdHentai,
-  getAnimeIdHentaiLink,
+  downloadBilibili,
+  downloadDirpy,
+  downloadHanime,
   downloadKoreanPm,
-  getKoreanPmLink,
   downloadMissav,
+  getAnimeIdHentaiLink,
+  getBilibiliLink,
+  getDirpyLink,
+  getHanimeLink,
+  getKoreanPmLink,
   getMissavLink,
   remoteM3U8ToMP4,
-  getHanimeLink,
-  downloadHanime
 } from './core'
+import { UrlType } from './types'
 import { downloadVideo } from './utils/downloader'
+import { judgeUrl } from './utils/judgeUrl'
+import { logger } from './utils/logger'
 
 const { version } = pkgJson
 
@@ -27,8 +28,8 @@ export async function fastLink(params: DirectLinkParams, options: Partial<Option
   const { url, cwd } = params
   const { proxy, puppeteer } = options
 
-  let proxyOptions = proxy || {}
-  let puppeteerOptions = puppeteer || {}
+  const proxyOptions = proxy || {}
+  const puppeteerOptions = puppeteer || {}
 
   const urlType = judgeUrl(url)
 
@@ -40,7 +41,7 @@ export async function fastLink(params: DirectLinkParams, options: Partial<Option
     logger.info('Matched link source: Bilibili.')
     if (!url.includes('bilibili.com')) {
       logger.error('Please provide a valid Bilibili URL.')
-      return ""
+      return ''
     }
     const link = await getBilibiliLink(url)
     return link
@@ -70,10 +71,11 @@ export async function fastLink(params: DirectLinkParams, options: Partial<Option
     logger.info('Matched link source: MissAV.')
     const videoLink = await getMissavLink({
       url,
-      cwd
+      cwd,
     })
     return videoLink
-  } else if (urlType === UrlType.Hanime) {
+  }
+  else if (urlType === UrlType.Hanime) {
     logger.info('Matched link source: Hanime.')
 
     const videoLinks = await getHanimeLink({
@@ -82,7 +84,8 @@ export async function fastLink(params: DirectLinkParams, options: Partial<Option
     }, proxyOptions)
 
     return videoLinks
-  } else if (urlType === UrlType.Dirpy) {
+  }
+  else if (urlType === UrlType.Dirpy) {
     logger.info('Matched link source: Dirpy.')
 
     const videoLink = await getDirpyLink({
@@ -94,7 +97,7 @@ export async function fastLink(params: DirectLinkParams, options: Partial<Option
   }
   else {
     logger.error('Your link is not supported!')
-    return ""
+    return ''
   }
 }
 
@@ -102,8 +105,8 @@ export async function fastDownload(params: DownloadParams, options: Partial<Opti
   const { url, path, cwd } = params
   const { proxy, puppeteer } = options
 
-  let proxyOptions = proxy || {}
-  let puppeteerOptions = puppeteer || {}
+  const proxyOptions = proxy || {}
+  const puppeteerOptions = puppeteer || {}
 
   const urlType = judgeUrl(url)
   logger.info(
@@ -140,7 +143,6 @@ export async function fastDownload(params: DownloadParams, options: Partial<Opti
     }, proxyOptions)
   }
 
-
   else if (urlType === UrlType.MissAV) {
     logger.info('Matched link source: MissAV.')
     await downloadMissav({
@@ -150,13 +152,13 @@ export async function fastDownload(params: DownloadParams, options: Partial<Opti
     })
   }
 
-  else if(urlType === UrlType.Hanime) {
+  else if (urlType === UrlType.Hanime) {
     logger.info('Matched link source: Hanime.')
 
     await downloadHanime({
       url,
       path,
-      cwd
+      cwd,
     })
   }
 
@@ -175,8 +177,8 @@ export async function fastDownload(params: DownloadParams, options: Partial<Opti
 
     await downloadVideo({
       url,
-      path: path || "./mp4-download.mp4",
-      cwd
+      path: path || './mp4-download.mp4',
+      cwd,
     })
   }
 

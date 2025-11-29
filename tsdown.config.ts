@@ -9,5 +9,5 @@ export default defineConfig({
   dts: true,
   minify: true,
   // compatible with __dirname in cjs and import.meta.url in mjs.
-  shims: true
+  shims: true,
 })

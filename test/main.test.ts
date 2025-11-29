@@ -1,7 +1,7 @@
-import { fastDownload, fastLink } from "../src";
+import { fastLink } from '../src'
 
 const a = await fastLink({
-  url: "https://www.bilibili.com/video/BV1wQSLBBEs8",
+  url: 'https://www.bilibili.com/video/BV1wQSLBBEs8',
 })
 
 console.log(a)
