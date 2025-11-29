@@ -18,7 +18,7 @@ export interface DirectLinkParams {
 
 export interface DownloadParams {
   url: string
-  path: string
+  path?: string
   cwd?: string
 }
 
@@ -33,5 +33,6 @@ export enum UrlType {
   M3U8,
   KoreanPM,
   MissAV,
+  Hanime,
   MP4
 }

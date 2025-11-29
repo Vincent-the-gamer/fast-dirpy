@@ -14,6 +14,9 @@ export function judgeUrl(url: string): UrlType {
   else if (url.includes('missav')) {
     return UrlType.MissAV
   }
+  else if (url.includes('hanime1.me')) {
+    return UrlType.Hanime
+  }
   else if ( 
     url.endsWith('.m3u8') ||
     url.includes('.m3u8') && !url.endsWith('.mp4')

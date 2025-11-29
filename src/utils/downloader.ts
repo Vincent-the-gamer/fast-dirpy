@@ -18,7 +18,7 @@ export async function downloadVideo(params: DownloadParams, options: Partial<Opt
     return Promise.reject('Extract direct link failed!')
   }
 
-  const writer = fs.createWriteStream(path)
+  const writer = fs.createWriteStream(path || "./download.mp4")
   const response = await axios({
     url,
     headers: {

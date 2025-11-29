@@ -23,6 +23,7 @@ A simple library/CLI to download youtube(etc.) videos.
   * [Koreanpornmovies](https://koreanpornmovie.com/)
   * [XVideos](https://www.xvideos.com/)
   * [Missav](https://missav.ws/) (m3u8)
+  * [Hanime1.me](https://hanime1.me/)
 </details>
 
 And `.m3u8` videos.
@@ -149,9 +150,9 @@ fast-dirpy --help
 
 ### Use as a library
 ```ts
-import { fastLink, fastDownload } from 'fast-dirpy'
+import { fastLink, fastDownload, remoteM3U8ToMP4, downloadVideo } from 'fast-dirpy'
 
-// get direct link
+// get direct link, returns string or object(some cases)
 const link = await fastLink(
   {
     url: '<url>',

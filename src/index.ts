@@ -4,23 +4,26 @@ import { logger } from './utils/logger'
 import { judgeUrl } from './utils/judgeUrl'
 import { bold, dim } from 'ansis'
 import pkgJson from "../package.json" with { type: "json" }
-import { 
-    downloadBilibili, 
-    getBilibiliLink,
-    downloadDirpy, 
-    getDirpyLink,
-    downloadAnimeIdHentai, 
-    getAnimeIdHentaiLink ,
-    downloadKoreanPm, 
-    getKoreanPmLink, 
-    downloadMissav, 
-    getMissavLink, 
-    remoteM3U8ToMP4
+import {
+  downloadBilibili,
+  getBilibiliLink,
+  downloadDirpy,
+  getDirpyLink,
+  downloadAnimeIdHentai,
+  getAnimeIdHentaiLink,
+  downloadKoreanPm,
+  getKoreanPmLink,
+  downloadMissav,
+  getMissavLink,
+  remoteM3U8ToMP4,
+  getHanimeLink,
+  downloadHanime
 } from './core'
+import { downloadVideo } from './utils/downloader'
 
 const { version } = pkgJson
 
-export async function fastLink(params: DirectLinkParams, options: Partial<Options> = DEFAULT_OPTIONS): Promise<string> {
+export async function fastLink(params: DirectLinkParams, options: Partial<Options> = DEFAULT_OPTIONS): Promise<string | Record<string, any>[]> {
   const { url, cwd } = params
   const { proxy, puppeteer } = options
 
@@ -70,8 +73,16 @@ export async function fastLink(params: DirectLinkParams, options: Partial<Option
       cwd
     })
     return videoLink
-  }
-  else if (urlType === UrlType.Dirpy) {
+  } else if (urlType === UrlType.Hanime) {
+    logger.info('Matched link source: Hanime.')
+
+    const videoLinks = await getHanimeLink({
+      url,
+      cwd,
+    }, proxyOptions)
+
+    return videoLinks
+  } else if (urlType === UrlType.Dirpy) {
     logger.info('Matched link source: Dirpy.')
 
     const videoLink = await getDirpyLink({
@@ -106,15 +117,7 @@ export async function fastDownload(params: DownloadParams, options: Partial<Opti
       path,
     })
   }
-  else if (urlType === UrlType.Dirpy) {
-    logger.info('Matched link source: Dirpy.')
 
-    downloadDirpy({
-      url,
-      path: path || './dirpy.mp4',
-      cwd,
-    }, proxyOptions)
-  }
   else if (urlType === UrlType.AnimeIdHentai) {
     logger.info('Matched link source: AnimeIdHentai.')
 
@@ -136,6 +139,8 @@ export async function fastDownload(params: DownloadParams, options: Partial<Opti
       cwd,
     }, proxyOptions)
   }
+
+
   else if (urlType === UrlType.MissAV) {
     logger.info('Matched link source: MissAV.')
     await downloadMissav({
@@ -144,6 +149,37 @@ export async function fastDownload(params: DownloadParams, options: Partial<Opti
       cwd,
     })
   }
+
+  else if(urlType === UrlType.Hanime) {
+    logger.info('Matched link source: Hanime.')
+
+    await downloadHanime({
+      url,
+      path,
+      cwd
+    })
+  }
+
+  else if (urlType === UrlType.Dirpy) {
+    logger.info('Matched link source: Dirpy.')
+
+    downloadDirpy({
+      url,
+      path: path || './dirpy.mp4',
+      cwd,
+    }, proxyOptions)
+  }
+
+  else if (urlType === UrlType.MP4) {
+    logger.info('Matched link source: mp4.')
+
+    await downloadVideo({
+      url,
+      path: path || "./mp4-download.mp4",
+      cwd
+    })
+  }
+
   else if (urlType === UrlType.M3U8) {
     logger.info('Matched link source: m3u8.')
 

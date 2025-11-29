@@ -4,3 +4,4 @@ export * from './dirpy'
 export * from './koreanpm'
 export * from './m3u8'
 export * from './missav'
+export * from "./hanime"
