@@ -3,7 +3,7 @@ import { bold, dim } from 'ansis'
 import { cac } from 'cac'
 import restoreCursor from 'restore-cursor'
 import pkgJson from '../package.json'
-import { downloadAnimeIdHentai, getAnimeIdHentaiLink, remoteM3U8ToMP4 } from './core'
+import { downloadAnimeIdHentai, downloadHanime, getAnimeIdHentaiLink, getHanimeLink, remoteM3U8ToMP4 } from './core'
 import { downloadBilibili, getBilibiliLink } from './core/bilibili'
 import { downloadDirpy, getDirpyLink } from './core/dirpy'
 import { downloadKoreanPm, getKoreanPmLink } from './core/koreanpm'
@@ -88,6 +88,15 @@ cli.command('get <url>', 'get video direct link.')
 
       console.log(videoLink)
     }
+    else if (urlType === UrlType.Hanime) {
+      logger.info('Matched link source: Hanime.')
+      const videoLink = await getHanimeLink({
+        url,
+        cwd: config,
+      }, proxyOptions)
+
+      console.log(videoLink)
+    }
     else {
       logger.error('Your link is not supported!')
     }
@@ -164,6 +173,14 @@ cli.command('download <url>', 'download a video.')
     else if (urlType === UrlType.MissAV) {
       logger.info('Matched link source: MissAV.')
       await downloadMissav({
+        url,
+        path,
+        cwd: config,
+      })
+    }
+    else if (urlType === UrlType.Hanime) {
+      logger.info('Matched link source: Hanime.')
+      await downloadHanime({
         url,
         path,
         cwd: config,
