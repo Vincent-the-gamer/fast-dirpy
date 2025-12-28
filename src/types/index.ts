@@ -1,4 +1,5 @@
 export interface Options {
+  headers?: Record<string, any>
   proxy?: {
     protocol?: string
     host: string
@@ -34,5 +35,6 @@ export enum UrlType {
   KoreanPM,
   MissAV,
   Hanime,
+  Wowxxx,
   MP4,
 }

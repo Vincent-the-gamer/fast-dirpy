@@ -12,6 +12,7 @@ import { UrlType } from './types'
 import { downloadVideo } from './utils/downloader'
 import { judgeUrl } from './utils/judgeUrl'
 import { logger, setSilent } from './utils/logger'
+import { downloadWowxxx, getWowxxxLink } from './core/wowxxx'
 
 const cli: CAC = cac('fast-dirpy')
 
@@ -30,16 +31,16 @@ cli.command('get <url>', 'get video direct link.')
 
     const proxyOptions = host
       ? {
-          proxy: { host, port },
-        }
+        proxy: { host, port },
+      }
       : undefined
 
     const puppeteerOptions = chromePath
       ? {
-          puppeteer: {
-            executablePath: chromePath,
-          },
-        }
+        puppeteer: {
+          executablePath: chromePath,
+        },
+      }
       : undefined
 
     setSilent(!!silent)
@@ -48,7 +49,40 @@ cli.command('get <url>', 'get video direct link.')
       `fast-dirpy ${dim(`v${version}`)} : ${bold(`Direct Link Getter`)}.`,
     )
 
-    if (urlType === UrlType.Bilibili) {
+    if (urlType === UrlType.AnimeIdHentai) {
+      logger.info('Matched link source: Animeidhentai.')
+      const videoLink = await getAnimeIdHentaiLink({
+        url,
+        cwd: config,
+      }, {
+        ...proxyOptions,
+        ...puppeteerOptions,
+      })
+
+      console.log(videoLink)
+    }
+
+    else if (urlType === UrlType.KoreanPM) {
+      logger.info('Matched link source: KoreanPM.')
+      const videoLink = await getKoreanPmLink({
+        url,
+        cwd: config,
+      }, proxyOptions)
+
+      console.log(videoLink)
+    }
+
+    else if (urlType === UrlType.Wowxxx) {
+      logger.info('Matched link source: Wowxxx.')
+      const videoLink = await getWowxxxLink({
+        url,
+        cwd: config,
+      }, proxyOptions)
+
+      console.log(videoLink)
+    }
+
+    else if (urlType === UrlType.Bilibili) {
       logger.info('Matched link source: Bilibili.')
       if (!url.includes('bilibili.com')) {
         logger.error('Please provide a valid Bilibili URL.')
@@ -61,27 +95,6 @@ cli.command('get <url>', 'get video direct link.')
       logger.info('Matched link source: Dirpy.')
 
       const videoLink = await getDirpyLink({
-        url,
-        cwd: config,
-      }, proxyOptions)
-
-      console.log(videoLink)
-    }
-    else if (urlType === UrlType.AnimeIdHentai) {
-      logger.info('Matched link source: Animeidhentai.')
-      const videoLink = await getAnimeIdHentaiLink({
-        url,
-        cwd: config,
-      }, {
-        ...proxyOptions,
-        ...puppeteerOptions,
-      })
-
-      console.log(videoLink)
-    }
-    else if (urlType === UrlType.KoreanPM) {
-      logger.info('Matched link source: KoreanPM.')
-      const videoLink = await getKoreanPmLink({
         url,
         cwd: config,
       }, proxyOptions)
@@ -107,16 +120,16 @@ cli.command('download <url>', 'download a video.')
 
     const proxyOptions = host
       ? {
-          proxy: { host, port },
-        }
+        proxy: { host, port },
+      }
       : undefined
 
     const puppeteerOptions = chromePath
       ? {
-          puppeteer: {
-            executablePath: chromePath,
-          },
-        }
+        puppeteer: {
+          executablePath: chromePath,
+        },
+      }
       : undefined
 
     setSilent(!!silent)
@@ -161,6 +174,16 @@ cli.command('download <url>', 'download a video.')
         cwd: config,
       }, proxyOptions)
     }
+
+    else if (urlType === UrlType.Wowxxx) {
+      logger.info('Matched link source: Wowxxx.')
+      await downloadWowxxx({
+        url,
+        path: path || './wowxxx.mp4',
+        cwd: config,
+      }, proxyOptions)
+    }
+
     else if (urlType === UrlType.MissAV) {
       logger.info('Matched link source: MissAV.')
       await downloadMissav({

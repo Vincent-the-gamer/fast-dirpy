@@ -22,6 +22,7 @@ export async function downloadVideo(params: DownloadParams, options: Partial<Opt
     url,
     headers: {
       'User-Agent': useRandomUserAgent(),
+      ...options.headers
     },
     method: 'GET',
     responseType: 'stream',
