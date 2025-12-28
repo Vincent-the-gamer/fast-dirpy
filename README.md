@@ -24,6 +24,7 @@ A simple library/CLI to download youtube(etc.) videos.
   * [XVideos](https://www.xvideos.com/)
   * [Missav](https://missav.ws/) (m3u8)
   * [Hanime1.me](https://hanime1.me/)
+  * [wow.xxx](https://www.wow.xxx/)
 </details>
 
 And `.m3u8` videos.

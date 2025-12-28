@@ -21,6 +21,7 @@ import { UrlType } from './types'
 import { downloadVideo } from './utils/downloader'
 import { judgeUrl } from './utils/judgeUrl'
 import { logger } from './utils/logger'
+import { downloadWowxxx, getWowxxxLink } from './core/wowxxx'
 
 const { version } = pkgJson
 
@@ -79,6 +80,16 @@ export async function fastLink(params: DirectLinkParams, options: Partial<Option
     logger.info('Matched link source: Hanime.')
 
     const videoLinks = await getHanimeLink({
+      url,
+      cwd,
+    }, proxyOptions)
+
+    return videoLinks
+  }
+  else if (urlType === UrlType.Wowxxx) {
+    logger.info('Matched link source: Wowxxx.')
+
+    const videoLinks = await getWowxxxLink({
       url,
       cwd,
     }, proxyOptions)
@@ -156,6 +167,16 @@ export async function fastDownload(params: DownloadParams, options: Partial<Opti
     logger.info('Matched link source: Hanime.')
 
     await downloadHanime({
+      url,
+      path,
+      cwd,
+    })
+  }
+
+  else if (urlType === UrlType.Wowxxx) {
+    logger.info('Matched link source: Wowxxx.')
+
+    await downloadWowxxx({
       url,
       path,
       cwd,
