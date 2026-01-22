@@ -9,19 +9,21 @@ import {
   downloadHanime,
   downloadKoreanPm,
   downloadMissav,
+  downloadXHamster,
   getAnimeIdHentaiLink,
   getBilibiliLink,
   getDirpyLink,
   getHanimeLink,
   getKoreanPmLink,
   getMissavLink,
+  getXHamsterLink,
   remoteM3U8ToMP4,
 } from './core'
+import { downloadWowxxx, getWowxxxLink } from './core/wowxxx'
 import { UrlType } from './types'
 import { downloadVideo } from './utils/downloader'
 import { judgeUrl } from './utils/judgeUrl'
 import { logger } from './utils/logger'
-import { downloadWowxxx, getWowxxxLink } from './core/wowxxx'
 
 const { version } = pkgJson
 
@@ -90,6 +92,16 @@ export async function fastLink(params: DirectLinkParams, options: Partial<Option
     logger.info('Matched link source: Wowxxx.')
 
     const videoLinks = await getWowxxxLink({
+      url,
+      cwd,
+    }, proxyOptions)
+
+    return videoLinks
+  }
+  else if (urlType === UrlType.XHamster) {
+    logger.info('Matched link source: XHamster.')
+
+    const videoLinks = await getXHamsterLink({
       url,
       cwd,
     }, proxyOptions)
@@ -170,7 +182,7 @@ export async function fastDownload(params: DownloadParams, options: Partial<Opti
       url,
       path,
       cwd,
-    })
+    }, proxyOptions)
   }
 
   else if (urlType === UrlType.Wowxxx) {
@@ -180,7 +192,17 @@ export async function fastDownload(params: DownloadParams, options: Partial<Opti
       url,
       path,
       cwd,
-    })
+    }, proxyOptions)
+  }
+
+  else if (urlType === UrlType.XHamster) {
+    logger.info('Matched link source: XHamster.')
+
+    await downloadXHamster({
+      url,
+      path,
+      cwd,
+    }, proxyOptions)
   }
 
   else if (urlType === UrlType.Dirpy) {
@@ -200,13 +222,13 @@ export async function fastDownload(params: DownloadParams, options: Partial<Opti
       url,
       path: path || './mp4-download.mp4',
       cwd,
-    })
+    }, proxyOptions)
   }
 
   else if (urlType === UrlType.M3U8) {
     logger.info('Matched link source: m3u8.')
 
-    await remoteM3U8ToMP4({
+    remoteM3U8ToMP4({
       url,
       path: path || './m3u8-download.mp4',
       cwd,

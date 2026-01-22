@@ -16,9 +16,12 @@ export function judgeUrl(url: string): UrlType {
   }
   else if (url.includes('hanime1.me')) {
     return UrlType.Hanime
-  } 
+  }
   else if (url.includes('wow.xxx')) {
     return UrlType.Wowxxx
+  }
+  else if (url.includes('xhamster.com')) {
+    return UrlType.XHamster
   }
   else if (
     url.endsWith('.m3u8')

@@ -5,4 +5,5 @@ export * from './hanime'
 export * from './koreanpm'
 export * from './m3u8'
 export * from './missav'
-export * from "./wowxxx"
+export * from './wowxxx'
+export * from './xhamster'

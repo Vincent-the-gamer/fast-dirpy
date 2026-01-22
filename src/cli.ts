@@ -3,16 +3,16 @@ import { bold, dim } from 'ansis'
 import { cac } from 'cac'
 import restoreCursor from 'restore-cursor'
 import pkgJson from '../package.json'
-import { downloadAnimeIdHentai, downloadHanime, getAnimeIdHentaiLink, getHanimeLink, remoteM3U8ToMP4 } from './core'
+import { downloadAnimeIdHentai, downloadHanime, downloadXHamster, getAnimeIdHentaiLink, getXHamsterLink, remoteM3U8ToMP4 } from './core'
 import { downloadBilibili, getBilibiliLink } from './core/bilibili'
 import { downloadDirpy, getDirpyLink } from './core/dirpy'
 import { downloadKoreanPm, getKoreanPmLink } from './core/koreanpm'
 import { downloadMissav } from './core/missav'
+import { downloadWowxxx, getWowxxxLink } from './core/wowxxx'
 import { UrlType } from './types'
 import { downloadVideo } from './utils/downloader'
 import { judgeUrl } from './utils/judgeUrl'
 import { logger, setSilent } from './utils/logger'
-import { downloadWowxxx, getWowxxxLink } from './core/wowxxx'
 
 const cli: CAC = cac('fast-dirpy')
 
@@ -31,16 +31,16 @@ cli.command('get <url>', 'get video direct link.')
 
     const proxyOptions = host
       ? {
-        proxy: { host, port },
-      }
+          proxy: { host, port },
+        }
       : undefined
 
     const puppeteerOptions = chromePath
       ? {
-        puppeteer: {
-          executablePath: chromePath,
-        },
-      }
+          puppeteer: {
+            executablePath: chromePath,
+          },
+        }
       : undefined
 
     setSilent(!!silent)
@@ -75,6 +75,16 @@ cli.command('get <url>', 'get video direct link.')
     else if (urlType === UrlType.Wowxxx) {
       logger.info('Matched link source: Wowxxx.')
       const videoLink = await getWowxxxLink({
+        url,
+        cwd: config,
+      }, proxyOptions)
+
+      console.log(videoLink)
+    }
+
+    else if (urlType === UrlType.XHamster) {
+      logger.info('Matched link source: XHamster.')
+      const videoLink = await getXHamsterLink({
         url,
         cwd: config,
       }, proxyOptions)
@@ -120,16 +130,16 @@ cli.command('download <url>', 'download a video.')
 
     const proxyOptions = host
       ? {
-        proxy: { host, port },
-      }
+          proxy: { host, port },
+        }
       : undefined
 
     const puppeteerOptions = chromePath
       ? {
-        puppeteer: {
-          executablePath: chromePath,
-        },
-      }
+          puppeteer: {
+            executablePath: chromePath,
+          },
+        }
       : undefined
 
     setSilent(!!silent)
@@ -184,6 +194,15 @@ cli.command('download <url>', 'download a video.')
       }, proxyOptions)
     }
 
+    else if (urlType === UrlType.XHamster) {
+      logger.info('Matched link source: XHamster.')
+      await downloadXHamster({
+        url,
+        path: path || './xhamster-vid.mp4',
+        cwd: config,
+      }, proxyOptions)
+    }
+
     else if (urlType === UrlType.MissAV) {
       logger.info('Matched link source: MissAV.')
       await downloadMissav({
@@ -198,12 +217,12 @@ cli.command('download <url>', 'download a video.')
         url,
         path,
         cwd: config,
-      })
+      }, proxyOptions)
     }
     else if (urlType === UrlType.M3U8) {
       logger.info('Matched link source: m3u8.')
 
-      await remoteM3U8ToMP4({
+      remoteM3U8ToMP4({
         url,
         path: path || './m3u8-download.mp4',
         cwd: config,
@@ -216,7 +235,7 @@ cli.command('download <url>', 'download a video.')
         url,
         path,
         cwd: config,
-      })
+      }, proxyOptions)
     }
     else {
       logger.error('Your link is not supported!')

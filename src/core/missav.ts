@@ -168,7 +168,7 @@ export async function downloadMissav(params: Partial<DownloadParams>) {
     cwd,
   })
 
-  await remoteM3U8ToMP4({
+  remoteM3U8ToMP4({
     url: link,
     cwd,
     path: path || `${movieId}.mp4`,

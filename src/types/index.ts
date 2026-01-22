@@ -36,5 +36,6 @@ export enum UrlType {
   MissAV,
   Hanime,
   Wowxxx,
+  XHamster,
   MP4,
 }

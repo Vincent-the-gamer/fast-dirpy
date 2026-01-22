@@ -19,12 +19,13 @@ A simple library/CLI to download youtube(etc.) videos.
 <details>
   <summary>NSFW</summary>
 
-  * [Animehentai](https://animeidhentai.com/)
-  * [Koreanpornmovies](https://koreanpornmovie.com/)
-  * [XVideos](https://www.xvideos.com/)
-  * [Missav](https://missav.ws/) (m3u8)
-  * [Hanime1.me](https://hanime1.me/)
-  * [wow.xxx](https://www.wow.xxx/)
+- [Animehentai](https://animeidhentai.com/)
+- [Koreanpornmovies](https://koreanpornmovie.com/)
+- [XVideos](https://www.xvideos.com/)
+- [Missav](https://missav.ws/) (m3u8)
+- [Hanime1.me](https://hanime1.me/)
+- [wow.xxx](https://www.wow.xxx/)
+- [xhamster](https://xhamster.com/) (m3u8, retry if error)
 </details>
 
 And `.m3u8` videos.
@@ -38,6 +39,7 @@ You can use this [userscript](https://greasyfork.org/zh-CN/scripts/449581-m3u8%E
 ## Installation
 
 ### As a library
+
 ```shell
 npm i fast-dirpy
 
@@ -46,6 +48,7 @@ deno add jsr:@vince-g/fast-dirpy
 ```
 
 ### As a **command line tool**
+
 ```shell
 npm i fast-dirpy -g
 ```
@@ -112,6 +115,7 @@ fast-dirpy get https\://www.youtube.com/watch\?v\=6c28qWDMPBA
 #### Download Video
 
 > [!IMPORTANT]
+>
 > 1. Some website listed in [Supported Websites](#supported-websites) requires Google Chrome installed for Puppeteer use. You have to use a config file or give parameter of puppeteer executable path.
 > 2. `.m3u8` source is handled by `ffmpeg`.
 
@@ -150,6 +154,7 @@ fast-dirpy --help
 ```
 
 ### Use as a library
+
 ```ts
 import { fastLink, fastDownload, remoteM3U8ToMP4, downloadVideo } from 'fast-dirpy'
 
