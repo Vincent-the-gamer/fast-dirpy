@@ -1,15 +1,9 @@
 {
   "name": "@vince-g/fast-dirpy",
-  "version": "0.3.9",
+  "version": "0.3.10",
   "license": "MIT",
   "exports": "./src/index.ts",
   "publish": {
-    "include": [
-      "src",
-      "package.json",
-      "jsr.json",
-      "README.md",
-      "LICENSE"
-    ]
+    "include": ["src", "package.json", "jsr.json", "README.md", "LICENSE"]
   }
 }
