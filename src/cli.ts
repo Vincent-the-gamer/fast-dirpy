@@ -3,12 +3,7 @@ import { bold, dim } from 'ansis'
 import { cac } from 'cac'
 import restoreCursor from 'restore-cursor'
 import pkgJson from '../package.json'
-import { downloadAnimeIdHentai, downloadHanime, downloadXHamster, getAnimeIdHentaiLink, getXHamsterLink, remoteM3U8ToMP4 } from './core'
-import { downloadBilibili, getBilibiliLink } from './core/bilibili'
-import { downloadDirpy, getDirpyLink } from './core/dirpy'
-import { downloadKoreanPm, getKoreanPmLink } from './core/koreanpm'
-import { downloadMissav } from './core/missav'
-import { downloadWowxxx, getWowxxxLink } from './core/wowxxx'
+import { downloadAnimeIdHentai, downloadBilibili, downloadDirpy, downloadHanime, downloadKoreanPm, downloadMissav, downloadWowxxx, downloadXHamster, getAnimeIdHentaiLink, getBilibiliLink, getDirpyLink, getKoreanPmLink, getMissavLink, getWowxxxLink, getXHamsterLink, remoteM3U8ToMP4 } from './core'
 import { UrlType } from './types'
 import { downloadVideo } from './utils/downloader'
 import { judgeUrl } from './utils/judgeUrl'
@@ -92,13 +87,23 @@ cli.command('get <url>', 'get video direct link.')
       console.log(videoLink)
     }
 
+    else if (urlType === UrlType.MissAV) {
+      logger.info('Matched link source: XVideos.')
+      const videoLink = await getMissavLink({
+        url,
+        cwd: config,
+      })
+
+      console.log(videoLink)
+    }
+
     else if (urlType === UrlType.Bilibili) {
       logger.info('Matched link source: Bilibili.')
       if (!url.includes('bilibili.com')) {
         logger.error('Please provide a valid Bilibili URL.')
         return
       }
-      const link = await getBilibiliLink(url)
+      const link = getBilibiliLink(url)
       console.log(link)
     }
     else if (urlType === UrlType.Dirpy) {
