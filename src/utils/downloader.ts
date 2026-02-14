@@ -14,7 +14,9 @@ export async function downloadVideo(params: DownloadParams, options: Partial<Opt
   const _proxy = proxy?.host !== '' ? proxy : undefined
 
   if (url === '') {
-    return Promise.reject('Extract direct link failed!')
+    return Promise.reject(
+      new Error('Extract direct link failed!'),
+    )
   }
 
   const writer = fs.createWriteStream(path || './download.mp4')
@@ -22,7 +24,7 @@ export async function downloadVideo(params: DownloadParams, options: Partial<Opt
     url,
     headers: {
       'User-Agent': useRandomUserAgent(),
-      ...options.headers
+      ...options.headers,
     },
     method: 'GET',
     responseType: 'stream',

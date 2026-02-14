@@ -45,22 +45,22 @@
   },
   "dependencies": {
     "ansis": "^4.2.0",
-    "axios": "^1.13.2",
+    "axios": "^1.13.5",
     "cac": "^6.7.14",
     "cheerio": "^1.2.0",
     "consola": "^3.4.2",
     "m3u8stream": "^0.8.6",
-    "puppeteer-core": "^24.36.0",
+    "puppeteer-core": "^24.37.3",
     "restore-cursor": "^5.1.0",
-    "unconfig": "^7.4.2"
+    "unconfig": "^7.5.0"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^7.2.0",
-    "@types/node": "^25.0.10",
+    "@antfu/eslint-config": "^7.4.3",
+    "@types/node": "^25.2.3",
     "deepmerge": "^4.3.1",
-    "eslint": "^9.39.2",
+    "eslint": "^10.0.0",
     "taze": "^19.9.2",
-    "tsdown": "^0.20.1",
+    "tsdown": "^0.20.3",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "vitest": "^4.0.18"
