@@ -45,11 +45,11 @@ export async function downloadHanime(params: DownloadParams, options: Partial<Op
   const directLinks = await getHanimeLink({ url }, options)
 
   if (directLinks.length > 0) {
-    logger.success(`Successfully get video sources, size ${directLinks[directLinks.length - 1].size} to be downloaded.`)
+    logger.success(`Successfully get video sources, size ${directLinks.at(-1).size} to be downloaded.`)
   }
 
   await downloadVideo({
-    url: directLinks[directLinks.length - 1].src,
+    url: directLinks.at(-1).src,
     path,
     cwd,
   }, options)

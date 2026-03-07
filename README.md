@@ -26,6 +26,7 @@ A simple library/CLI to download youtube(etc.) videos.
 - [Hanime1.me](https://hanime1.me/)
 - [wow.xxx](https://www.wow.xxx/)
 - [xhamster](https://xhamster.com/) (m3u8, retry if error)
+- [rule34.xyz](https://rule34.xyz/) (anime style)
 </details>
 
 And `.m3u8` videos.
