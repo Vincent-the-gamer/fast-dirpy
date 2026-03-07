@@ -9,9 +9,9 @@ import { useRandomUserAgent } from '../utils/userAgent'
 
 // Sort the video sizes, ensure the large size video to be at the end of array.
 function compareSize(a: Record<string, any>, b: Record<string, any>) {
-    const sizeA = a.label.slice(0, a.label.length - 1)
-    const sizeB = b.label.slice(0, b.label.length - 1)
-    return Number(sizeA) - Number(sizeB)
+  const sizeA = a.label.slice(0, a.label.length - 1)
+  const sizeB = b.label.slice(0, b.label.length - 1)
+  return Number(sizeA) - Number(sizeB)
 }
 
 export async function getWowxxxLink(params: DirectLinkParams, options: Partial<Options> = DEFAULT_OPTIONS): Promise<Record<string, any>[]> {
@@ -47,11 +47,11 @@ export async function downloadWowxxx(params: DownloadParams, options: Partial<Op
   const directLinks = await getWowxxxLink({ url }, options)
 
   if (directLinks.length > 0) {
-    logger.success(`Successfully get video sources, size ${directLinks[directLinks.length - 1].label} to be downloaded.`)
+    logger.success(`Successfully get video sources, size ${directLinks.at(-1).label} to be downloaded.`)
   }
 
   await downloadVideo({
-    url: directLinks[directLinks.length - 1].src,
+    url: directLinks.at(-1).src,
     path,
     cwd,
   }, options)

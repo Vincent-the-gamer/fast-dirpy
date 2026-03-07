@@ -3,7 +3,7 @@ import axios from 'axios'
 import { load } from 'cheerio'
 import { DEFAULT_OPTIONS } from '../constants'
 import { resolveConfig } from '../options'
-import { downloadVideo } from '../utils/downloader'
+import { downloadVideosParallel } from '../utils/downloader'
 import { useRandomUserAgent } from '../utils/userAgent'
 
 export async function getDirpyLink(params: DirectLinkParams, options: Partial<Options> = DEFAULT_OPTIONS): Promise<string> {
@@ -38,12 +38,20 @@ export async function getDirpyLink(params: DirectLinkParams, options: Partial<Op
   return src
 }
 
-export async function downloadDirpy(params: DownloadParams, options: Partial<Options> = DEFAULT_OPTIONS): Promise<void> {
-  const { path, url, cwd } = params
-  const directLink = await getDirpyLink({ url }, options)
-  await downloadVideo({
-    url: directLink,
-    path,
-    cwd,
-  }, options)
+export async function downloadDirpy(params: DownloadParams | DownloadParams[], options: Partial<Options> = DEFAULT_OPTIONS): Promise<void> {
+  if (!Array.isArray(params)) {
+    params = [params] as DownloadParams[]
+  }
+
+  const directParams = []
+
+  for (const param of params) {
+    const directLink = await getDirpyLink({
+      url: param.url,
+      cwd: param.cwd
+    }, options)
+    directParams.push({ ...param, url: directLink })
+  }
+
+  await downloadVideosParallel(directParams)
 }

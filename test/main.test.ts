@@ -1,12 +1,7 @@
-import { fastDownload } from '../src'
+import { downloadRule34XyzVideo } from "../src/core/rule34xyz";
 
-// const a = await fastLink({
-//   url: 'https://www.wow.xxx/zh/videos/tiny-blonde-cheats-with-bbc-for-sisters-boyfriend/?asgtbndr=1',
-// })
+await downloadRule34XyzVideo([{
+  url: 'https://rule34.xyz/post/4596989?type=video&page=2&cursor=4597035&providerId=root',
+  path: "./test.mp4"
+}])
 
-// console.log(a)
-
-await fastDownload({
-  url: 'https://xxx',
-  path: './test-down.mp4',
-})

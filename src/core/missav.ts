@@ -155,7 +155,7 @@ export async function getMissavLink(params: DirectLinkParams) {
   const regex = /(?:\d+p|\d+x\d+)\/video\.m3u8/g
   const matches = list.match(regex)
 
-  const m3u8Url = `https://surrit.com/${uuid}/${matches[matches.length - 1]}`
+  const m3u8Url = `https://surrit.com/${uuid}/${matches.at(-1)}`
   return m3u8Url
 }
 
