@@ -12,7 +12,7 @@
 A simple library/CLI to download youtube(etc.) videos.
 
 > [!IMPORTANT]
-> There are breaking changes in v1.0.0, to see the user guide, please refer to branch [v0.3.10](https://github.com/Vincent-the-gamer/fast-dirpy/tree/v0.3.10).
+> There will be breaking changes in v1.0.0, to see the user guide, please refer to branch [v0.3.10](https://github.com/Vincent-the-gamer/fast-dirpy/tree/v0.3.10).
 
 ## Supported Websites
 
