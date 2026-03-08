@@ -24,7 +24,9 @@ export interface DownloadParams {
 }
 
 export type M3U8Params = DownloadParams & {
-  ffmpegPath: string
+  ffmpegPath?: string
+  concurrency?: number
+  retries?: number
 }
 
 export enum UrlType {

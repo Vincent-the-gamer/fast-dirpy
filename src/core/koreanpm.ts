@@ -3,7 +3,7 @@ import axios from 'axios'
 import { load } from 'cheerio'
 import { DEFAULT_OPTIONS } from '../constants'
 import { resolveConfig } from '../options'
-import { downloadVideo } from '../utils/downloader'
+import { downloadVideo, downloadVideosParallel } from '../utils/downloader'
 import { useRandomUserAgent } from '../utils/userAgent'
 
 export async function getKoreanPmLink(params: DirectLinkParams, options: Partial<Options> = DEFAULT_OPTIONS): Promise<string> {
@@ -34,12 +34,18 @@ export async function getKoreanPmLink(params: DirectLinkParams, options: Partial
   return link
 }
 
-export async function downloadKoreanPm(params: DownloadParams, options: Partial<Options> = DEFAULT_OPTIONS): Promise<void> {
-  const { path, url, cwd } = params
-  const directLink = await getKoreanPmLink({ url }, options)
-  await downloadVideo({
-    url: directLink,
-    path,
-    cwd,
-  }, options)
+export async function downloadKoreanPm(params: DownloadParams | DownloadParams[], options: Partial<Options> = DEFAULT_OPTIONS): Promise<void> {
+  if (!Array.isArray(params)) {
+    params = [params] as DownloadParams[]
+  }
+
+  const directParams = []
+
+  for (const param of params) {
+    const { url, cwd } = param
+    const directLink = await getKoreanPmLink({ url, cwd }, options)
+    directParams.push({ ...param, url: directLink })
+  }
+
+  await downloadVideosParallel(directParams)
 }

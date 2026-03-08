@@ -3,7 +3,7 @@ import axios from 'axios'
 import { load } from 'cheerio'
 import { DEFAULT_OPTIONS } from '../constants'
 import { resolveConfig } from '../options'
-import { downloadVideo } from '../utils/downloader'
+import { downloadVideo, downloadVideosParallel } from '../utils/downloader'
 import { logger } from '../utils/logger'
 import { useRandomUserAgent } from '../utils/userAgent'
 
@@ -40,17 +40,23 @@ export async function getHanimeLink(params: DirectLinkParams, options: Partial<O
   return sources
 }
 
-export async function downloadHanime(params: DownloadParams, options: Partial<Options> = DEFAULT_OPTIONS): Promise<void> {
-  const { path, url, cwd } = params
-  const directLinks = await getHanimeLink({ url }, options)
-
-  if (directLinks.length > 0) {
-    logger.success(`Successfully get video sources, size ${directLinks.at(-1).size} to be downloaded.`)
+export async function downloadHanime(params: DownloadParams | DownloadParams[], options: Partial<Options> = DEFAULT_OPTIONS): Promise<void> {
+  if (!Array.isArray(params)) {
+    params = [params] as DownloadParams[]
   }
 
-  await downloadVideo({
-    url: directLinks.at(-1).src,
-    path,
-    cwd,
-  }, options)
+  const directParams = []
+
+  for (const param of params) {
+    const { url, cwd } = param
+    const directLinks = await getHanimeLink({ url, cwd }, options)
+
+    if (directLinks.length > 0) {
+      logger.success(`Successfully get video sources, size ${directLinks.at(-1)!.size} to be downloaded.`)
+    }
+
+    directParams.push({ ...param, url: directLinks.at(-1)!.src })
+  }
+
+  await downloadVideosParallel(directParams)
 }
