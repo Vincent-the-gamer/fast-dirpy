@@ -11,9 +11,6 @@
 
 A simple library/CLI to download youtube(etc.) videos.
 
-> [!IMPORTANT]
-> There will be breaking changes in v1.0.0, to see the user guide, please refer to branch [v0.3.10](https://github.com/Vincent-the-gamer/fast-dirpy/tree/v0.3.10).
-
 ## Supported Websites
 
 - [YouTube](https://www.youtube.com/)
@@ -33,10 +30,6 @@ A simple library/CLI to download youtube(etc.) videos.
 
 And `.m3u8` videos.
 
-> [!IMPORTANT]
-> From v0.3.0, .m3u8 downloader is no longer using ffmpeg.
-> And it doesn't provide proxy settings, so, you need to use `export https_proxy=http://ip:port` to set proxy manually in terminal.
-
 You can use this [userscript](https://greasyfork.org/zh-CN/scripts/449581-m3u8%E8%A7%86%E9%A2%91%E4%BE%A6%E6%B5%8B%E4%B8%8B%E8%BD%BD%E5%99%A8-%E8%87%AA%E5%8A%A8%E5%97%85%E6%8E%A2) to extract `.m3u8` sources from websites.
 
 ## Installation
@@ -55,10 +48,6 @@ deno add jsr:@vince-g/fast-dirpy
 ```shell
 npm i fast-dirpy -g
 ```
-
-### Additional: download `ffmpeg`
-
-https://www.ffmpeg.org/download.html
 
 ## Usage
 
