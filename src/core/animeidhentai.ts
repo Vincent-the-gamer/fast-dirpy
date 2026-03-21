@@ -3,9 +3,10 @@ import axios from 'axios'
 import { load } from 'cheerio'
 import { DEFAULT_OPTIONS } from '../constants'
 import { resolveConfig } from '../options'
-import { downloadVideo } from '../utils/downloader'
+import { downloadVideo, downloadVideosParallel } from '../utils/downloader'
 import { usePuppeteer } from '../utils/puppeteer'
 import { useRandomUserAgent } from '../utils/userAgent'
+import { logger } from '../utils/logger'
 
 /**
  * Requires puppeteer
@@ -80,12 +81,20 @@ export async function getAnimeIdHentaiLink(params: DirectLinkParams, options: Pa
   return link
 }
 
-export async function downloadAnimeIdHentai(params: DownloadParams, options: Partial<Options> = DEFAULT_OPTIONS): Promise<void> {
-  const { path, url, cwd } = params
-  const directLink = await getAnimeIdHentaiLink({ url }, options)
-  await downloadVideo({
-    url: directLink,
-    path,
-    cwd,
-  }, options)
+export async function downloadAnimeIdHentai(params: DownloadParams | DownloadParams[], options: Partial<Options> = DEFAULT_OPTIONS): Promise<void> {
+  if (!Array.isArray(params)) {
+    params = [params] as DownloadParams[]
+  }
+
+  const directParams = []
+
+  for (const param of params) {
+    const { url, cwd } = param
+    const directLink = await getAnimeIdHentaiLink({ url, cwd }, options)
+    directParams.push({ ...param, url: directLink })
+  }
+
+  if (directParams.length > 0) {
+    await downloadVideosParallel(directParams)
+  }
 }

@@ -21,6 +21,7 @@ export interface DownloadParams {
   url: string
   path?: string
   cwd?: string
+  urlType?: UrlType
 }
 
 export type M3U8Params = DownloadParams & {
@@ -35,7 +36,6 @@ export enum UrlType {
   Dirpy,
   M3U8,
   KoreanPM,
-  MissAV,
   Hanime,
   Wowxxx,
   XHamster,

@@ -3,11 +3,12 @@ import { bold, dim } from 'ansis'
 import { cac } from 'cac'
 import restoreCursor from 'restore-cursor'
 import pkgJson from '../package.json'
-import { downloadAnimeIdHentai, downloadBilibili, downloadDirpy, downloadHanime, downloadKoreanPm, downloadMissav, downloadWowxxx, downloadXHamster, getAnimeIdHentaiLink, getBilibiliLink, getDirpyLink, getKoreanPmLink, getMissavLink, getWowxxxLink, getXHamsterLink, remoteM3U8ToMP4 } from './core'
-import { UrlType } from './types'
-import { downloadVideo } from './utils/downloader'
+import { downloadAnimeIdHentai, downloadBilibili, downloadDirpy, downloadHanime, downloadKoreanPm, downloadWowxxx, downloadXHamster, getAnimeIdHentaiLink, getBilibiliLink, getDirpyLink, getKoreanPmLink, getWowxxxLink, getXHamsterLink, remoteM3U8ToMP4, remoteM3U8ToMP4Parallel } from './core'
+import { DownloadParams, UrlType } from './types'
+import { downloadVideo, downloadVideosParallel } from './utils/downloader'
 import { judgeUrl } from './utils/judgeUrl'
 import { logger, setSilent } from './utils/logger'
+import fs from 'fs/promises'
 
 const cli: CAC = cac('fast-dirpy')
 
@@ -87,16 +88,6 @@ cli.command('get <url>', 'get video direct link.')
       console.log(videoLink)
     }
 
-    else if (urlType === UrlType.MissAV) {
-      logger.info('Matched link source: XVideos.')
-      const videoLink = await getMissavLink({
-        url,
-        cwd: config,
-      })
-
-      console.log(videoLink)
-    }
-
     else if (urlType === UrlType.Bilibili) {
       logger.info('Matched link source: Bilibili.')
       if (!url.includes('bilibili.com')) {
@@ -121,17 +112,43 @@ cli.command('get <url>', 'get video direct link.')
     }
   })
 
-cli.command('download <url>', 'download a video.')
-  .option('--path, -p <path>', 'Download destination path + filename. e.g. /xxx/example.mp4.')
+cli.command('download', 'download a video.')
+  .option('--json, -j <json>', 'JSON download params.')
+  .option('--jsonFile, -F <jsonFile>', 'Path to a JSON file containing download params.')
   .option('--proxyHost, -H <proxyHost>', 'Proxy host.')
   .option('--proxyPort, -P <proxyPort>', 'Proxy port.')
   .option('--config, -c <path>', 'Specify an external config file.')
   .option('--silent', 'Suppress non-error logs')
   .option('--chromePath', 'Path to your Google Chrome browser')
-  .action(async (url, options) => {
-    const urlType = judgeUrl(url)
+  .action(async (options) => {
+    const { json, jsonFile } = options
 
-    const { proxyHost: host, proxyPort: port, path, config, silent, chromePath } = options
+    if(!json && !jsonFile) {
+      logger.error('No JSON params provided.')
+      return
+    }
+
+    const buildParams = async (jsonStr: string, jsonFile: string) => {
+      if (jsonStr) {
+        return JSON.parse(jsonStr)
+      } else if(jsonFile) {
+        const fileContent = await fs.readFile(jsonFile, 'utf-8')
+        return JSON.parse(fileContent)
+      }
+    }
+
+    let params: DownloadParams | DownloadParams[] = await buildParams(json, jsonFile)
+
+    if (!Array.isArray(params)) {
+      params = [params] as DownloadParams[]
+    }
+
+    if (params.length < 1) {
+      logger.error('No params provided.')
+      return
+    }
+
+    const { proxyHost: host, proxyPort: port, config, silent, chromePath } = options
 
     const proxyOptions = host
       ? {
@@ -152,98 +169,79 @@ cli.command('download <url>', 'download a video.')
       `fast-dirpy ${dim(`v${version}`)} : ${bold(`Video Downloader`)}.`,
     )
 
-    if (urlType === UrlType.Bilibili) {
-      logger.info('Matched link source: Bilibili.')
-      await downloadBilibili({
-        url,
-        path,
-      })
+    for (const param of params) {
+      param.urlType = judgeUrl(param.url)
+      param.cwd = config
     }
-    else if (urlType === UrlType.Dirpy) {
-      logger.info('Matched link source: Dirpy.')
 
-      downloadDirpy({
-        url,
-        path: path || './dirpy.mp4',
-        cwd: config,
-      }, proxyOptions)
+    const bilibiliParams = params.filter(param => param.urlType === UrlType.Bilibili)
+    const animeIdHentaiParams = params.filter(param => param.urlType === UrlType.AnimeIdHentai)
+    const koreanPmParams = params.filter(param => param.urlType === UrlType.KoreanPM)
+    const hanimeParams = params.filter(param => param.urlType === UrlType.Hanime)
+    const wowxxxParams = params.filter(param => param.urlType === UrlType.Wowxxx)
+    const xHamsterParams = params.filter(param => param.urlType === UrlType.XHamster)
+    const dirpyParams = params.filter(param => param.urlType === UrlType.Dirpy)
+    const mp4Params = params.filter(param => param.urlType === UrlType.MP4)
+    const m3u8Params = params.filter(param => param.urlType === UrlType.M3U8)
+
+    if(bilibiliParams.length > 0) {
+      await downloadBilibili(bilibiliParams)
     }
-    else if (urlType === UrlType.AnimeIdHentai) {
-      logger.info('Matched link source: AnimeIdHentai.')
 
-      await downloadAnimeIdHentai({
-        url,
-        path: path || './animeidhentai.mp4',
-        cwd: config,
-      }, {
+    if(animeIdHentaiParams.length > 0) {
+      await downloadAnimeIdHentai(animeIdHentaiParams, {
         ...proxyOptions,
         ...puppeteerOptions,
       })
     }
 
-    else if (urlType === UrlType.KoreanPM) {
-      logger.info('Matched link source: KoreanPM.')
-      await downloadKoreanPm({
-        url,
-        path: path || './korean-pm.mp4',
-        cwd: config,
-      }, proxyOptions)
-    }
-
-    else if (urlType === UrlType.Wowxxx) {
-      logger.info('Matched link source: Wowxxx.')
-      await downloadWowxxx({
-        url,
-        path: path || './wowxxx.mp4',
-        cwd: config,
-      }, proxyOptions)
-    }
-
-    else if (urlType === UrlType.XHamster) {
-      logger.info('Matched link source: XHamster.')
-      await downloadXHamster({
-        url,
-        path: path || './xhamster-vid.mp4',
-        cwd: config,
-      }, proxyOptions)
-    }
-
-    else if (urlType === UrlType.MissAV) {
-      logger.info('Matched link source: MissAV.')
-      await downloadMissav({
-        url,
-        path,
-        cwd: config,
+    if(koreanPmParams.length > 0) {
+      await downloadKoreanPm(koreanPmParams, {
+        ...proxyOptions,
+        ...puppeteerOptions,
       })
     }
-    else if (urlType === UrlType.Hanime) {
-      logger.info('Matched link source: Hanime.')
-      await downloadHanime({
-        url,
-        path,
-        cwd: config,
-      }, proxyOptions)
-    }
-    else if (urlType === UrlType.M3U8) {
-      logger.info('Matched link source: m3u8.')
 
-      remoteM3U8ToMP4({
-        url,
-        path: path || './m3u8-download.mp4',
-        cwd: config,
+    if(hanimeParams.length > 0) {
+      await downloadHanime(hanimeParams, {
+        ...proxyOptions,
+        ...puppeteerOptions,
       })
     }
-    else if (urlType === UrlType.MP4) {
-      logger.info('Matched link source: mp4.')
 
-      await downloadVideo({
-        url,
-        path,
-        cwd: config,
-      }, proxyOptions)
+    if(wowxxxParams.length > 0) {
+      await downloadWowxxx(wowxxxParams, {
+        ...proxyOptions,
+        ...puppeteerOptions,
+      })
     }
-    else {
-      logger.error('Your link is not supported!')
+
+    if(xHamsterParams.length > 0) {
+      await downloadXHamster(xHamsterParams, {
+        ...proxyOptions,
+        ...puppeteerOptions,
+      })
+    }
+
+    if(dirpyParams.length > 0) {
+      await downloadDirpy(dirpyParams, {
+        ...proxyOptions,
+        ...puppeteerOptions,
+      })
+    }
+
+    if(mp4Params.length > 0) {
+      await downloadVideosParallel(mp4Params, {
+        ...proxyOptions,
+        ...puppeteerOptions,
+      })
+    }
+
+    if(m3u8Params.length > 0) {
+      await remoteM3U8ToMP4Parallel(m3u8Params, {
+        ...proxyOptions,
+        ...puppeteerOptions,
+      })
     }
   })
 

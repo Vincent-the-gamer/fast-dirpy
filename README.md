@@ -25,7 +25,6 @@ A simple library/CLI to download youtube(etc.) videos.
 - [Animehentai](https://animeidhentai.com/)
 - [Koreanpornmovies](https://koreanpornmovie.com/)
 - [XVideos](https://www.xvideos.com/)
-- [Missav](https://missav.ws/) (m3u8)
 - [Hanime1.me](https://hanime1.me/)
 - [wow.xxx](https://www.wow.xxx/)
 - [xhamster](https://xhamster.com/) (m3u8, retry if error)
@@ -104,7 +103,7 @@ export default defineConfig({
 #   -c, --config: Specified external config file.
 #       e.g.: fast-dirpy get https://xxx -c ~/Downloads/fast-dirpy.config.json
 #   --chromePath: Path to your Google Chrome browser.
-fast-dirpy get https\://www.youtube.com/watch\?v\=6c28qWDMPBA -H 127.0.0.1 -P 7890
+fast-dirpy get https://www.youtube.com/watch?v=6c28qWDMPBA -H 127.0.0.1 -P 7890
 
 # Bilibili source doesn't need any proxy, so it's disabled by default.
 fast-dirpy get https://www.bilibili.com/video/BV1TSPeeGE35
@@ -121,34 +120,27 @@ fast-dirpy get https\://www.youtube.com/watch\?v\=6c28qWDMPBA
 > [!IMPORTANT]
 >
 > 1. Some website listed in [Supported Websites](#supported-websites) requires Google Chrome installed for Puppeteer use. You have to use a config file or give parameter of puppeteer executable path.
-> 2. `.m3u8` source is handled by `ffmpeg`.
+> 2. You can download multiple videos in parallel at version `v1.0.0` and above.
 
 ```shell
-# get video direct link
-# Path: --path, -p: Downloaded video save path.
-#
 # Proxy:
 #  -H, --proxyHost: proxy host.
 #  -P, --proxyPort: proxy port.
 #  -c, --config: Specified external config file.
 #       e.g.: fast-dirpy get https://xxx -c ~/Downloads/fast-dirpy.config.json
 #  --chromePath: Path to your Google Chrome browser.
-fast-dirpy download https\://www.youtube.com/watch\?v\=6c28qWDMPBA -p ./test.mp4  -H 127.0.0.1 -P 7890
 
-# Bilibili source doesn't need any proxy, so it's disabled by default.
-fast-dirpy download https\://www.bilibili.com/video/BV1TSPeeGE35 -p ./test.mp4
+fast-dirpy download --json '[{"url": "https://www.bilibili.com/video/BV1uEAWzuEHC","path": "./cmd-test.mp4"}]' -H 127.0.0.1 -P 7890
 
-# m3u8 sources
-fast-dirpy download https\://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8 -p ./test.mp4
-
-# mp4 sources
-fast-dirpy download http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4 -p ./big_buck_bunny.mp4
+fast-dirpy download --jsonFile ./test/params.json -H 127.0.0.1 -P 7890
 ```
 
 if you have set your proxy config in `fast-dirpy.config.ts`, you can omit proxy parameters:
 
 ```shell
-fast-dirpy download https\://www.youtube.com/watch\?v\=6c28qWDMPBA -p ./test.mp4
+fast-dirpy download --jsonFile ./test/params.json
+
+fast-dirpy download --json '[{"url": "https://www.bilibili.com/video/BV1uEAWzuEHC","path": "./cmd-test.mp4"}]'
 ```
 
 For further CLI help:
@@ -158,6 +150,9 @@ fast-dirpy --help
 ```
 
 ### Use as a library
+
+> [!IMPORTANT]
+> You can download multiple videos in parallel at version `v1.0.0` and above.
 
 ```ts
 import { fastLink, fastDownload, remoteM3U8ToMP4, downloadVideo } from 'fast-dirpy'
@@ -175,26 +170,14 @@ const link = await fastLink(
 )
 
 // download video
-await fastDownload({
+await fastDownload([{
   url: '<url>',
   path: './download.mp4',
   cwd: '/path/to/external-config', // Optional: You can specify an external config file.
-},
+}],
 // options (Optional, can be omitted if you have a config file, this will overwrites your config file options.)
 {
   proxy: { ... }
-})
-
-// Download `.m3u8` video
-await remoteM3U8ToMP4({
-  url: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8',
-  path: './test.mp4',
-})
-
-// Download `.mp4` video
-await downloadVideo({
-    url: 'http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4',
-    path: "./big_buck_bunny.mp4"
 })
 ```
 

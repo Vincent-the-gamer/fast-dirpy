@@ -8,20 +8,18 @@ import {
   downloadDirpy,
   downloadHanime,
   downloadKoreanPm,
-  downloadMissav,
   downloadXHamster,
   getAnimeIdHentaiLink,
   getBilibiliLink,
   getDirpyLink,
   getHanimeLink,
   getKoreanPmLink,
-  getMissavLink,
   getXHamsterLink,
-  remoteM3U8ToMP4,
+  remoteM3U8ToMP4Parallel,
 } from './core'
 import { downloadWowxxx, getWowxxxLink } from './core/wowxxx'
 import { UrlType } from './types'
-import { downloadVideo } from './utils/downloader'
+import { downloadVideo, downloadVideosParallel } from './utils/downloader'
 import { judgeUrl } from './utils/judgeUrl'
 import { logger } from './utils/logger'
 
@@ -46,7 +44,7 @@ export async function fastLink(params: DirectLinkParams, options: Partial<Option
       logger.error('Please provide a valid Bilibili URL.')
       return ''
     }
-    const link = await getBilibiliLink(url)
+    const link = await getBilibiliLink({ url, cwd })
     return link
   }
   else if (urlType === UrlType.AnimeIdHentai) {
@@ -68,14 +66,6 @@ export async function fastLink(params: DirectLinkParams, options: Partial<Option
       cwd,
     }, proxyOptions)
 
-    return videoLink
-  }
-  else if (urlType === UrlType.MissAV) {
-    logger.info('Matched link source: MissAV.')
-    const videoLink = await getMissavLink({
-      url,
-      cwd,
-    })
     return videoLink
   }
   else if (urlType === UrlType.Hanime) {
@@ -124,118 +114,99 @@ export async function fastLink(params: DirectLinkParams, options: Partial<Option
   }
 }
 
-export async function fastDownload(params: DownloadParams, options: Partial<Options> = DEFAULT_OPTIONS): Promise<void> {
-  const { url, path, cwd } = params
+export async function fastDownload(params: DownloadParams | DownloadParams[], options: Partial<Options> = DEFAULT_OPTIONS): Promise<void> {
+  if (!Array.isArray(params)) {
+    params = [params] as DownloadParams[]
+  }
+
+  if (params.length < 1) {
+    logger.error('No valid params provided.')
+    return
+  }
+
   const { proxy, puppeteer } = options
 
   const proxyOptions = proxy || {}
   const puppeteerOptions = puppeteer || {}
 
-  const urlType = judgeUrl(url)
+  for (const param of params) {
+    param.urlType = judgeUrl(param.url)
+  }
+
   logger.info(
     `fast-dirpy ${dim(`v${version}`)} : ${bold(`Video Downloader`)}.`,
   )
 
-  if (urlType === UrlType.Bilibili) {
-    logger.info('Matched link source: Bilibili.')
-    await downloadBilibili({
-      url,
-      path,
-    })
+  const bilibiliParams = params.filter(param => param.urlType === UrlType.Bilibili)
+  const animeIdHentaiParams = params.filter(param => param.urlType === UrlType.AnimeIdHentai)
+  const koreanPmParams = params.filter(param => param.urlType === UrlType.KoreanPM)
+  const hanimeParams = params.filter(param => param.urlType === UrlType.Hanime)
+  const wowxxxParams = params.filter(param => param.urlType === UrlType.Wowxxx)
+  const xHamsterParams = params.filter(param => param.urlType === UrlType.XHamster)
+  const dirpyParams = params.filter(param => param.urlType === UrlType.Dirpy)
+  const mp4Params = params.filter(param => param.urlType === UrlType.MP4)
+  const m3u8Params = params.filter(param => param.urlType === UrlType.M3U8)
+
+
+
+  if(bilibiliParams.length > 0) {
+    await downloadBilibili(bilibiliParams)
   }
 
-  else if (urlType === UrlType.AnimeIdHentai) {
-    logger.info('Matched link source: AnimeIdHentai.')
-
-    await downloadAnimeIdHentai({
-      url,
-      path: path || './animeidhentai.mp4',
-      cwd,
-    }, {
+  if(animeIdHentaiParams.length > 0) {
+    await downloadAnimeIdHentai(animeIdHentaiParams, {
       ...proxyOptions,
       ...puppeteerOptions,
     })
   }
 
-  else if (urlType === UrlType.KoreanPM) {
-    logger.info('Matched link source: KoreanPM.')
-    await downloadKoreanPm({
-      url,
-      path: path || './korean-pm.mp4',
-      cwd,
-    }, proxyOptions)
-  }
-
-  else if (urlType === UrlType.MissAV) {
-    logger.info('Matched link source: MissAV.')
-    await downloadMissav({
-      url,
-      path,
-      cwd,
+  if(koreanPmParams.length > 0) {
+    await downloadKoreanPm(koreanPmParams, {
+      ...proxyOptions,
+      ...puppeteerOptions,
     })
   }
 
-  else if (urlType === UrlType.Hanime) {
-    logger.info('Matched link source: Hanime.')
-
-    await downloadHanime({
-      url,
-      path,
-      cwd,
-    }, proxyOptions)
-  }
-
-  else if (urlType === UrlType.Wowxxx) {
-    logger.info('Matched link source: Wowxxx.')
-
-    await downloadWowxxx({
-      url,
-      path,
-      cwd,
-    }, proxyOptions)
-  }
-
-  else if (urlType === UrlType.XHamster) {
-    logger.info('Matched link source: XHamster.')
-
-    await downloadXHamster({
-      url,
-      path,
-      cwd,
-    }, proxyOptions)
-  }
-
-  else if (urlType === UrlType.Dirpy) {
-    logger.info('Matched link source: Dirpy.')
-
-    downloadDirpy({
-      url,
-      path: path || './dirpy.mp4',
-      cwd,
-    }, proxyOptions)
-  }
-
-  else if (urlType === UrlType.MP4) {
-    logger.info('Matched link source: mp4.')
-
-    await downloadVideo({
-      url,
-      path: path || './mp4-download.mp4',
-      cwd,
-    }, proxyOptions)
-  }
-
-  else if (urlType === UrlType.M3U8) {
-    logger.info('Matched link source: m3u8.')
-
-    remoteM3U8ToMP4({
-      url,
-      path: path || './m3u8-download.mp4',
-      cwd,
+  if(hanimeParams.length > 0) {
+    await downloadHanime(hanimeParams, {
+      ...proxyOptions,
+      ...puppeteerOptions,
     })
   }
-  else {
-    logger.error('Your link is not supported!')
+
+  if(wowxxxParams.length > 0) {
+    await downloadWowxxx(wowxxxParams, {
+      ...proxyOptions,
+      ...puppeteerOptions,
+    })
+  }
+
+  if(xHamsterParams.length > 0) {
+    await downloadXHamster(xHamsterParams, {
+      ...proxyOptions,
+      ...puppeteerOptions,
+    })
+  }
+
+  if(dirpyParams.length > 0) {
+    await downloadDirpy(dirpyParams, {
+      ...proxyOptions,
+      ...puppeteerOptions,
+    })
+  }
+
+  if(mp4Params.length > 0) {
+    await downloadVideosParallel(mp4Params, {
+      ...proxyOptions,
+      ...puppeteerOptions,
+    })
+  }
+
+  if(m3u8Params.length > 0) {
+    await remoteM3U8ToMP4Parallel(m3u8Params, {
+      ...proxyOptions,
+      ...puppeteerOptions,
+    })
   }
 }
 

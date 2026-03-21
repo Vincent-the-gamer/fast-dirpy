@@ -47,5 +47,7 @@ export async function downloadKoreanPm(params: DownloadParams | DownloadParams[]
     directParams.push({ ...param, url: directLink })
   }
 
-  await downloadVideosParallel(directParams)
+  if (directParams.length > 0) {
+    await downloadVideosParallel(directParams)
+  }
 }

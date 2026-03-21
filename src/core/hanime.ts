@@ -57,6 +57,7 @@ export async function downloadHanime(params: DownloadParams | DownloadParams[], 
 
     directParams.push({ ...param, url: directLinks.at(-1)!.src })
   }
-
-  await downloadVideosParallel(directParams)
+  if (directParams.length > 0) {
+    await downloadVideosParallel(directParams)
+  }
 }
