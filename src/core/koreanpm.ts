@@ -3,7 +3,7 @@ import axios from 'axios'
 import { load } from 'cheerio'
 import { DEFAULT_OPTIONS } from '../constants'
 import { resolveConfig } from '../options'
-import { downloadVideo, downloadVideosParallel } from '../utils/downloader'
+import { downloadVideosParallel } from '../utils/downloader'
 import { useRandomUserAgent } from '../utils/userAgent'
 
 export async function getKoreanPmLink(params: DirectLinkParams, options: Partial<Options> = DEFAULT_OPTIONS): Promise<string> {
