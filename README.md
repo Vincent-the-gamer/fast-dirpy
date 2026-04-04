@@ -26,7 +26,6 @@ A simple library/CLI to download youtube(etc.) videos.
 - [wow.xxx](https://www.wow.xxx/)
 - [xhamster](https://xhamster.com/) (m3u8, retry if error)
 - [rule34.xyz](https://rule34.xyz/) (2d/3d videos)
-- [kissjav.com](https://kissjav.com)
 
 > [!WARNING]
 > MissAV has a cloudflare challenge page which can't be bypassed using puppeteer/playwright, so you need to download the html page manually
@@ -35,7 +34,7 @@ A simple library/CLI to download youtube(etc.) videos.
 >
 > And this method is unstable, sometimes you'll get http 429.
 
-- [missav](https://missav.ws/) (Compatible with njavtv.com)
+- [missav](https://missav.ws/)
   </details>
 
 And `.m3u8` videos.

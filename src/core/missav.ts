@@ -75,7 +75,7 @@ export async function downloadMissav(params: DownloadParams | DownloadParams[], 
   const _options = {
     ...options,
     headers: {
-      'Referer': options.headers?.Referer || 'https://missav.ws/',
+      Referer: options.headers?.Referer || 'https://missav.ws/',
     },
   }
 

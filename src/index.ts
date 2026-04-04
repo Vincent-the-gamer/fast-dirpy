@@ -8,6 +8,7 @@ import {
   downloadDirpy,
   downloadHanime,
   downloadKoreanPm,
+  downloadMissav,
   downloadXHamster,
   getAnimeIdHentaiLink,
   getBilibiliLink,
@@ -32,7 +33,7 @@ export async function fastLink(params: DirectLinkParams, options: Partial<Option
   const proxyOptions = proxy || {}
   const puppeteerOptions = puppeteer || {}
 
-  const urlType = judgeUrl(url)
+  const urlType = judgeUrl(url!)
 
   logger.info(
     `fast-dirpy ${dim(`v${version}`)} : ${bold(`Direct Link Getter`)}.`,
@@ -40,7 +41,7 @@ export async function fastLink(params: DirectLinkParams, options: Partial<Option
 
   if (urlType === UrlType.Bilibili) {
     logger.info('Matched link source: Bilibili.')
-    if (!url.includes('bilibili.com')) {
+    if (!url!.includes('bilibili.com')) {
       logger.error('Please provide a valid Bilibili URL.')
       return ''
     }
@@ -146,6 +147,7 @@ export async function fastDownload(params: DownloadParams | DownloadParams[], op
   const dirpyParams = params.filter(param => param.urlType === UrlType.Dirpy)
   const mp4Params = params.filter(param => param.urlType === UrlType.MP4)
   const m3u8Params = params.filter(param => param.urlType === UrlType.M3U8)
+  const missAVParams = params.filter(param => param.urlType === UrlType.MissAV)
 
   if (bilibiliParams.length > 0) {
     await downloadBilibili(bilibiliParams)
@@ -183,6 +185,12 @@ export async function fastDownload(params: DownloadParams | DownloadParams[], op
     await downloadXHamster(xHamsterParams, {
       ...proxyOptions,
       ...puppeteerOptions,
+    })
+  }
+
+  if (missAVParams.length > 0) {
+    await downloadMissav(missAVParams, {
+      ...proxyOptions,
     })
   }
 

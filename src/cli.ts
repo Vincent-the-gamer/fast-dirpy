@@ -5,7 +5,7 @@ import { bold, dim } from 'ansis'
 import { cac } from 'cac'
 import restoreCursor from 'restore-cursor'
 import pkgJson from '../package.json'
-import { downloadAnimeIdHentai, downloadBilibili, downloadDirpy, downloadHanime, downloadKissJavVideo, downloadKoreanPm, downloadMissav, downloadWowxxx, downloadXHamster, getAnimeIdHentaiLink, getBilibiliLink, getDirpyLink, getKissJavLink, getKoreanPmLink, getWowxxxLink, getXHamsterLink, remoteM3U8ToMP4Parallel } from './core'
+import { downloadAnimeIdHentai, downloadBilibili, downloadDirpy, downloadHanime, downloadKoreanPm, downloadMissav, downloadWowxxx, downloadXHamster, getAnimeIdHentaiLink, getBilibiliLink, getDirpyLink, getKoreanPmLink, getWowxxxLink, getXHamsterLink, remoteM3U8ToMP4Parallel } from './core'
 import { UrlType } from './types'
 import { downloadVideosParallel } from './utils/downloader'
 import { judgeUrl } from './utils/judgeUrl'
@@ -82,16 +82,6 @@ cli.command('get <url>', 'get video direct link.')
     else if (urlType === UrlType.XHamster) {
       logger.info('Matched link source: XHamster.')
       const videoLink = await getXHamsterLink({
-        url,
-        cwd: config,
-      }, proxyOptions)
-
-      console.log(videoLink)
-    }
-
-    else if (urlType === UrlType.KissJav) {
-      logger.info('Matched link source: KissJav.')
-      const videoLink = await getKissJavLink({
         url,
         cwd: config,
       }, proxyOptions)
@@ -196,8 +186,6 @@ cli.command('download', 'download a video.')
     const mp4Params = params.filter(param => param.urlType === UrlType.MP4)
     const m3u8Params = params.filter(param => param.urlType === UrlType.M3U8)
     const missavParams = params.filter(param => param.urlType === UrlType.MissAV)
-    const kissJavParams = params.filter(param => param.urlType === UrlType.KissJav)
-
 
     if (bilibiliParams.length > 0) {
       await downloadBilibili(bilibiliParams)
@@ -241,13 +229,6 @@ cli.command('download', 'download a video.')
     if (missavParams.length > 0) {
       await downloadMissav(missavParams, {
         ...proxyOptions,
-      })
-    }
-
-    if (kissJavParams.length > 0) {
-      await downloadKissJavVideo(kissJavParams, {
-        ...proxyOptions,
-        ...puppeteerOptions,
       })
     }
 
