@@ -1,14 +1,15 @@
 import type { CAC } from 'cac'
+import type { DownloadParams } from './types'
+import fs from 'node:fs/promises'
 import { bold, dim } from 'ansis'
 import { cac } from 'cac'
 import restoreCursor from 'restore-cursor'
 import pkgJson from '../package.json'
-import { downloadAnimeIdHentai, downloadMissav, downloadBilibili, downloadDirpy, downloadHanime, downloadKoreanPm, downloadWowxxx, downloadXHamster, getAnimeIdHentaiLink, getBilibiliLink, getDirpyLink, getKoreanPmLink, getWowxxxLink, getXHamsterLink, remoteM3U8ToMP4, remoteM3U8ToMP4Parallel, getMissavLink } from './core'
-import { DownloadParams, UrlType } from './types'
+import { downloadAnimeIdHentai, downloadBilibili, downloadDirpy, downloadHanime, downloadKissJavVideo, downloadKoreanPm, downloadMissav, downloadWowxxx, downloadXHamster, getAnimeIdHentaiLink, getBilibiliLink, getDirpyLink, getKissJavLink, getKoreanPmLink, getWowxxxLink, getXHamsterLink, remoteM3U8ToMP4Parallel } from './core'
+import { UrlType } from './types'
 import { downloadVideosParallel } from './utils/downloader'
 import { judgeUrl } from './utils/judgeUrl'
 import { logger, setSilent } from './utils/logger'
-import fs from 'fs/promises'
 
 const cli: CAC = cac('fast-dirpy')
 
@@ -88,6 +89,16 @@ cli.command('get <url>', 'get video direct link.')
       console.log(videoLink)
     }
 
+    else if (urlType === UrlType.KissJav) {
+      logger.info('Matched link source: KissJav.')
+      const videoLink = await getKissJavLink({
+        url,
+        cwd: config,
+      }, proxyOptions)
+
+      console.log(videoLink)
+    }
+
     else if (urlType === UrlType.Bilibili) {
       logger.info('Matched link source: Bilibili.')
       if (!url.includes('bilibili.com')) {
@@ -123,7 +134,7 @@ cli.command('download', 'download a video.')
   .action(async (options) => {
     const { json, jsonFile } = options
 
-    if(!json && !jsonFile) {
+    if (!json && !jsonFile) {
       logger.error('No JSON params provided.')
       return
     }
@@ -131,7 +142,8 @@ cli.command('download', 'download a video.')
     const buildParams = async (jsonStr: string, jsonFile: string) => {
       if (jsonStr) {
         return JSON.parse(jsonStr)
-      } else if(jsonFile) {
+      }
+      else if (jsonFile) {
         const fileContent = await fs.readFile(jsonFile, 'utf-8')
         return JSON.parse(fileContent)
       }
@@ -184,67 +196,76 @@ cli.command('download', 'download a video.')
     const mp4Params = params.filter(param => param.urlType === UrlType.MP4)
     const m3u8Params = params.filter(param => param.urlType === UrlType.M3U8)
     const missavParams = params.filter(param => param.urlType === UrlType.MissAV)
+    const kissJavParams = params.filter(param => param.urlType === UrlType.KissJav)
 
-    if(bilibiliParams.length > 0) {
+
+    if (bilibiliParams.length > 0) {
       await downloadBilibili(bilibiliParams)
     }
 
-    if(animeIdHentaiParams.length > 0) {
+    if (animeIdHentaiParams.length > 0) {
       await downloadAnimeIdHentai(animeIdHentaiParams, {
         ...proxyOptions,
         ...puppeteerOptions,
       })
     }
 
-    if(koreanPmParams.length > 0) {
+    if (koreanPmParams.length > 0) {
       await downloadKoreanPm(koreanPmParams, {
         ...proxyOptions,
         ...puppeteerOptions,
       })
     }
 
-    if(hanimeParams.length > 0) {
+    if (hanimeParams.length > 0) {
       await downloadHanime(hanimeParams, {
         ...proxyOptions,
         ...puppeteerOptions,
       })
     }
 
-    if(wowxxxParams.length > 0) {
+    if (wowxxxParams.length > 0) {
       await downloadWowxxx(wowxxxParams, {
         ...proxyOptions,
         ...puppeteerOptions,
       })
     }
 
-    if(xHamsterParams.length > 0) {
+    if (xHamsterParams.length > 0) {
       await downloadXHamster(xHamsterParams, {
         ...proxyOptions,
         ...puppeteerOptions,
       })
     }
 
-    if(missavParams.length > 0) {
+    if (missavParams.length > 0) {
       await downloadMissav(missavParams, {
-        ...proxyOptions
+        ...proxyOptions,
       })
     }
 
-    if(dirpyParams.length > 0) {
+    if (kissJavParams.length > 0) {
+      await downloadKissJavVideo(kissJavParams, {
+        ...proxyOptions,
+        ...puppeteerOptions,
+      })
+    }
+
+    if (dirpyParams.length > 0) {
       await downloadDirpy(dirpyParams, {
         ...proxyOptions,
         ...puppeteerOptions,
       })
     }
 
-    if(mp4Params.length > 0) {
+    if (mp4Params.length > 0) {
       await downloadVideosParallel(mp4Params, {
         ...proxyOptions,
         ...puppeteerOptions,
       })
     }
 
-    if(m3u8Params.length > 0) {
+    if (m3u8Params.length > 0) {
       await remoteM3U8ToMP4Parallel(m3u8Params, {
         ...proxyOptions,
         ...puppeteerOptions,

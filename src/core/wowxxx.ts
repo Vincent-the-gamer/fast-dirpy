@@ -3,7 +3,7 @@ import axios from 'axios'
 import { load } from 'cheerio'
 import { DEFAULT_OPTIONS } from '../constants'
 import { resolveConfig } from '../options'
-import { downloadVideo, downloadVideosParallel } from '../utils/downloader'
+import { downloadVideosParallel } from '../utils/downloader'
 import { logger } from '../utils/logger'
 import { useRandomUserAgent } from '../utils/userAgent'
 

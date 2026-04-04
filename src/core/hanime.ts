@@ -3,7 +3,7 @@ import axios from 'axios'
 import { load } from 'cheerio'
 import { DEFAULT_OPTIONS } from '../constants'
 import { resolveConfig } from '../options'
-import { downloadVideo, downloadVideosParallel } from '../utils/downloader'
+import { downloadVideosParallel } from '../utils/downloader'
 import { logger } from '../utils/logger'
 import { useRandomUserAgent } from '../utils/userAgent'
 
@@ -19,7 +19,7 @@ export async function getHanimeLink(params: DirectLinkParams, options: Partial<O
 
   const _proxy = proxy?.host !== '' ? proxy : undefined
 
-  const { data } = await axios.get(url, {
+  const { data } = await axios.get(url!, {
     headers: {
       'User-Agent': useRandomUserAgent(),
       'Referer': `https://hanime1.me/`,

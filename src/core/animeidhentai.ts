@@ -3,10 +3,9 @@ import axios from 'axios'
 import { load } from 'cheerio'
 import { DEFAULT_OPTIONS } from '../constants'
 import { resolveConfig } from '../options'
-import { downloadVideo, downloadVideosParallel } from '../utils/downloader'
+import { downloadVideosParallel } from '../utils/downloader'
 import { usePuppeteer } from '../utils/puppeteer'
 import { useRandomUserAgent } from '../utils/userAgent'
-import { logger } from '../utils/logger'
 
 /**
  * Requires puppeteer
@@ -18,7 +17,7 @@ async function getPlayerPage(params: DirectLinkParams, options: Partial<Options>
 
   const _proxy = proxy?.host !== '' ? proxy : undefined
 
-  const { data } = await axios.get(url, {
+  const { data } = await axios.get(url!, {
     headers: {
       'User-Agent': useRandomUserAgent(),
     },

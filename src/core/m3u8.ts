@@ -1,14 +1,13 @@
-import type { M3U8Params } from '../types'
-import type { Options } from '../types'
+import type { M3U8Params, Options } from '../types'
 import { createWriteStream } from 'node:fs'
 import path from 'node:path'
 import m3u8stream from 'm3u8stream'
-import { DEFAULT_OPTIONS, __dirname } from '../constants'
-import { logger } from '../utils/logger'
+import { __dirname, DEFAULT_OPTIONS } from '../constants'
 import { resolveConfig } from '../options'
+import { logger } from '../utils/logger'
 
 // 生成简单的标识符（使用URL的最后部分）
-const getM3U8Identifier = (params: Partial<M3U8Params>): string => {
+function getM3U8Identifier(params: Partial<M3U8Params>): string {
   const shortId = params.url?.split('/').pop() || 'unknown'
   return `[${shortId}]`
 }
@@ -25,8 +24,8 @@ export interface ParallelM3U8Progress {
   total: number
   completed: number
   failed: number
-  currentParams: M3U8Params,
-  identifier?: string,
+  currentParams: M3U8Params
+  identifier?: string
   status: 'pending' | 'downloading' | 'success' | 'failed'
   downloadProgress?: M3U8DownloadProgress
   error?: Error
@@ -38,7 +37,7 @@ export interface ParallelM3U8Progress {
 export async function remoteM3U8ToMP4(
   params: M3U8Params,
   options: Partial<Options> = DEFAULT_OPTIONS,
-  onProgress?: (progress: M3U8DownloadProgress) => void
+  onProgress?: (progress: M3U8DownloadProgress) => void,
 ): Promise<void> {
   const { url, cwd, path: filePath } = params
 
@@ -63,8 +62,8 @@ export async function remoteM3U8ToMP4(
           headers: options.headers,
           timeout,
           // 如果有代理配置，可以在这里设置
-          ...(proxy?.host ? { proxy: `http://${proxy.host}:${proxy.port}` } : {})
-        }
+          ...(proxy?.host ? { proxy: `http://${proxy.host}:${proxy.port}` } : {}),
+        },
       })
 
       const writer = createWriteStream(outputPath)
@@ -79,7 +78,7 @@ export async function remoteM3U8ToMP4(
           totalSegments,
           downloaded,
           downloadedMB,
-          percent
+          percent,
         }
 
         logger.info(`${identifier} Segment: ${segment.num}/${totalSegments}, Downloaded: ${downloadedMB.toFixed(2)}MB (${percent.toFixed(2)}%)`)
@@ -109,8 +108,8 @@ export async function remoteM3U8ToMP4(
         logger.error(`${identifier} File write error: ${error.message}`)
         reject(error)
       })
-
-    } catch (error) {
+    }
+    catch (error) {
       const errorMessage = error instanceof Error ? error.message : String(error)
       logger.error(`${identifier} Failed to initialize M3U8 download: ${errorMessage}`)
       reject(error)
@@ -132,7 +131,7 @@ export async function remoteM3U8ToMP4Parallel(
   options: Partial<Options> = DEFAULT_OPTIONS,
   maxConcurrent: number = 3,
   onProgress?: (progress: ParallelM3U8Progress) => void,
-  onDownloadProgress?: (identifier: string, progress: M3U8DownloadProgress) => void
+  onDownloadProgress?: (identifier: string, progress: M3U8DownloadProgress) => void,
 ): Promise<void[]> {
   const results: Promise<void>[] = []
   const executing: Set<Promise<void>> = new Set()
@@ -160,7 +159,7 @@ export async function remoteM3U8ToMP4Parallel(
         currentParams: params,
         identifier,
         status: 'downloading',
-        downloadProgress
+        downloadProgress,
       })
     })
       .then((result) => {

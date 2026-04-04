@@ -1,10 +1,10 @@
-import axios from "axios"
-import { DEFAULT_OPTIONS } from "../constants"
-import { resolveConfig } from "../options"
-import { DirectLinkParams, DownloadParams, Options } from "../types"
-import { useRandomUserAgent } from "../utils/userAgent"
-import { load } from "cheerio"
-import { downloadVideosParallel } from "../utils/downloader"
+import type { DirectLinkParams, DownloadParams, Options } from '../types'
+import axios from 'axios'
+import { load } from 'cheerio'
+import { DEFAULT_OPTIONS } from '../constants'
+import { resolveConfig } from '../options'
+import { downloadVideosParallel } from '../utils/downloader'
+import { useRandomUserAgent } from '../utils/userAgent'
 
 export async function getRule34XyzVideoLink(params: DirectLinkParams, options: Partial<Options> = DEFAULT_OPTIONS): Promise<string> {
   const { url, cwd } = params
@@ -13,7 +13,7 @@ export async function getRule34XyzVideoLink(params: DirectLinkParams, options: P
 
   const _proxy = proxy?.host !== '' ? proxy : undefined
 
-  const { data } = await axios.get(url, {
+  const { data } = await axios.get(url!, {
     headers: {
       'User-Agent': useRandomUserAgent(),
       'Referer': `https://rule34.xyz`,
@@ -47,7 +47,7 @@ export async function downloadRule34XyzVideo(params: DownloadParams | DownloadPa
   for (const param of params) {
     const directLink = await getRule34XyzVideoLink({
       url: param.url,
-      cwd: param.cwd
+      cwd: param.cwd,
     }, options)
     directParams.push({ ...param, url: directLink })
   }

@@ -1,11 +1,10 @@
-import { UrlType, type DirectLinkParams, type DownloadParams, type Options } from '../types'
+import type { DirectLinkParams, DownloadParams, Options } from '../types'
 import axios from 'axios'
 import { load } from 'cheerio'
 import { DEFAULT_OPTIONS } from '../constants'
 import { resolveConfig } from '../options'
 import { downloadVideosParallel } from '../utils/downloader'
 import { useRandomUserAgent } from '../utils/userAgent'
-import { logger } from '../utils/logger'
 
 export async function getDirpyLink(params: DirectLinkParams, options: Partial<Options> = DEFAULT_OPTIONS): Promise<string> {
   const { url, cwd } = params
@@ -49,12 +48,12 @@ export async function downloadDirpy(params: DownloadParams | DownloadParams[], o
   for (const param of params) {
     const directLink = await getDirpyLink({
       url: param.url,
-      cwd: param.cwd
+      cwd: param.cwd,
     }, options)
     directParams.push({ ...param, url: directLink })
   }
 
   if (directParams.length > 0) {
-     await downloadVideosParallel(directParams)
+    await downloadVideosParallel(directParams)
   }
 }

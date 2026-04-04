@@ -1,11 +1,11 @@
 import type { DirectLinkParams, DownloadParams, Options } from '../types'
+import { readFile } from 'node:fs/promises'
 import axios from 'axios'
-import { logger } from '../utils/logger'
-import { remoteM3U8ToMP4Parallel } from './m3u8'
-import { readFile } from 'fs/promises'
-import { useRandomUserAgent } from '../utils/userAgent'
 import { DEFAULT_OPTIONS } from '../constants'
 import { resolveConfig } from '../options'
+import { logger } from '../utils/logger'
+import { useRandomUserAgent } from '../utils/userAgent'
+import { remoteM3U8ToMP4Parallel } from './m3u8'
 
 async function getUuid(html: string) {
   const regex = /m3u8\|([a-f0-9|]+)\|com\|surrit\|https\|video/
@@ -35,7 +35,7 @@ export async function getMissavLink(params: DirectLinkParams, options: Partial<O
   const { data: list } = await axios.get(playlist, {
     headers: {
       'User-Agent': useRandomUserAgent(),
-      'Referer': `https://missav.ws/`,
+      'Referer': options.headers?.Referer || 'https://missav.ws/',
     },
     proxy,
     timeout,
@@ -46,7 +46,6 @@ export async function getMissavLink(params: DirectLinkParams, options: Partial<O
   const m3u8Url = `https://surrit.com/${uuid}/${matches.at(-1)}`
   return m3u8Url
 }
-
 
 export async function downloadMissav(params: DownloadParams | DownloadParams[], options: Partial<Options> = DEFAULT_OPTIONS) {
   if (!Array.isArray(params)) {
@@ -76,8 +75,8 @@ export async function downloadMissav(params: DownloadParams | DownloadParams[], 
   const _options = {
     ...options,
     headers: {
-      'Referer': `https://missav.ws/`,
-    }
+      'Referer': options.headers?.Referer || 'https://missav.ws/',
+    },
   }
 
   await remoteM3U8ToMP4Parallel(directParams, _options)

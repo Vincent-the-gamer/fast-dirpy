@@ -19,7 +19,7 @@ import {
 } from './core'
 import { downloadWowxxx, getWowxxxLink } from './core/wowxxx'
 import { UrlType } from './types'
-import { downloadVideo, downloadVideosParallel } from './utils/downloader'
+import { downloadVideosParallel } from './utils/downloader'
 import { judgeUrl } from './utils/judgeUrl'
 import { logger } from './utils/logger'
 
@@ -147,62 +147,60 @@ export async function fastDownload(params: DownloadParams | DownloadParams[], op
   const mp4Params = params.filter(param => param.urlType === UrlType.MP4)
   const m3u8Params = params.filter(param => param.urlType === UrlType.M3U8)
 
-
-
-  if(bilibiliParams.length > 0) {
+  if (bilibiliParams.length > 0) {
     await downloadBilibili(bilibiliParams)
   }
 
-  if(animeIdHentaiParams.length > 0) {
+  if (animeIdHentaiParams.length > 0) {
     await downloadAnimeIdHentai(animeIdHentaiParams, {
       ...proxyOptions,
       ...puppeteerOptions,
     })
   }
 
-  if(koreanPmParams.length > 0) {
+  if (koreanPmParams.length > 0) {
     await downloadKoreanPm(koreanPmParams, {
       ...proxyOptions,
       ...puppeteerOptions,
     })
   }
 
-  if(hanimeParams.length > 0) {
+  if (hanimeParams.length > 0) {
     await downloadHanime(hanimeParams, {
       ...proxyOptions,
       ...puppeteerOptions,
     })
   }
 
-  if(wowxxxParams.length > 0) {
+  if (wowxxxParams.length > 0) {
     await downloadWowxxx(wowxxxParams, {
       ...proxyOptions,
       ...puppeteerOptions,
     })
   }
 
-  if(xHamsterParams.length > 0) {
+  if (xHamsterParams.length > 0) {
     await downloadXHamster(xHamsterParams, {
       ...proxyOptions,
       ...puppeteerOptions,
     })
   }
 
-  if(dirpyParams.length > 0) {
+  if (dirpyParams.length > 0) {
     await downloadDirpy(dirpyParams, {
       ...proxyOptions,
       ...puppeteerOptions,
     })
   }
 
-  if(mp4Params.length > 0) {
+  if (mp4Params.length > 0) {
     await downloadVideosParallel(mp4Params, {
       ...proxyOptions,
       ...puppeteerOptions,
     })
   }
 
-  if(m3u8Params.length > 0) {
+  if (m3u8Params.length > 0) {
     await remoteM3U8ToMP4Parallel(m3u8Params, {
       ...proxyOptions,
       ...puppeteerOptions,

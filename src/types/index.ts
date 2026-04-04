@@ -39,6 +39,7 @@ export enum UrlType {
   KoreanPM,
   Hanime,
   MissAV,
+  NJavTV,
   Wowxxx,
   XHamster,
   MP4,

@@ -7,7 +7,7 @@ import { logger } from './logger'
 import { useRandomUserAgent } from './userAgent'
 
 // 生成简单的标识符（使用索引+视频ID或URL的简短形式）
-const getVideoIdentifier = (params: DownloadParams): string => {
+function getVideoIdentifier(params: DownloadParams): string {
   // 标识符则使用URL的最后部分
   const shortId = params.url.split('/').pop() || 'unknown'
   return `[${shortId}]`
@@ -59,8 +59,8 @@ export interface ParallelDownloadProgress {
   total: number
   completed: number
   failed: number
-  currentParams: DownloadParams,
-  identifier?: string,
+  currentParams: DownloadParams
+  identifier?: string
   status: 'pending' | 'success' | 'failed'
   error?: Error
 }

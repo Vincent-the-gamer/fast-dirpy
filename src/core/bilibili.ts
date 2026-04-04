@@ -38,7 +38,7 @@ export async function getBilibiliLink(params: DirectLinkParams, options: Partial
   await page.setUserAgent(userAgent)
 
   try {
-    await page.goto("https://snapany.com/zh/bilibili")
+    await page.goto('https://snapany.com/zh/bilibili')
     await page.waitForNetworkIdle()
 
     const inputSelector = 'input[name=\'link\']'
@@ -90,11 +90,10 @@ export async function downloadBilibili(params: DownloadParams | DownloadParams[]
   for (const param of params) {
     const url = await getBilibiliLink({
       url: param.url,
-      cwd: param.cwd
+      cwd: param.cwd,
     })
     directParams.push({ ...param, url })
   }
 
   await downloadVideosParallel(directParams)
 }
-
