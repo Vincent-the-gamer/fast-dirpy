@@ -26,11 +26,17 @@ A simple library/CLI to download youtube(etc.) videos.
 - [wow.xxx](https://www.wow.xxx/)
 - [xhamster](https://xhamster.com/) (m3u8, retry if error)
 - [rule34.xyz](https://rule34.xyz/) (2d/3d videos)
-</details>
+
+> [!WARNING]
+> MissAV has a cloudflare challenge page which can't be bypassed using puppeteer/playwright, so you need to download the html page manually (no js and css needed, only html), then pass the local file path to extract m3u8 source.
+> `fast-dirpy download --json '[{"url": "missav:/home/xxx/Downloads/xxx.html", "path": "./msav-test.mp4"}]'`
+>
+> And this method is unstable, sometimes you'll get http 429.
+
+- [missav](https://missav.ws/)
+  </details>
 
 And `.m3u8` videos.
-
-You can use this [userscript](https://greasyfork.org/zh-CN/scripts/449581-m3u8%E8%A7%86%E9%A2%91%E4%BE%A6%E6%B5%8B%E4%B8%8B%E8%BD%BD%E5%99%A8-%E8%87%AA%E5%8A%A8%E5%97%85%E6%8E%A2) to extract `.m3u8` sources from websites.
 
 ## Installation
 

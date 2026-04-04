@@ -13,8 +13,9 @@ export interface Options {
 }
 
 export interface DirectLinkParams {
-  url: string
+  url?: string
   cwd?: string
+  missavHtmlPage?: string
 }
 
 export interface DownloadParams {
@@ -37,6 +38,7 @@ export enum UrlType {
   M3U8,
   KoreanPM,
   Hanime,
+  MissAV,
   Wowxxx,
   XHamster,
   MP4,

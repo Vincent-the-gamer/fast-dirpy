@@ -3,9 +3,9 @@ import { bold, dim } from 'ansis'
 import { cac } from 'cac'
 import restoreCursor from 'restore-cursor'
 import pkgJson from '../package.json'
-import { downloadAnimeIdHentai, downloadBilibili, downloadDirpy, downloadHanime, downloadKoreanPm, downloadWowxxx, downloadXHamster, getAnimeIdHentaiLink, getBilibiliLink, getDirpyLink, getKoreanPmLink, getWowxxxLink, getXHamsterLink, remoteM3U8ToMP4, remoteM3U8ToMP4Parallel } from './core'
+import { downloadAnimeIdHentai, downloadMissav, downloadBilibili, downloadDirpy, downloadHanime, downloadKoreanPm, downloadWowxxx, downloadXHamster, getAnimeIdHentaiLink, getBilibiliLink, getDirpyLink, getKoreanPmLink, getWowxxxLink, getXHamsterLink, remoteM3U8ToMP4, remoteM3U8ToMP4Parallel, getMissavLink } from './core'
 import { DownloadParams, UrlType } from './types'
-import { downloadVideo, downloadVideosParallel } from './utils/downloader'
+import { downloadVideosParallel } from './utils/downloader'
 import { judgeUrl } from './utils/judgeUrl'
 import { logger, setSilent } from './utils/logger'
 import fs from 'fs/promises'
@@ -183,6 +183,7 @@ cli.command('download', 'download a video.')
     const dirpyParams = params.filter(param => param.urlType === UrlType.Dirpy)
     const mp4Params = params.filter(param => param.urlType === UrlType.MP4)
     const m3u8Params = params.filter(param => param.urlType === UrlType.M3U8)
+    const missavParams = params.filter(param => param.urlType === UrlType.MissAV)
 
     if(bilibiliParams.length > 0) {
       await downloadBilibili(bilibiliParams)
@@ -220,6 +221,12 @@ cli.command('download', 'download a video.')
       await downloadXHamster(xHamsterParams, {
         ...proxyOptions,
         ...puppeteerOptions,
+      })
+    }
+
+    if(missavParams.length > 0) {
+      await downloadMissav(missavParams, {
+        ...proxyOptions
       })
     }
 

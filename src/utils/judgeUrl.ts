@@ -11,7 +11,7 @@ export function judgeUrl(url: string): UrlType {
   else if (url.includes('koreanpornmovie')) {
     return UrlType.KoreanPM
   }
-  else if (url.includes('missav')) {
+  else if (url.startsWith('missav:')) {
     return UrlType.MissAV
   }
   else if (url.includes('hanime1.me')) {
