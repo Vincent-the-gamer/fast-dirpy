@@ -10,4 +10,7 @@ export default defineConfig({
   minify: true,
   // compatible with __dirname in cjs and import.meta.url in mjs.
   shims: true,
+  deps: {
+    onlyBundle: false
+  }
 })
