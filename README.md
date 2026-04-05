@@ -39,6 +39,10 @@ A simple library/CLI to download youtube(etc.) videos.
 
 And `.m3u8` videos.
 
+## Agent Skill
+
+fast-dirpy now has a skill: [Find fast-dirpy skill](https://github.com/Vincent-the-gamer/skills)
+
 ## Installation
 
 ### As a library
