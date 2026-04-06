@@ -15,7 +15,6 @@ export interface Options {
 export interface DirectLinkParams {
   url?: string
   cwd?: string
-  missavHtmlPage?: string
 }
 
 export interface DownloadParams {

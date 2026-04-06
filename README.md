@@ -24,7 +24,6 @@ A simple library/CLI to download youtube(etc.) videos.
 - [XVideos](https://www.xvideos.com/)
 - [Hanime1.me](https://hanime1.me/)
 - [wow.xxx](https://www.wow.xxx/)
-- [xhamster](https://xhamster.com/) (m3u8, retry if error)
 - [rule34.xyz](https://rule34.xyz/) (2d/3d videos)
 
 > [!WARNING]
@@ -35,6 +34,14 @@ A simple library/CLI to download youtube(etc.) videos.
 > And this method is unstable, sometimes you'll get http 429.
 
 - [missav](https://missav.ws/)
+
+> [!WARNING]
+> XHamster requests are mostly failed, so above v1.0.2, it also provides manual link extract method.
+> download the html page(no js and css needed, only html), then pass the local file path to extract m3u8 source.
+> `fast-dirpy download --json '[{"url": "xhamster:/home/xxx/Downloads/xxx.html", "path": "./xhamster-test.mp4"}]'`
+
+- [xhamster](https://xhamster.com/) (m3u8, if error, manually download html page and )
+
   </details>
 
 And `.m3u8` videos.

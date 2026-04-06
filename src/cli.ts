@@ -81,6 +81,7 @@ cli.command('get <url>', 'get video direct link.')
 
     else if (urlType === UrlType.XHamster) {
       logger.info('Matched link source: XHamster.')
+
       const videoLink = await getXHamsterLink({
         url,
         cwd: config,

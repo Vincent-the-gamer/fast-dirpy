@@ -11,7 +11,11 @@ export function judgeUrl(url: string): UrlType {
   else if (url.includes('koreanpornmovie')) {
     return UrlType.KoreanPM
   }
-  else if (url.startsWith('missav:')) {
+  else if (
+    url.includes("missav.ws")
+    || url.includes("missav.ai")
+    || url.startsWith('missav:')
+  ) {
     return UrlType.MissAV
   }
   else if (url.includes('hanime1.me')) {
@@ -20,7 +24,7 @@ export function judgeUrl(url: string): UrlType {
   else if (url.includes('wow.xxx')) {
     return UrlType.Wowxxx
   }
-  else if (url.includes('xhamster.com')) {
+  else if (url.includes('xhamster.com') || url.startsWith("xhamster:")) {
     return UrlType.XHamster
   }
   else if (
