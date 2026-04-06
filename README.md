@@ -40,7 +40,7 @@ A simple library/CLI to download youtube(etc.) videos.
 > download the html page(no js and css needed, only html), then pass the local file path to extract m3u8 source.
 > `fast-dirpy download --json '[{"url": "xhamster:/home/xxx/Downloads/xxx.html", "path": "./xhamster-test.mp4"}]'`
 
-- [xhamster](https://xhamster.com/) (m3u8, if error, manually download html page and )
+- [xhamster](https://xhamster.com/) (m3u8, if error, manually download html page.)
 
   </details>
 
