@@ -42,7 +42,7 @@ A simple library/CLI to download youtube(etc.) videos.
 
 - [xhamster](https://xhamster.com/) (m3u8, if error, manually download html page.)
 
-  </details>
+</details>
 
 And `.m3u8` videos.
 
