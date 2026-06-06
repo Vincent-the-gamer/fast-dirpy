@@ -21,7 +21,7 @@ export async function getWowxxxLink(params: DirectLinkParams, options: Partial<O
 
   const _proxy = proxy?.host !== '' ? proxy : undefined
 
-  const { data } = await axios.get(url, {
+  const { data } = await axios.get(url!, {
     headers: {
       'User-Agent': useRandomUserAgent(),
       'Referer': `https://www.wow.xxx/`,

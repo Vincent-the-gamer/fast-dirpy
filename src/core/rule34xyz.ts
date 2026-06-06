@@ -6,7 +6,7 @@ import { resolveConfig } from '../options'
 import { downloadVideosParallel } from '../utils/downloader'
 import { useRandomUserAgent } from '../utils/userAgent'
 
-export async function getRule34XyzVideoLink(params: DirectLinkParams, options: Partial<Options> = DEFAULT_OPTIONS): Promise<string> {
+export async function getRule34XyzLink(params: DirectLinkParams, options: Partial<Options> = DEFAULT_OPTIONS): Promise<string> {
   const { url, cwd } = params
 
   const { proxy, timeout } = await resolveConfig(options, cwd)

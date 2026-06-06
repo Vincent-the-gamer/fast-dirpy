@@ -42,5 +42,6 @@ export enum UrlType {
   Wowxxx,
   XHamster,
   LewdNinja,
+  SfmCompile,
   MP4,
 }

@@ -3,26 +3,18 @@ import { bold, dim } from 'ansis'
 import pkgJson from '../package.json' with { type: 'json' }
 import { DEFAULT_OPTIONS } from './constants'
 import {
-  downloadAnimeIdHentai,
-  downloadBilibili,
-  downloadDirpy,
-  downloadHanime,
-  downloadKoreanPm,
-  downloadLewdNinjaVideo,
-  downloadMissav,
-  downloadXHamster,
   getAnimeIdHentaiLink,
   getBilibiliLink,
   getDirpyLink,
   getHanimeLink,
   getKoreanPmLink,
-  getLewdNinjaVideoLink,
+  getLewdNinjaLink,
+  getSfmCompileLink,
+  getWowxxxLink,
   getXHamsterLink,
-  remoteM3U8ToMP4Parallel,
 } from './core'
-import { downloadWowxxx, getWowxxxLink } from './core/wowxxx'
 import { UrlType } from './types'
-import { downloadMultipleVideos, downloadVideosParallel } from './utils/downloader'
+import { downloadMultipleVideos } from './utils/downloader'
 import { judgeUrl } from './utils/judgeUrl'
 import { logger } from './utils/logger'
 
@@ -104,7 +96,18 @@ export async function fastLink(params: DirectLinkParams, options: Partial<Option
   else if (urlType === UrlType.LewdNinja) {
     logger.info('Matched link source: LewdNinja.')
 
-    const videoLinks = await getLewdNinjaVideoLink({
+    const videoLinks = await getLewdNinjaLink({
+      url,
+      cwd,
+    }, proxyOptions)
+
+    return videoLinks
+  }
+
+  else if (urlType === UrlType.SfmCompile) {
+    logger.info('Matched link source: sfmcompile.')
+
+    const videoLinks = await getSfmCompileLink({
       url,
       cwd,
     }, proxyOptions)

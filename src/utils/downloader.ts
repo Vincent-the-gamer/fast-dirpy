@@ -10,6 +10,7 @@ import {
   downloadKoreanPm,
   downloadLewdNinjaVideo,
   downloadMissav,
+  downloadSfmCompileVideo,
   downloadWowxxx,
   downloadXHamster,
   remoteM3U8ToMP4Parallel,
@@ -180,6 +181,7 @@ export async function downloadMultipleVideos(params: DownloadParams[], options?:
   const m3u8Params = params.filter(param => param.urlType === UrlType.M3U8)
   const missAVParams = params.filter(param => param.urlType === UrlType.MissAV)
   const lewdNinjaParams = params.filter(param => param.urlType === UrlType.LewdNinja)
+  const sfmCompileParams = params.filter(param => param.urlType === UrlType.SfmCompile)
 
   if (bilibiliParams.length > 0) {
     await downloadBilibili(bilibiliParams)
@@ -228,6 +230,12 @@ export async function downloadMultipleVideos(params: DownloadParams[], options?:
 
   if (lewdNinjaParams.length > 0) {
     await downloadLewdNinjaVideo(lewdNinjaParams, {
+      ...options!.proxyOptions,
+    })
+  }
+
+  if (sfmCompileParams.length > 0) {
+    await downloadSfmCompileVideo(sfmCompileParams, {
       ...options!.proxyOptions,
     })
   }

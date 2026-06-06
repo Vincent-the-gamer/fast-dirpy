@@ -30,6 +30,9 @@ export function judgeUrl(url: string): UrlType {
   else if (url.includes('new.lewd.ninja')) {
     return UrlType.LewdNinja
   }
+  else if (url.includes('sfmcompile.club')) {
+    return UrlType.SfmCompile
+  }
   else if (
     url.endsWith('.m3u8')
     || url.includes('.m3u8') && !url.endsWith('.mp4')

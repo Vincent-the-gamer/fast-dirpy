@@ -5,9 +5,9 @@ import { bold, dim } from 'ansis'
 import { cac } from 'cac'
 import restoreCursor from 'restore-cursor'
 import pkgJson from '../package.json'
-import { downloadAnimeIdHentai, downloadBilibili, downloadDirpy, downloadHanime, downloadKoreanPm, downloadMissav, downloadWowxxx, downloadXHamster, getAnimeIdHentaiLink, getBilibiliLink, getDirpyLink, getKoreanPmLink, getLewdNinjaVideoLink, getWowxxxLink, getXHamsterLink, remoteM3U8ToMP4Parallel } from './core'
+import { getAnimeIdHentaiLink, getBilibiliLink, getDirpyLink, getKoreanPmLink, getLewdNinjaLink, getSfmCompileLink, getWowxxxLink, getXHamsterLink } from './core'
 import { UrlType } from './types'
-import { downloadMultipleVideos, downloadVideosParallel } from './utils/downloader'
+import { downloadMultipleVideos } from './utils/downloader'
 import { judgeUrl } from './utils/judgeUrl'
 import { logger, setSilent } from './utils/logger'
 
@@ -93,7 +93,18 @@ cli.command('get <url>', 'get video direct link.')
     else if (urlType === UrlType.LewdNinja) {
       logger.info('Matched link source: LewdNinja.')
 
-      const videoLink = await getLewdNinjaVideoLink({
+      const videoLink = await getLewdNinjaLink({
+        url,
+        cwd: config,
+      }, proxyOptions)
+
+      console.log(videoLink)
+    }
+
+    else if (urlType === UrlType.SfmCompile) {
+      logger.info('Matched link source: sfmcompile.')
+
+      const videoLink = await getSfmCompileLink({
         url,
         cwd: config,
       }, proxyOptions)
