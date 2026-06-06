@@ -26,7 +26,7 @@ A simple library/CLI to download youtube(etc.) videos.
 - [wow.xxx](https://www.wow.xxx/)
 - [rule34.xyz](https://rule34.xyz/)
 - [lewd ninja](https://new.lewd.ninja/)
-- [sfmcompile.club](https://sfmcompile.club/) p.s. for link, please use https://sfmcompile.club/<video-tag>, not directly https://sfmcompile.club
+- [sfmcompile.club](https://sfmcompile.club/) p.s. for link, please use `https://sfmcompile.club/<video-tag>`, not directly `https://sfmcompile.club`
 
 > [!WARNING]
 > MissAV has a cloudflare challenge page which can't be bypassed using puppeteer/playwright, so you need to download the html page manually
