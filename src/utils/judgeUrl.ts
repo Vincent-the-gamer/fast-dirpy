@@ -12,8 +12,8 @@ export function judgeUrl(url: string): UrlType {
     return UrlType.KoreanPM
   }
   else if (
-    url.includes("missav.ws")
-    || url.includes("missav.ai")
+    url.includes('missav.ws')
+    || url.includes('missav.ai')
     || url.startsWith('missav:')
   ) {
     return UrlType.MissAV
@@ -24,8 +24,11 @@ export function judgeUrl(url: string): UrlType {
   else if (url.includes('wow.xxx')) {
     return UrlType.Wowxxx
   }
-  else if (url.includes('xhamster.com') || url.startsWith("xhamster:")) {
+  else if (url.includes('xhamster.com') || url.startsWith('xhamster:')) {
     return UrlType.XHamster
+  }
+  else if (url.includes('new.lewd.ninja')) {
+    return UrlType.LewdNinja
   }
   else if (
     url.endsWith('.m3u8')

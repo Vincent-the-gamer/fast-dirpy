@@ -2,7 +2,20 @@ import type { DownloadParams, Options } from '../types'
 import fs from 'node:fs'
 import axios from 'axios'
 import { DEFAULT_OPTIONS } from '../constants'
+import {
+  downloadAnimeIdHentai,
+  downloadBilibili,
+  downloadDirpy,
+  downloadHanime,
+  downloadKoreanPm,
+  downloadLewdNinjaVideo,
+  downloadMissav,
+  downloadWowxxx,
+  downloadXHamster,
+  remoteM3U8ToMP4Parallel,
+} from '../core'
 import { resolveConfig } from '../options'
+import { UrlType } from '../types'
 import { logger } from './logger'
 import { useRandomUserAgent } from './userAgent'
 
@@ -153,4 +166,90 @@ export async function downloadVideosParallel(
   return finalResults
     .filter((result): result is PromiseFulfilledResult<void> => result.status === 'fulfilled')
     .map(result => result.value)
+}
+
+export async function downloadMultipleVideos(params: DownloadParams[], options?: Record<string, any>) {
+  const bilibiliParams = params.filter(param => param.urlType === UrlType.Bilibili)
+  const animeIdHentaiParams = params.filter(param => param.urlType === UrlType.AnimeIdHentai)
+  const koreanPmParams = params.filter(param => param.urlType === UrlType.KoreanPM)
+  const hanimeParams = params.filter(param => param.urlType === UrlType.Hanime)
+  const wowxxxParams = params.filter(param => param.urlType === UrlType.Wowxxx)
+  const xHamsterParams = params.filter(param => param.urlType === UrlType.XHamster)
+  const dirpyParams = params.filter(param => param.urlType === UrlType.Dirpy)
+  const mp4Params = params.filter(param => param.urlType === UrlType.MP4)
+  const m3u8Params = params.filter(param => param.urlType === UrlType.M3U8)
+  const missAVParams = params.filter(param => param.urlType === UrlType.MissAV)
+  const lewdNinjaParams = params.filter(param => param.urlType === UrlType.LewdNinja)
+
+  if (bilibiliParams.length > 0) {
+    await downloadBilibili(bilibiliParams)
+  }
+
+  if (animeIdHentaiParams.length > 0) {
+    await downloadAnimeIdHentai(animeIdHentaiParams, {
+      ...options!.proxyOptions,
+      ...options!.puppeteerOptions,
+    })
+  }
+
+  if (koreanPmParams.length > 0) {
+    await downloadKoreanPm(koreanPmParams, {
+      ...options!.proxyOptions,
+      ...options!.puppeteerOptions,
+    })
+  }
+
+  if (hanimeParams.length > 0) {
+    await downloadHanime(hanimeParams, {
+      ...options!.proxyOptions,
+      ...options!.puppeteerOptions,
+    })
+  }
+
+  if (wowxxxParams.length > 0) {
+    await downloadWowxxx(wowxxxParams, {
+      ...options!.proxyOptions,
+      ...options!.puppeteerOptions,
+    })
+  }
+
+  if (xHamsterParams.length > 0) {
+    await downloadXHamster(xHamsterParams, {
+      ...options!.proxyOptions,
+      ...options!.puppeteerOptions,
+    })
+  }
+
+  if (missAVParams.length > 0) {
+    await downloadMissav(missAVParams, {
+      ...options!.proxyOptions,
+    })
+  }
+
+  if (lewdNinjaParams.length > 0) {
+    await downloadLewdNinjaVideo(lewdNinjaParams, {
+      ...options!.proxyOptions,
+    })
+  }
+
+  if (dirpyParams.length > 0) {
+    await downloadDirpy(dirpyParams, {
+      ...options!.proxyOptions,
+      ...options!.puppeteerOptions,
+    })
+  }
+
+  if (mp4Params.length > 0) {
+    await downloadVideosParallel(mp4Params, {
+      ...options!.proxyOptions,
+      ...options!.puppeteerOptions,
+    })
+  }
+
+  if (m3u8Params.length > 0) {
+    await remoteM3U8ToMP4Parallel(m3u8Params, {
+      ...options!.proxyOptions,
+      ...options!.puppeteerOptions,
+    })
+  }
 }

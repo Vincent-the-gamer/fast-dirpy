@@ -41,5 +41,6 @@ export enum UrlType {
   NJavTV,
   Wowxxx,
   XHamster,
+  LewdNinja,
   MP4,
 }

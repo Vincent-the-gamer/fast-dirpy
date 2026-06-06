@@ -1,8 +1,9 @@
+allowBuilds:
+  esbuild: true
+
+minimumReleaseAgeExclude:
+  - '@types/node@25.9.2'
+
 shellEmulator: true
 
 trustPolicy: no-downgrade
-
-ignoredBuiltDependencies:
-  - unrs-resolver
-onlyBuiltDependencies:
-  - esbuild

@@ -24,7 +24,8 @@ A simple library/CLI to download youtube(etc.) videos.
 - [XVideos](https://www.xvideos.com/)
 - [Hanime1.me](https://hanime1.me/)
 - [wow.xxx](https://www.wow.xxx/)
-- [rule34.xyz](https://rule34.xyz/) (2d/3d videos)
+- [rule34.xyz](https://rule34.xyz/)
+- [lewd ninja](https://new.lewd.ninja/)
 
 > [!WARNING]
 > MissAV has a cloudflare challenge page which can't be bypassed using puppeteer/playwright, so you need to download the html page manually
@@ -139,13 +140,13 @@ fast-dirpy get https\://www.youtube.com/watch\?v\=6c28qWDMPBA
 
 fast-dirpy download --json '[{"url": "https://www.bilibili.com/video/BV1uEAWzuEHC","path": "./cmd-test.mp4"}]' -H 127.0.0.1 -P 7890
 
-fast-dirpy download --jsonFile ./test/params.json -H 127.0.0.1 -P 7890
+fast-dirpy download --json-file ./test/params.json -H 127.0.0.1 -P 7890
 ```
 
 if you have set your proxy config in `fast-dirpy.config.ts`, you can omit proxy parameters:
 
 ```shell
-fast-dirpy download --jsonFile ./test/params.json
+fast-dirpy download --json-file ./test/params.json
 
 fast-dirpy download --json '[{"url": "https://www.bilibili.com/video/BV1uEAWzuEHC","path": "./cmd-test.mp4"}]'
 ```

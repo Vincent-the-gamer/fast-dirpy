@@ -5,9 +5,9 @@ import { bold, dim } from 'ansis'
 import { cac } from 'cac'
 import restoreCursor from 'restore-cursor'
 import pkgJson from '../package.json'
-import { downloadAnimeIdHentai, downloadBilibili, downloadDirpy, downloadHanime, downloadKoreanPm, downloadMissav, downloadWowxxx, downloadXHamster, getAnimeIdHentaiLink, getBilibiliLink, getDirpyLink, getKoreanPmLink, getWowxxxLink, getXHamsterLink, remoteM3U8ToMP4Parallel } from './core'
+import { downloadAnimeIdHentai, downloadBilibili, downloadDirpy, downloadHanime, downloadKoreanPm, downloadMissav, downloadWowxxx, downloadXHamster, getAnimeIdHentaiLink, getBilibiliLink, getDirpyLink, getKoreanPmLink, getLewdNinjaVideoLink, getWowxxxLink, getXHamsterLink, remoteM3U8ToMP4Parallel } from './core'
 import { UrlType } from './types'
-import { downloadVideosParallel } from './utils/downloader'
+import { downloadMultipleVideos, downloadVideosParallel } from './utils/downloader'
 import { judgeUrl } from './utils/judgeUrl'
 import { logger, setSilent } from './utils/logger'
 
@@ -83,6 +83,17 @@ cli.command('get <url>', 'get video direct link.')
       logger.info('Matched link source: XHamster.')
 
       const videoLink = await getXHamsterLink({
+        url,
+        cwd: config,
+      }, proxyOptions)
+
+      console.log(videoLink)
+    }
+
+    else if (urlType === UrlType.LewdNinja) {
+      logger.info('Matched link source: LewdNinja.')
+
+      const videoLink = await getLewdNinjaVideoLink({
         url,
         cwd: config,
       }, proxyOptions)
@@ -177,82 +188,10 @@ cli.command('download', 'download a video.')
       param.cwd = config
     }
 
-    const bilibiliParams = params.filter(param => param.urlType === UrlType.Bilibili)
-    const animeIdHentaiParams = params.filter(param => param.urlType === UrlType.AnimeIdHentai)
-    const koreanPmParams = params.filter(param => param.urlType === UrlType.KoreanPM)
-    const hanimeParams = params.filter(param => param.urlType === UrlType.Hanime)
-    const wowxxxParams = params.filter(param => param.urlType === UrlType.Wowxxx)
-    const xHamsterParams = params.filter(param => param.urlType === UrlType.XHamster)
-    const dirpyParams = params.filter(param => param.urlType === UrlType.Dirpy)
-    const mp4Params = params.filter(param => param.urlType === UrlType.MP4)
-    const m3u8Params = params.filter(param => param.urlType === UrlType.M3U8)
-    const missavParams = params.filter(param => param.urlType === UrlType.MissAV)
-
-    if (bilibiliParams.length > 0) {
-      await downloadBilibili(bilibiliParams)
-    }
-
-    if (animeIdHentaiParams.length > 0) {
-      await downloadAnimeIdHentai(animeIdHentaiParams, {
-        ...proxyOptions,
-        ...puppeteerOptions,
-      })
-    }
-
-    if (koreanPmParams.length > 0) {
-      await downloadKoreanPm(koreanPmParams, {
-        ...proxyOptions,
-        ...puppeteerOptions,
-      })
-    }
-
-    if (hanimeParams.length > 0) {
-      await downloadHanime(hanimeParams, {
-        ...proxyOptions,
-        ...puppeteerOptions,
-      })
-    }
-
-    if (wowxxxParams.length > 0) {
-      await downloadWowxxx(wowxxxParams, {
-        ...proxyOptions,
-        ...puppeteerOptions,
-      })
-    }
-
-    if (xHamsterParams.length > 0) {
-      await downloadXHamster(xHamsterParams, {
-        ...proxyOptions,
-        ...puppeteerOptions,
-      })
-    }
-
-    if (missavParams.length > 0) {
-      await downloadMissav(missavParams, {
-        ...proxyOptions,
-      })
-    }
-
-    if (dirpyParams.length > 0) {
-      await downloadDirpy(dirpyParams, {
-        ...proxyOptions,
-        ...puppeteerOptions,
-      })
-    }
-
-    if (mp4Params.length > 0) {
-      await downloadVideosParallel(mp4Params, {
-        ...proxyOptions,
-        ...puppeteerOptions,
-      })
-    }
-
-    if (m3u8Params.length > 0) {
-      await remoteM3U8ToMP4Parallel(m3u8Params, {
-        ...proxyOptions,
-        ...puppeteerOptions,
-      })
-    }
+    await downloadMultipleVideos(params, {
+      proxyOptions,
+      puppeteerOptions,
+    })
   })
 
 cli.help()
