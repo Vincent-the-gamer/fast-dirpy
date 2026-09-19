@@ -5,7 +5,7 @@ import { bold, dim } from 'ansis'
 import { cac } from 'cac'
 import restoreCursor from 'restore-cursor'
 import pkgJson from '../package.json'
-import { getAnimeIdHentaiLink, getBilibiliLink, getDirpyLink, getKoreanPmLink, getLewdNinjaLink, getSfmCompileLink, getWowxxxLink, getXHamsterLink } from './core'
+import { downloadUgoiraVideo, getAnimeIdHentaiLink, getBilibiliLink, getDirpyLink, getKoreanPmLink, getLewdNinjaLink, getSfmCompileLink, getWowxxxLink, getXHamsterLink } from './core'
 import { UrlType } from './types'
 import { downloadMultipleVideos } from './utils/downloader'
 import { judgeUrl } from './utils/judgeUrl'
@@ -203,6 +203,30 @@ cli.command('download', 'download a video.')
       proxyOptions,
       puppeteerOptions,
     })
+  })
+
+cli.command('ugoira <url>', 'Download mp4 video from pixiv gif via ugoira.com.')
+  .option('--proxyHost, -H <proxyHost>', 'Proxy host.')
+  .option('--proxyPort, -P <proxyPort>', 'Proxy port.')
+  .option('--silent', 'Suppress non-error logs')
+  .action(async (url, options) => {
+    const { proxyHost: host, proxyPort: port, silent } = options
+
+    const proxyOptions = host
+      ? {
+          proxy: { host, port },
+        }
+      : undefined
+
+    setSilent(!!silent)
+
+    logger.info(
+      `fast-dirpy ${dim(`v${version}`)} : ${bold(`Ugoira downloader`)}.`,
+    )
+
+    await downloadUgoiraVideo({
+      url
+    }, proxyOptions)
   })
 
 cli.help()

@@ -1,7 +1,7 @@
 {
   "name": "fast-dirpy",
   "type": "module",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A simple library/CLI to download video from several websites.",
   "author": "Vincent-the-gamer",
   "license": "MIT",
@@ -44,25 +44,25 @@
     "access": "public"
   },
   "dependencies": {
-    "ansis": "^4.3.1",
-    "axios": "^1.17.0",
+    "ansis": "^4.4.0",
+    "axios": "^1.20.0",
     "cac": "^7.0.0",
     "cheerio": "^1.2.0",
     "consola": "^3.4.2",
     "m3u8stream": "^0.8.6",
-    "puppeteer-core": "^25.1.0",
+    "puppeteer-core": "^25.11.0",
     "restore-cursor": "^5.1.0",
     "unconfig": "^7.5.0"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^9.0.0",
-    "@types/node": "^25.9.2",
+    "@antfu/eslint-config": "^9.5.1",
+    "@types/node": "^26.6.2",
     "deepmerge": "^4.3.1",
-    "eslint": "^10.4.1",
-    "taze": "^19.14.1",
-    "tsdown": "^0.22.2",
-    "tsx": "^4.22.4",
-    "typescript": "^6.0.3",
-    "vitest": "^4.1.8"
+    "eslint": "^10.11.0",
+    "taze": "^21.1.0",
+    "tsdown": "^0.23.0",
+    "tsx": "^4.23.13",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.1"
   }
 }

@@ -3,6 +3,7 @@ import { bold, dim } from 'ansis'
 import pkgJson from '../package.json' with { type: 'json' }
 import { DEFAULT_OPTIONS } from './constants'
 import {
+  downloadUgoiraVideo,
   getAnimeIdHentaiLink,
   getBilibiliLink,
   getDirpyLink,
@@ -159,8 +160,14 @@ export async function fastDownload(params: DownloadParams | DownloadParams[], op
   })
 }
 
+/**
+ * Download multiple Pixiv GIF artworks
+ */
+export async function ugoira(links: string[]) {
+  await downloadUgoiraVideo(links.map(link => ({url: link})))
+}
+
 export * from './config'
 export * from './constants'
 export * from './core'
 export * from './types'
-export * from './utils/downloader'

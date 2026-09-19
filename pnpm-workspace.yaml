@@ -2,7 +2,8 @@ allowBuilds:
   esbuild: true
 
 minimumReleaseAgeExclude:
-  - '@types/node@25.9.2'
+  - '@types/node@25.9.2 || 26.6.2'
+  - eslint@10.11.0
 
 shellEmulator: true
 

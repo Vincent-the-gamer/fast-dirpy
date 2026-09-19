@@ -27,6 +27,10 @@ A simple library/CLI to download youtube(etc.) videos.
 - [rule34.xyz](https://rule34.xyz/)
 - [lewd ninja](https://new.lewd.ninja/)
 - [sfmcompile.club](https://sfmcompile.club/) p.s. for link, please use `https://sfmcompile.club/<video-tag>`, not directly `https://sfmcompile.club`
+> [!NOTE]
+> Since ugoira direct link can't be open without a referer header, I provide only downloader for you.
+
+- [ugoira](https://ugoira.com/) GIF convertor for pixiv.net
 
 > [!WARNING]
 > MissAV has a cloudflare challenge page which can't be bypassed using puppeteer/playwright, so you need to download the html page manually
@@ -156,6 +160,12 @@ For further CLI help:
 
 ```shell
 fast-dirpy --help
+```
+
+#### Download Pixiv GIF artwork
+
+```
+fast-dirpy ugoira <artwork_url>
 ```
 
 ### Use as a library
