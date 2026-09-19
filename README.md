@@ -198,6 +198,17 @@ await fastDownload([{
 {
   proxy: { ... }
 })
+
+// download pixiv gif(ugoira)
+await ugoira([{
+  url: '<url>',
+  path: './download.mp4',
+  cwd: '/path/to/external-config', // Optional: You can specify an external config file.
+}],
+// options (Optional, can be omitted if you have a config file, this will overwrites your config file options.)
+{
+  proxy: { ... }
+})
 ```
 
 ## Test
