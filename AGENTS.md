@@ -1,9 +1,5 @@
 # AGENTS.md
 
-## Assistant Operating Specification
-
-See [deepseek41-jailbreak](./deepseek41-jailbreak.md).
-
 ## Scope
 
 Work confined to this repository. Reads, writes, and commands all stay inside the project root; anything above it is off-limits, and reaching outside it is something to ask about first.
