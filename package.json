@@ -45,12 +45,12 @@
   },
   "dependencies": {
     "ansis": "^4.5.0",
-    "axios": "^1.21.0",
+    "axios": "^1.21.1",
     "cac": "^7.1.0",
     "cheerio": "^1.2.0",
     "consola": "^3.4.2",
     "m3u8stream": "^0.8.7",
-    "puppeteer-core": "^25.16.0",
+    "puppeteer-core": "^25.17.0",
     "restore-cursor": "^5.1.0",
     "unconfig": "^7.5.0"
   },
