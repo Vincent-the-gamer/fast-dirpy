@@ -6,6 +6,7 @@ import {
   downloadAnimeIdHentai,
   downloadBilibili,
   downloadDirpy,
+  downloadEporner,
   downloadHanime,
   downloadKoreanPm,
   downloadLewdNinjaVideo,
@@ -182,6 +183,7 @@ export async function downloadMultipleVideos(params: DownloadParams[], options?:
   const missAVParams = params.filter(param => param.urlType === UrlType.MissAV)
   const lewdNinjaParams = params.filter(param => param.urlType === UrlType.LewdNinja)
   const sfmCompileParams = params.filter(param => param.urlType === UrlType.SfmCompile)
+  const epornerParams = params.filter(param => param.urlType === UrlType.Eporner)
 
   if (bilibiliParams.length > 0) {
     await downloadBilibili(bilibiliParams)
@@ -237,6 +239,12 @@ export async function downloadMultipleVideos(params: DownloadParams[], options?:
   if (sfmCompileParams.length > 0) {
     await downloadSfmCompileVideo(sfmCompileParams, {
       ...options!.proxyOptions,
+    })
+  }
+
+  if (epornerParams.length > 0) {
+    await downloadEporner(epornerParams, {
+      ...options?.proxyOptions,
     })
   }
 
