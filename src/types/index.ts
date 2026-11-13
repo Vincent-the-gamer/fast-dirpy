@@ -44,4 +44,5 @@ export enum UrlType {
   LewdNinja,
   SfmCompile,
   MP4,
+  Eporner,
 }

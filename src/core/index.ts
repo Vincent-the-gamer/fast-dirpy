@@ -1,6 +1,7 @@
 export * from './animeidhentai'
 export * from './bilibili'
 export * from './dirpy'
+export * from './eporner'
 export * from './hanime'
 export * from './koreanpm'
 export * from './lewdNinja'

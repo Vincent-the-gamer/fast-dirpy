@@ -33,6 +33,9 @@ export function judgeUrl(url: string): UrlType {
   else if (url.includes('sfmcompile.club')) {
     return UrlType.SfmCompile
   }
+  else if (url.includes('eporner.com')) {
+    return UrlType.Eporner
+  }
   else if (
     url.endsWith('.m3u8')
     || url.includes('.m3u8') && !url.endsWith('.mp4')
