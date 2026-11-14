@@ -14,6 +14,7 @@ import {
   downloadSfmCompileVideo,
   downloadWowxxx,
   downloadXHamster,
+  downloadYouporn,
   remoteM3U8ToMP4Parallel,
 } from '../core'
 import { resolveConfig } from '../options'
@@ -184,6 +185,7 @@ export async function downloadMultipleVideos(params: DownloadParams[], options?:
   const lewdNinjaParams = params.filter(param => param.urlType === UrlType.LewdNinja)
   const sfmCompileParams = params.filter(param => param.urlType === UrlType.SfmCompile)
   const epornerParams = params.filter(param => param.urlType === UrlType.Eporner)
+  const youpornParams = params.filter(param => param.urlType === UrlType.YouPorn)
 
   if (bilibiliParams.length > 0) {
     await downloadBilibili(bilibiliParams)
@@ -244,6 +246,12 @@ export async function downloadMultipleVideos(params: DownloadParams[], options?:
 
   if (epornerParams.length > 0) {
     await downloadEporner(epornerParams, {
+      ...options?.proxyOptions,
+    })
+  }
+
+  if (youpornParams.length > 0) {
+    await downloadYouporn(youpornParams, {
       ...options?.proxyOptions,
     })
   }

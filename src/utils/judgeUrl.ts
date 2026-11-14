@@ -36,6 +36,9 @@ export function judgeUrl(url: string): UrlType {
   else if (url.includes('eporner.com')) {
     return UrlType.Eporner
   }
+  else if (url.includes('youporn.com')) {
+    return UrlType.YouPorn
+  }
   else if (
     url.endsWith('.m3u8')
     || url.includes('.m3u8') && !url.endsWith('.mp4')
