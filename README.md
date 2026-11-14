@@ -25,6 +25,7 @@ A simple library/CLI to download youtube(etc.) videos.
 - [Hanime1.me](https://hanime1.me/)
 - [wow.xxx](https://www.wow.xxx/)
 - [Eporner](https://www.eporner.com/)
+- [YouPorn](https://www.youporn.com/)
 - [rule34.xyz](https://rule34.xyz/)
 - [lewd ninja](https://new.lewd.ninja/)
 - [sfmcompile.club](https://sfmcompile.club/) p.s. for link, please use `https://sfmcompile.club/<video-tag>`, not directly `https://sfmcompile.club`

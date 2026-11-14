@@ -5,7 +5,7 @@ import { bold, dim } from 'ansis'
 import { cac } from 'cac'
 import restoreCursor from 'restore-cursor'
 import pkgJson from '../package.json'
-import { downloadUgoiraVideo, getAnimeIdHentaiLink, getBilibiliLink, getDirpyLink, getEpornerLink, getKoreanPmLink, getLewdNinjaLink, getSfmCompileLink, getWowxxxLink, getXHamsterLink } from './core'
+import { downloadUgoiraVideo, getAnimeIdHentaiLink, getBilibiliLink, getDirpyLink, getEpornerLink, getKoreanPmLink, getLewdNinjaLink, getSfmCompileLink, getWowxxxLink, getXHamsterLink, getYoupornLink } from './core'
 import { UrlType } from './types'
 import { downloadMultipleVideos } from './utils/downloader'
 import { judgeUrl } from './utils/judgeUrl'
@@ -116,6 +116,17 @@ cli.command('get <url>', 'get video direct link.')
       logger.info('Matched link source: Eporner.')
 
       const videoLink = await getEpornerLink({
+        url,
+        cwd: config,
+      }, proxyOptions)
+
+      console.log(videoLink)
+    }
+
+    else if (urlType === UrlType.YouPorn) {
+      logger.info('Matched link source: YouPorn.')
+
+      const videoLink = await getYoupornLink({
         url,
         cwd: config,
       }, proxyOptions)

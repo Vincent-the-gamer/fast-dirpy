@@ -46,4 +46,5 @@ export enum UrlType {
   SfmCompile,
   MP4,
   Eporner,
+  YouPorn,
 }
