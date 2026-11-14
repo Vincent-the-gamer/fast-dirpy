@@ -15,7 +15,9 @@ async function getPlayerPage(params: DirectLinkParams, options: Partial<Options>
 
   const { proxy, timeout } = await resolveConfig(options, cwd)
 
-  const _proxy = proxy?.host !== '' ? proxy : undefined
+  const _proxy = proxy?.host !== ''
+    ? proxy
+    : undefined
 
   const { data } = await axios.get(url!, {
     headers: {
@@ -42,7 +44,9 @@ export async function getAnimeIdHentaiLink(params: DirectLinkParams, options: Pa
   const { url, cwd } = params
   const { proxy, puppeteer }: any = await resolveConfig(options, cwd)
 
-  const _proxy = proxy?.host !== '' ? proxy : undefined
+  const _proxy = proxy?.host !== ''
+    ? proxy
+    : undefined
 
   const playerLink = await getPlayerPage({
     url,

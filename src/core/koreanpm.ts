@@ -11,7 +11,9 @@ export async function getKoreanPmLink(params: DirectLinkParams, options: Partial
 
   const { proxy, timeout } = await resolveConfig(options, cwd)
 
-  const _proxy = proxy?.host !== '' ? proxy : undefined
+  const _proxy = proxy?.host !== ''
+    ? proxy
+    : undefined
 
   const { data } = await axios.get(url, {
     headers: {

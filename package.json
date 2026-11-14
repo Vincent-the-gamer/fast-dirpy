@@ -1,7 +1,7 @@
 {
   "name": "fast-dirpy",
   "type": "module",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A simple library/CLI to download video from several websites.",
   "author": "Vincent-the-gamer",
   "license": "MIT",
@@ -57,12 +57,13 @@
   "devDependencies": {
     "@antfu/eslint-config": "^10.0.0",
     "@types/node": "^26.6.6",
+    "@typescript/native": "npm:typescript@^7.0.2",
     "deepmerge": "^4.3.1",
-    "eslint": "^10.14.0",
+    "eslint": "^10.15.0",
     "taze": "^21.3.0",
     "tsdown": "^0.23.7",
     "tsx": "^4.23.15",
-    "typescript": "^7.0.2",
+    "typescript": "npm:@typescript/typescript6@^6.0.2",
     "vitest": "^5.1.0"
   }
 }

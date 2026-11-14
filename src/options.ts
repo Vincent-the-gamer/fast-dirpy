@@ -13,7 +13,15 @@ export async function resolveConfig(options: Options, cwd?: string): Promise<Opt
         files: [
           'fast-dirpy.config',
         ],
-        extensions: ['ts', 'mts', 'cts', 'js', 'mjs', 'cjs', 'json'],
+        extensions: [
+          'ts',
+          'mts',
+          'cts',
+          'js',
+          'mjs',
+          'cjs',
+          'json',
+        ],
       },
     ],
     cwd: cwd || process.cwd(),

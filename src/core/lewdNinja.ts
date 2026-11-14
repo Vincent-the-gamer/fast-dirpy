@@ -10,7 +10,9 @@ export async function getLewdNinjaLink(params: DirectLinkParams, options: Partia
 
   const { proxy, timeout } = await resolveConfig(options, cwd)
 
-  const _proxy = proxy?.host !== '' ? proxy : undefined
+  const _proxy = proxy?.host !== ''
+    ? proxy
+    : undefined
 
   const urlSuffix = url!.replace('https://new.lewd.ninja', '').trim()
 

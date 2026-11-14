@@ -247,7 +247,7 @@ cli.command('ugoira <url>', 'Download mp4 video from pixiv gif via ugoira.com.')
     )
 
     await downloadUgoiraVideo({
-      url
+      url,
     }, proxyOptions)
   })
 

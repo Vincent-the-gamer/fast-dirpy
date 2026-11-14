@@ -61,7 +61,9 @@ export async function remoteM3U8ToMP4(
           headers: options.headers,
           timeout,
           // 如果有代理配置，可以在这里设置
-          ...(proxy?.host ? { proxy: `http://${proxy.host}:${proxy.port}` } : {}),
+          ...(proxy?.host
+            ? { proxy: `http://${proxy.host}:${proxy.port}` }
+            : {}),
           maxRetries: 3,
           maxReconnects: 2,
           backoff: { inc: 500, max: 10000 },
@@ -79,7 +81,9 @@ export async function remoteM3U8ToMP4(
       // 处理下载进度
       stream.on('progress', (segment, totalSegments, downloaded) => {
         const downloadedMB = downloaded / 1024 / 1024
-        const percent = totalSegments > 0 ? (segment.num / totalSegments) * 100 : 0
+        const percent = totalSegments > 0
+          ? (segment.num / totalSegments) * 100
+          : 0
 
         const progress: M3U8DownloadProgress = {
           segment,
@@ -118,7 +122,9 @@ export async function remoteM3U8ToMP4(
       })
     }
     catch (error) {
-      const errorMessage = error instanceof Error ? error.message : String(error)
+      const errorMessage = error instanceof Error
+        ? error.message
+        : String(error)
       logger.error(`${identifier} Failed to initialize M3U8 download: ${errorMessage}`)
       reject(error)
     }
@@ -192,7 +198,9 @@ export async function remoteM3U8ToMP4Parallel(
         failed++
         executing.delete(promise)
 
-        const errorMessage = error instanceof Error ? error.message : String(error)
+        const errorMessage = error instanceof Error
+          ? error.message
+          : String(error)
         logger.error(`${identifier} M3U8 download failed: ${errorMessage}`)
 
         // 回调进度（失败）

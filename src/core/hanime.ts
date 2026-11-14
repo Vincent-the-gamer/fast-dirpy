@@ -17,7 +17,9 @@ export async function getHanimeLink(params: DirectLinkParams, options: Partial<O
 
   const { proxy, timeout } = await resolveConfig(options, cwd)
 
-  const _proxy = proxy?.host !== '' ? proxy : undefined
+  const _proxy = proxy?.host !== ''
+    ? proxy
+    : undefined
 
   const { data } = await axios.get(url!, {
     headers: {

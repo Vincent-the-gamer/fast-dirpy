@@ -15,13 +15,17 @@ interface EpornerSource {
 
 function parseQuality(fileName: string): number {
   const match = fileName.match(/(\d+)p(?:-av1)?\.mp4/i)
-  return match ? Number(match[1]) : 0
+  return match
+    ? Number(match[1])
+    : 0
 }
 
 function normalizeUrl(href: string): string {
   if (href.startsWith('http://') || href.startsWith('https://'))
     return href
-  return `https://www.eporner.com${href.startsWith('/') ? href : `/${href}`}`
+  return `https://www.eporner.com${href.startsWith('/')
+    ? href
+    : `/${href}`}`
 }
 
 function pickBestSource(sources: EpornerSource[]): EpornerSource | undefined {
@@ -32,8 +36,11 @@ function pickBestSource(sources: EpornerSource[]): EpornerSource | undefined {
     if (a.quality !== b.quality)
       return b.quality - a.quality
     // prefer h264 (non-av1) over av1 at same quality
-    if (a.isAv1 !== b.isAv1)
-      return a.isAv1 ? 1 : -1
+    if (a.isAv1 !== b.isAv1) {
+      return a.isAv1
+        ? 1
+        : -1
+    }
     return 0
   })
 
@@ -44,7 +51,9 @@ export async function getEpornerLink(params: DirectLinkParams, options: Partial<
   const { url, cwd } = params
 
   const { proxy, timeout } = await resolveConfig(options, cwd)
-  const _proxy = proxy?.host !== '' ? proxy : undefined
+  const _proxy = proxy?.host !== ''
+    ? proxy
+    : undefined
 
   const { data } = await axios.get(url!, {
     headers: {

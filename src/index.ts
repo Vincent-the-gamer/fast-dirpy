@@ -164,7 +164,7 @@ export async function fastDownload(params: DownloadParams | DownloadParams[], op
  * Download multiple Pixiv GIF artworks
  */
 export async function ugoira(links: string[]) {
-  await downloadUgoiraVideo(links.map(link => ({url: link})))
+  await downloadUgoiraVideo(links.map(link => ({ url: link })))
 }
 
 export * from './config'

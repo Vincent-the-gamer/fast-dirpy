@@ -11,7 +11,9 @@ export async function getDirpyLink(params: DirectLinkParams, options: Partial<Op
 
   const { proxy, timeout } = await resolveConfig(options, cwd)
 
-  const _proxy = proxy?.host !== '' ? proxy : undefined
+  const _proxy = proxy?.host !== ''
+    ? proxy
+    : undefined
 
   const { data } = await axios.get('https://dirpy.com/studio', {
     params: {

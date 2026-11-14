@@ -36,7 +36,9 @@ export async function downloadVideo(params: DownloadParams, options: Partial<Opt
 
   const { proxy, timeout } = await resolveConfig(options)
 
-  const _proxy = proxy?.host !== '' ? proxy : undefined
+  const _proxy = proxy?.host !== ''
+    ? proxy
+    : undefined
 
   if (url === '') {
     return Promise.reject(
@@ -132,7 +134,9 @@ export async function downloadVideosParallel(
         failed++
         executing.delete(promise)
 
-        const errorMessage = error instanceof Error ? error.message : String(error)
+        const errorMessage = error instanceof Error
+          ? error.message
+          : String(error)
         logger.error(`${identifier} Download failed: ${errorMessage}`)
 
         // 回调进度

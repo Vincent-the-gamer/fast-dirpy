@@ -11,7 +11,9 @@ export async function getRule34XyzLink(params: DirectLinkParams, options: Partia
 
   const { proxy, timeout } = await resolveConfig(options, cwd)
 
-  const _proxy = proxy?.host !== '' ? proxy : undefined
+  const _proxy = proxy?.host !== ''
+    ? proxy
+    : undefined
 
   const { data } = await axios.get(url!, {
     headers: {

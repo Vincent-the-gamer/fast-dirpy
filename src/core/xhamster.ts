@@ -1,26 +1,29 @@
 import type { DirectLinkParams, DownloadParams, Options } from '../types'
+import { readFile } from 'node:fs/promises'
 import axios from 'axios'
 import { load } from 'cheerio'
 import { DEFAULT_OPTIONS } from '../constants'
 import { resolveConfig } from '../options'
-import { useRandomUserAgent } from '../utils/userAgent'
-import { readFile } from 'node:fs/promises'
-import { remoteM3U8ToMP4Parallel } from './m3u8'
 import { logger } from '../utils/logger'
+import { useRandomUserAgent } from '../utils/userAgent'
+import { remoteM3U8ToMP4Parallel } from './m3u8'
 
 export async function getXHamsterLink(params: DirectLinkParams, options: Partial<Options> = DEFAULT_OPTIONS): Promise<string> {
   const { url, cwd } = params
 
   const { proxy, timeout } = await resolveConfig(options, cwd)
 
-  const _proxy = proxy?.host !== '' ? proxy : undefined
+  const _proxy = proxy?.host !== ''
+    ? proxy
+    : undefined
 
   let page: string
 
-  if (url!.startsWith("xhamster:")) {
-    const htmlPagePath = url!.replace("xhamster:", "").trim()
-    page = await readFile(htmlPagePath, "utf-8")
-  } else {
+  if (url!.startsWith('xhamster:')) {
+    const htmlPagePath = url!.replace('xhamster:', '').trim()
+    page = await readFile(htmlPagePath, 'utf-8')
+  }
+  else {
     const { data } = await axios.get(url!, {
       headers: {
         'User-Agent': useRandomUserAgent(),

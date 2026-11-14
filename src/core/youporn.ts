@@ -24,7 +24,7 @@ interface MediaStream {
 function extractMediaEndpoint(page: string): string | null {
   // Prefer mediaDefinitions (JSON-like) then mediaDefinition
   const keyMatch = page.match(/mediaDefinitions?\s*:\s*(\[[\s\S]*?\])\s*,/)
-    || page.match(/mediaDefinitions?\s*:\s*(\[[\s\S]*?\])\s*}/)
+    || page.match(/mediaDefinitions?\s*:\s*(\[[\s\S]*?\])\s*\}/)
 
   if (keyMatch) {
     try {
@@ -53,7 +53,9 @@ function qualityValue(q: MediaStream): number {
     return q.quality
   if (typeof q.quality === 'string') {
     const n = Number.parseInt(q.quality, 10)
-    return Number.isFinite(n) ? n : 0
+    return Number.isFinite(n)
+      ? n
+      : 0
   }
   return 0
 }
@@ -67,8 +69,11 @@ function pickBestStream(streams: MediaStream[]): MediaStream | null {
     const bq = qualityValue(b)
     if (bq !== aq)
       return bq - aq
-    if (a.defaultQuality !== b.defaultQuality)
-      return a.defaultQuality ? -1 : 1
+    if (a.defaultQuality !== b.defaultQuality) {
+      return a.defaultQuality
+        ? -1
+        : 1
+    }
     return 0
   })
 
@@ -83,7 +88,9 @@ export async function getYoupornLink(params: DirectLinkParams, options: Partial<
   }
 
   const { proxy, timeout } = await resolveConfig(options, cwd)
-  const _proxy = proxy?.host !== '' ? proxy : undefined
+  const _proxy = proxy?.host !== ''
+    ? proxy
+    : undefined
   const userAgent = options.headers?.['User-Agent'] || options.headers?.['user-agent'] || useRandomUserAgent()
 
   const { data: page } = await axios.get(url, {
@@ -123,7 +130,9 @@ export async function getYoupornLink(params: DirectLinkParams, options: Partial<
     return Promise.reject(new Error('Failed to select a YouPorn video URL.'))
   }
 
-  const label = best.quality ? `${best.quality}p` : 'default'
+  const label = best.quality
+    ? `${best.quality}p`
+    : 'default'
   logger.info(`YouPorn: selected ${label} MP4 source.`)
 
   return best.videoUrl

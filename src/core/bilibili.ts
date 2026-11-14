@@ -10,7 +10,9 @@ export async function getBilibiliLink(params: DirectLinkParams, options: Partial
   const { url, cwd } = params
   const { proxy, puppeteer }: any = await resolveConfig(options, cwd)
 
-  const _proxy = proxy?.host !== '' ? proxy : undefined
+  const _proxy = proxy?.host !== ''
+    ? proxy
+    : undefined
 
   const { executablePath, headless } = puppeteer
   const browser = await usePuppeteer({
