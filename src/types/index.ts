@@ -28,6 +28,7 @@ export type M3U8Params = DownloadParams & {
   ffmpegPath?: string
   concurrency?: number
   retries?: number
+  chunkReadahead?: number
 }
 
 export enum UrlType {

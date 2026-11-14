@@ -56,15 +56,23 @@ export async function remoteM3U8ToMP4(
   return new Promise((resolve, reject) => {
     try {
       // 创建m3u8stream
-      const stream = m3u8stream(url, {
-        // 可以添加请求头等配置
+      const streamOptions: any = {
         requestOptions: {
           headers: options.headers,
           timeout,
           // 如果有代理配置，可以在这里设置
           ...(proxy?.host ? { proxy: `http://${proxy.host}:${proxy.port}` } : {}),
+          maxRetries: 3,
+          maxReconnects: 2,
+          backoff: { inc: 500, max: 10000 },
         },
-      })
+      }
+
+      if (params.chunkReadahead !== undefined) {
+        streamOptions.chunkReadahead = params.chunkReadahead
+      }
+
+      const stream = m3u8stream(url, streamOptions)
 
       const writer = createWriteStream(outputPath)
 
