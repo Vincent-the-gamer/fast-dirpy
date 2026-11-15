@@ -1,88 +1,117 @@
 import type { DirectLinkParams, DownloadParams, Options } from '../types'
+import axios from 'axios'
 import { DEFAULT_OPTIONS } from '../constants'
 import { resolveConfig } from '../options'
 import { downloadVideosParallel } from '../utils/downloader'
 import { logger } from '../utils/logger'
-import { usePuppeteer } from '../utils/puppeteer'
 import { useRandomUserAgent } from '../utils/userAgent'
 
-export async function getBilibiliLink(params: DirectLinkParams, options: Partial<Options> = DEFAULT_OPTIONS) {
-  const { url, cwd } = params
-  const { proxy, puppeteer }: any = await resolveConfig(options, cwd)
+const BILIBILI_PARSE_API = 'https://xapi.peanutdl.com/beibei'
 
-  const _proxy = proxy?.host !== ''
-    ? proxy
-    : undefined
-
-  const { executablePath, headless } = puppeteer
-  const browser = await usePuppeteer({
-    executablePath,
-    headless,
-    args: [
-      `--proxy-server=http://${_proxy?.host}:${proxy?.port}`, // proxy server
-      '--disable-features=IsolateOrigins,site-per-process',
-      '--disable-site-isolation-trials',
-      '--disable-web-security',
-      '--disable-setuid-sandbox',
-      '--no-sandbox',
-      '--disable-gpu',
-      '--disable-dev-shm-usage',
-      '--disable-accelerated-2d-canvas',
-      '--no-first-run',
-      '--no-zygote',
-      '--window-size=1920,1080',
-    ],
-    slowMo: 10,
-  })
-
-  const page = await browser.newPage()
-  const userAgent = useRandomUserAgent()
-  await page.setUserAgent(userAgent)
-
-  try {
-    await page.goto('https://snapany.com/zh/bilibili')
-    await page.waitForNetworkIdle()
-
-    const inputSelector = 'input[name=\'link\']'
-    await page.waitForSelector(inputSelector)
-    await page.type(inputSelector, url, { delay: 10 }) // delay 模拟人工输入
-
-    const buttonSelector = 'button[type=\'submit\']'
-    await page.waitForSelector(buttonSelector)
-    await page.click(buttonSelector)
-
-    await page.waitForSelector('div[data-testid="flowbite-card"]')
-
-    // 获取视频链接
-    // 获取页面上所有的卡片
-    const cardsData = await page.$$eval(
-      'div[data-testid="flowbite-card"]',
-      (cards) => {
-        return cards.map((card) => {
-          // 获取视频链接
-          const videoLinkElement = card.querySelector('a[href*=".mp4"]')
-          let videoUrl = videoLinkElement?.getAttribute('href') || ''
-          videoUrl = videoUrl.replace(/&amp;/g, '&')
-
-          return {
-            videoUrl,
-          }
-        })
-      },
-    )
-
-    return cardsData.filter(card => card.videoUrl)[0]?.videoUrl
+interface BilibiliParseResponse {
+  status?: number
+  mp4?: {
+    status?: number
+    player_url?: string
+    info_description?: string
+    info_size?: string
   }
-  catch (e) {
-    logger.error(`Error during scraping: ${e}`)
+  video_audio?: {
+    status?: number
+    Array_Video?: Array<{
+      status?: number
+      id?: string
+      title?: string
+      codecs?: string
+      bandwidth?: string
+      info_base_url?: string
+    }>
+    Array_Audio?: Array<{
+      status?: number
+      id?: string
+      title?: string
+      codecs?: string
+      bandwidth?: string
+      info_base_url?: string
+    }>
   }
-  finally {
-    logger.info('Closing browser')
-    await browser.close()
+  info?: {
+    Title?: string
+    Bvid?: string
   }
+  message?: string
+  msg?: string
+  error?: string
 }
 
-export async function downloadBilibili(params: DownloadParams | DownloadParams[]) {
+function pickBestDashUrl(items?: Array<{ status?: number; info_base_url?: string; bandwidth?: string; id?: string }>): string | undefined {
+  if (!items || items.length === 0)
+    return undefined
+
+  const valid = items.filter(item => item?.status === 0 && item.info_base_url)
+  if (valid.length === 0)
+    return undefined
+
+  const sorted = [...valid].sort((a, b) => Number(b.bandwidth || 0) - Number(a.bandwidth || 0))
+  return sorted[0]?.info_base_url
+}
+
+export async function getBilibiliLink(params: DirectLinkParams, options: Partial<Options> = DEFAULT_OPTIONS): Promise<string> {
+  const { url, cwd } = params
+
+  if (!url) {
+    return Promise.reject(new Error('url is required for getBilibiliLink.'))
+  }
+
+  const { proxy, timeout } = await resolveConfig(options, cwd)
+  const _proxy = proxy?.host !== '' ? proxy : undefined
+
+  const { data } = await axios.post<BilibiliParseResponse>(
+    BILIBILI_PARSE_API,
+    {
+      api: 'BEIBEI',
+      url,
+      captcha: '',
+      id: '',
+    },
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json, text/plain, */*',
+        'User-Agent': useRandomUserAgent(),
+        'Origin': 'https://peanutdl.com',
+        'Referer': 'https://peanutdl.com/',
+        ...(options.headers || {}),
+      },
+      proxy: _proxy,
+      timeout: timeout || 30000,
+    },
+  )
+
+  if (data?.status !== 0) {
+    const message = data?.message || data?.msg || data?.error || 'Unknown parse error'
+    return Promise.reject(new Error(`Failed to parse Bilibili video: ${message}`))
+  }
+
+  // Prefer combined mp4 when available.
+  if (data.mp4?.status === 0 && data.mp4.player_url) {
+    if (data.mp4.info_description) {
+      logger.info(`Bilibili: selected combined MP4 source (${data.mp4.info_description}).`)
+    }
+    return data.mp4.player_url
+  }
+
+  // Fallback: best separate video stream URL (audio merging not handled automatically).
+  const bestVideo = pickBestDashUrl(data.video_audio?.Array_Video)
+  if (bestVideo) {
+    logger.info('Bilibili: combined MP4 unavailable, using best DASH video stream (audio may require separate handling).')
+    return bestVideo
+  }
+
+  return Promise.reject(new Error('Failed to extract a downloadable Bilibili URL from parse response.'))
+}
+
+export async function downloadBilibili(params: DownloadParams | DownloadParams[], options: Partial<Options> = DEFAULT_OPTIONS): Promise<void> {
   if (!Array.isArray(params)) {
     params = [params] as DownloadParams[]
   }
@@ -90,12 +119,18 @@ export async function downloadBilibili(params: DownloadParams | DownloadParams[]
   const directParams = []
 
   for (const param of params) {
-    const url = await getBilibiliLink({
-      url: param.url,
-      cwd: param.cwd,
-    })
-    directParams.push({ ...param, url })
+    const { url, cwd } = param
+    const directLink = await getBilibiliLink({ url, cwd }, options)
+    directParams.push({ ...param, url: directLink })
   }
 
-  await downloadVideosParallel(directParams)
+  if (directParams.length > 0) {
+    await downloadVideosParallel(directParams, {
+      ...options,
+      headers: {
+        ...(options.headers || {}),
+        Referer: 'https://www.bilibili.com/',
+      },
+    })
+  }
 }

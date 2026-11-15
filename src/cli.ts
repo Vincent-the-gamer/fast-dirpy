@@ -136,11 +136,14 @@ cli.command('get <url>', 'get video direct link.')
 
     else if (urlType === UrlType.Bilibili) {
       logger.info('Matched link source: Bilibili.')
-      if (!url.includes('bilibili.com')) {
+      if (!url.includes('bilibili.com') && !/BV[a-zA-Z0-9]+/.test(url) && !url.includes('b23.tv')) {
         logger.error('Please provide a valid Bilibili URL.')
         return
       }
-      const link = getBilibiliLink(url)
+      const link = await getBilibiliLink({
+        url,
+        cwd: config,
+      }, proxyOptions)
       console.log(link)
     }
     else if (urlType === UrlType.Dirpy) {

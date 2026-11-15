@@ -192,7 +192,9 @@ export async function downloadMultipleVideos(params: DownloadParams[], options?:
   const youpornParams = params.filter(param => param.urlType === UrlType.YouPorn)
 
   if (bilibiliParams.length > 0) {
-    await downloadBilibili(bilibiliParams)
+    await downloadBilibili(bilibiliParams, {
+      ...options?.proxyOptions,
+    })
   }
 
   if (animeIdHentaiParams.length > 0) {
