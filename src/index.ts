@@ -36,11 +36,11 @@ export async function fastLink(params: DirectLinkParams, options: Partial<Option
 
   if (urlType === UrlType.Bilibili) {
     logger.info('Matched link source: Bilibili.')
-    if (!url!.includes('bilibili.com')) {
+    if (!url!.includes('bilibili.com') && !/BV[a-zA-Z0-9]+/.test(url!) && !url!.includes('b23.tv')) {
       logger.error('Please provide a valid Bilibili URL.')
       return ''
     }
-    const link = await getBilibiliLink({ url, cwd })
+    const link = await getBilibiliLink({ url, cwd }, proxyOptions)
     return link
   }
   else if (urlType === UrlType.AnimeIdHentai) {
